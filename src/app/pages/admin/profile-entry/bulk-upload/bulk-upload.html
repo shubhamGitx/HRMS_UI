@@ -1,0 +1,92 @@
+<div class="bu-card">
+  <!-- Header -->
+  <div class="bu-header">
+    <div class="bu-header-main">
+      <div class="bu-header-icon">
+        <i class="bi bi-file-earmark-spreadsheet"></i>
+      </div>
+      <div>
+        <h2>{{ language.t('Multiple Employees (Excel Bulk Upload)', 'Multiple Employees (Excel Bulk Upload)') }}</h2>
+        <p>{{ language.t('Batch onboarding using the official Employee Master Excel format.', 'Batch onboarding using the official Employee Master Excel format.') }}</p>
+      </div>
+    </div>
+    <button type="button" class="btn btn-outline-secondary btn-sm" (click)="switchToSingle.emit()">
+      <i class="bi bi-arrow-left me-1"></i> {{ language.t('Switch to Single Entry Wizard', 'Switch to Single Entry Wizard') }}
+    </button>
+  </div>
+
+  <!-- Wizard Steps -->
+  <div class="bu-steps-bar">
+    <div class="bu-step-item" [class.active]="step() === 1" [class.done]="step() > 1">
+      <span class="step-num">1</span>
+      <span>{{ language.t('Download Template', 'Download Template') }}</span>
+    </div>
+    <div class="bu-step-item" [class.active]="step() === 2" [class.done]="step() > 2">
+      <span class="step-num">2</span>
+      <span>{{ language.t('Upload Filled File', 'Upload Filled File') }}</span>
+    </div>
+    <div class="bu-step-item" [class.active]="step() === 3" [class.done]="uploadSuccess()">
+      <span class="step-num">3</span>
+      <span>{{ language.t('Validation & Ingestion', 'Validation & Ingestion') }}</span>
+    </div>
+  </div>
+
+  <!-- Body Content -->
+  <div class="bu-body-content">
+    <!-- Success Message -->
+    <div *ngIf="uploadSuccess()" class="bu-success-box">
+      <i class="bi bi-check-circle-fill success-icon"></i>
+      <h3>{{ savedCount() }} Employee Records Processed</h3>
+      <p>{{ language.t('All rows successfully validated and stored into Employee Master draft tables.', 'All rows successfully validated and stored into Employee Master draft tables.') }}</p>
+      <div class="bu-success-actions">
+        <button type="button" class="btn btn-outline-primary" (click)="reset()">
+          <i class="bi bi-arrow-repeat me-1"></i> {{ language.t('Upload Another Batch', 'Upload Another Batch') }}
+        </button>
+        <button type="button" class="btn btn-primary" (click)="switchToSingle.emit()">
+          <i class="bi bi-person-check-fill me-1"></i> {{ language.t('Review in Single Wizard', 'Review in Single Wizard') }}
+        </button>
+      </div>
+    </div>
+
+    <!-- Step 1 & 2 Workflow -->
+    <div *ngIf="!uploadSuccess()" class="bu-workflow-grid">
+      <!-- Card 1: Download Template -->
+      <div class="bu-box">
+        <div class="box-head">
+          <i class="bi bi-cloud-arrow-down text-primary"></i>
+          <h4>{{ language.t('Step 1: Get Excel Master Template', 'Step 1: Get Excel Master Template') }}</h4>
+        </div>
+        <p>
+          {{ language.t('Download the pre-formatted CSV/Excel template with all required government columns: Designation, Office, Category, Date of Birth, and Bank details.', 'Download the pre-formatted CSV/Excel template with all required government columns: Designation, Office, Category, Date of Birth, and Bank details.') }}
+        </p>
+        <button type="button" class="btn btn-primary-custom" (click)="downloadTemplate()">
+          <i class="bi bi-download me-1"></i> {{ language.t('Download Excel Template', 'Download Excel Template') }}
+        </button>
+      </div>
+
+      <!-- Card 2: Upload File -->
+      <div class="bu-box">
+        <div class="box-head">
+          <i class="bi bi-cloud-arrow-up text-success"></i>
+          <h4>{{ language.t('Step 2: Upload Completed File', 'Step 2: Upload Completed File') }}</h4>
+        </div>
+        <p>{{ language.t('Upload your filled spreadsheet for automated row-level syntax and master code verification.', 'Upload your filled spreadsheet for automated row-level syntax and master code verification.') }}</p>
+
+        <div class="file-drop-zone">
+          <i class="bi bi-file-earmark-arrow-up drop-icon"></i>
+          <span *ngIf="!selectedFileName()">{{ language.t('Drag & drop file here, or click to browse', 'Drag & drop file here, or click to browse') }}</span>
+          <strong *ngIf="selectedFileName()" class="text-success">{{ selectedFileName() }}</strong>
+          <small class="text-muted">{{ language.t('Supports .xlsx, .csv (Max 10 MB)', 'Supports .xlsx, .csv (Max 10 MB)') }}</small>
+          <input type="file" accept=".xlsx,.csv" (change)="onFileSelected($event)" class="file-hidden-input" />
+        </div>
+
+        <div class="mt-3 text-end" *ngIf="selectedFileName()">
+          <button type="button" class="btn btn-success" (click)="processUpload()" [disabled]="isUploading()">
+            <span *ngIf="isUploading()" class="spinner-border spinner-border-sm me-1"></span>
+            <i *ngIf="!isUploading()" class="bi bi-play-circle-fill me-1"></i> {{ language.t('Validate & Import', 'Validate & Import') }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

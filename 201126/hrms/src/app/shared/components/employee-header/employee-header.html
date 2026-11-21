@@ -1,0 +1,40 @@
+<div class="emp-header-card">
+  <div class="emp-info-main">
+    <div class="emp-avatar">
+      <span>{{ initials }}</span>
+    </div>
+    <div class="emp-meta-primary">
+      <div class="name-status-row">
+        <h3 class="emp-name">{{ employeeName }}</h3>
+        <span class="status-badge" [class.active]="status === 'Active'">
+          <i class="bi bi-circle-fill"></i> {{ language.t(status) }}
+        </span>
+        <span class="type-pill">{{ language.t(employeeType) }}</span>
+      </div>
+      <div class="emp-meta-items">
+        <span class="meta-item">
+          <i class="bi bi-person-badge"></i>
+          <strong>{{ language.t('Code', 'Code') }}:</strong> {{ employeeCode }}
+        </span>
+        <span class="meta-separator">•</span>
+        <span class="meta-item">
+          <i class="bi bi-briefcase"></i>
+          <strong>{{ language.t('Role', 'Role') }}:</strong> {{ designation }}
+        </span>
+        <span class="meta-separator">•</span>
+        <span class="meta-item">
+          <i class="bi bi-building"></i>
+          <strong>{{ language.t('Dept', 'Dept') }}:</strong> {{ department }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="emp-reporting-box">
+    <div class="reporting-inner">
+      <small class="reporting-label">{{ language.t('Reporting Officer', 'Reporting Officer') }}</small>
+      <strong class="reporting-name">{{ reportingOfficer || language.t('Not Assigned', 'Not Assigned') }}</strong>
+      <span class="reporting-role" *ngIf="reportingRole">{{ reportingRole }}</span>
+    </div>
+  </div>
+</div>

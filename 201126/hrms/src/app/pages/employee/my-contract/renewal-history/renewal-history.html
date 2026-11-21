@@ -1,0 +1,121 @@
+<div class="renewal-history-container">
+  <!-- Loading state indicator -->
+  <div *ngIf="isLoading()" class="contract-loading-bar">
+    <i class="bi bi-arrow-repeat spin-icon"></i> {{ language.t('Syncing renewal history with server...', 'Syncing renewal history with server...') }}
+  </div>
+
+  <!-- Summary Stat Cards Grid -->
+  <div class="renewal-stats-grid">
+    <div class="stat-mini-card blue">
+      <div class="stat-icon-box">
+        <i class="bi bi-award-fill"></i>
+      </div>
+      <div class="stat-details">
+        <span class="stat-title">{{ language.t('Total Service Completed', 'Total Service Completed') }}</span>
+        <strong class="stat-number">{{ (totalMonths() / 12) | number:'1.0-1' }} {{ language.t('Yrs', 'Yrs') }}</strong>
+        <span class="stat-subtext">{{ language.t('Across', 'Across') }} {{ totalRenewalsCount() }} {{ language.t('contract terms', 'contract terms') }}</span>
+      </div>
+    </div>
+
+    <div class="stat-mini-card green">
+      <div class="stat-icon-box">
+        <i class="bi bi-check-circle-fill"></i>
+      </div>
+      <div class="stat-details">
+        <span class="stat-title">{{ language.t('Renewals Granted', 'Renewals Granted') }}</span>
+        <strong class="stat-number">{{ totalRenewalsCount() }} {{ language.t('Extensions', 'Extensions') }}</strong>
+        <span class="stat-subtext">{{ language.t('All approved on time', 'All approved on time') }}</span>
+      </div>
+    </div>
+
+    <div class="stat-mini-card purple">
+      <div class="stat-icon-box">
+        <i class="bi bi-star-fill"></i>
+      </div>
+      <div class="stat-details">
+        <span class="stat-title">{{ language.t('Latest Appraisal Grade', 'Latest Appraisal Grade') }}</span>
+        <strong class="stat-number">{{ language.t('Grade', 'Grade') }} {{ latestAppraisal() }}</strong>
+        <span class="stat-subtext">{{ language.t('Outstanding Performance', 'Outstanding Performance') }}</span>
+      </div>
+    </div>
+
+    <div class="stat-mini-card orange">
+      <div class="stat-icon-box">
+        <i class="bi bi-calendar-event-fill"></i>
+      </div>
+      <div class="stat-details">
+        <span class="stat-title">{{ language.t('Next Renewal Audit', 'Next Renewal Audit') }}</span>
+        <strong class="stat-number">Jan 2027</strong>
+        <span class="stat-subtext">{{ language.t('Current term till 31 Mar 2027', 'Current term till 31 Mar 2027') }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Renewal History Log Table -->
+  <div class="content-card table-card">
+    <div class="card-header-row">
+      <div>
+        <h3><i class="bi bi-clock-history"></i> {{ language.t('Contract Extension & Renewal History Log', 'Contract Extension & Renewal History Log') }}</h3>
+        <p class="sec-subtitle">{{ language.t('Complete chronological record of all contractual terms and remuneration revisions', 'Complete chronological record of all contractual terms and remuneration revisions') }}</p>
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <table class="hrms-custom-table">
+        <thead>
+          <tr>
+            <th>{{ language.t('Renewal Phase', 'Renewal Phase') }}</th>
+            <th>{{ language.t('Contract Period', 'Contract Period') }}</th>
+            <th>{{ language.t('Duration', 'Duration') }}</th>
+            <th>{{ language.t('Monthly Pay', 'Monthly Pay') }}</th>
+            <th>{{ language.t('Increment', 'Increment') }}</th>
+            <th>{{ language.t('Appraisal Grade', 'Appraisal Grade') }}</th>
+            <th>{{ language.t('Sanction Memo No.', 'Sanction Memo No.') }}</th>
+            <th>{{ language.t('Status', 'Status') }}</th>
+            <th style="text-align: right;">{{ language.t('Action', 'Action') }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of historyList()">
+            <td>
+              <div class="phase-cell">
+                <strong>{{ item.renewalPhase }}</strong>
+                <small class="text-muted">{{ language.t('Order Date', 'Order Date') }}: {{ item.sanctionOrderDate }}</small>
+              </div>
+            </td>
+            <td>
+              <div class="period-cell">
+                <span class="date-str">{{ item.startDate }} &ndash; {{ item.endDate }}</span>
+              </div>
+            </td>
+            <td><strong>{{ item.durationMonths }} {{ language.t('Mos', 'Mos') }}</strong></td>
+            <td><strong class="pay-str">₹{{ item.monthlyPay | number }}</strong></td>
+            <td>
+              <span class="inc-badge" [class.has-inc]="item.incrementPercentage > 0">
+                +{{ item.incrementPercentage }}%
+              </span>
+            </td>
+            <td>
+              <span class="grade-badge" [ngClass]="'grade-' + item.performanceGrade.replace('+', 'plus')">
+                {{ item.performanceGrade }}
+              </span>
+            </td>
+            <td>
+              <span class="memo-code">{{ item.sanctionOrderNo }}</span>
+            </td>
+            <td>
+              <span class="status-chip" [ngClass]="item.status.toLowerCase()">
+                {{ language.t(item.status) }}
+              </span>
+            </td>
+            <td style="text-align: right;">
+              <button type="button" class="btn-table-icon" (click)="downloadOrder(item.sanctionOrderNo)" title="Download Sanction Order PDF">
+                <i class="bi bi-download"></i> {{ language.t('Order PDF', 'Order PDF') }}
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

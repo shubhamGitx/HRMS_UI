@@ -1,0 +1,563 @@
+.contract-section-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.contract-loading-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: #1d4ed8;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.spin-icon {
+  animation: spin 1s linear infinite;
+  display: inline-block;
+}
+
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
+
+/* Hero Banner Card */
+.contract-hero-card {
+  background: linear-gradient(135deg, #0f2b48 0%, #1a497b 60%, #1e5c9b 100%);
+  color: #ffffff;
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: 0 10px 25px rgba(15, 43, 72, 0.18);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.status-badge-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.contract-status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.contract-status-chip.active {
+  background: #10b981;
+  color: #ffffff;
+}
+
+.contract-id-pill {
+  font-size: 0.8rem;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 4px 10px;
+  border-radius: 6px;
+  color: #dbeafe;
+  font-family: monospace;
+}
+
+.contract-main-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 4px 0 6px 0;
+  color: #ffffff;
+}
+
+.contract-sub-title {
+  font-size: 0.9rem;
+  color: #93c5fd;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hero-actions-block {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.action-btn.btn-primary {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.action-btn.btn-primary:hover {
+  background: #1d4ed8;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+}
+
+.action-btn.btn-secondary {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.action-btn.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* Tenure Progress Meter */
+.tenure-meter-wrapper {
+  margin-top: 26px;
+  background: rgba(15, 23, 42, 0.45);
+  border-radius: 14px;
+  padding: 20px 24px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(8px);
+}
+
+.tenure-info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  gap: 16px;
+}
+
+.tenure-date-box .lbl {
+  display: flex;
+  align-items: center;
+  font-size: 0.725rem;
+  color: #93c5fd;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+.tenure-date-box .val {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #ffffff;
+  font-family: monospace, sans-serif;
+}
+
+.tenure-date-box.align-right {
+  text-align: right;
+}
+.tenure-date-box.align-right .lbl {
+  justify-content: flex-end;
+}
+
+.tenure-metrics-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+
+.tenure-badges-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.tenure-state-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 20px;
+  letter-spacing: 0.4px;
+}
+.tenure-state-pill.status-healthy {
+  background: rgba(16, 185, 129, 0.2);
+  color: #6ee7b7;
+  border: 1px solid rgba(16, 185, 129, 0.4);
+}
+.tenure-state-pill.status-warning {
+  background: rgba(245, 158, 11, 0.2);
+  color: #fde68a;
+  border: 1px solid rgba(245, 158, 11, 0.4);
+}
+.tenure-state-pill.status-expired {
+  background: rgba(239, 68, 68, 0.2);
+  color: #fca5a5;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+}
+
+.days-remaining-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 4px 14px;
+  border-radius: 20px;
+}
+.days-remaining-badge.status-healthy {
+  background: #10b981;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.35);
+}
+.days-remaining-badge.status-warning {
+  background: #f59e0b;
+  color: #000000;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.35);
+}
+.days-remaining-badge.status-expired {
+  background: #ef4444;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.35);
+}
+
+.days-passed-text {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.8rem;
+  color: #cbd5e1;
+  font-weight: 500;
+}
+
+.tenure-progress-container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.progress-bar-track {
+  height: 12px;
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 6px;
+  position: relative;
+}
+.progress-bar-fill.status-healthy {
+  background: linear-gradient(90deg, #059669 0%, #10b981 70%, #34d399 100%);
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+}
+.progress-bar-fill.status-warning {
+  background: linear-gradient(90deg, #d97706 0%, #f59e0b 70%, #fbbf24 100%);
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+}
+.progress-bar-fill.status-expired {
+  background: linear-gradient(90deg, #dc2626 0%, #ef4444 100%);
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+}
+
+.bar-fill-label {
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.track-markers-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.725rem;
+  color: #94a3b8;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.track-markers-row .marker.start {
+  color: #60a5fa;
+}
+.track-markers-row .marker.today {
+  color: #34d399;
+  font-weight: 700;
+}
+.track-markers-row .marker.end {
+  color: #93c5fd;
+}
+
+/* Two Column Side-by-Side Layout */
+.contract-grid-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+/* Details Card */
+.contract-details-card,
+.terms-conditions-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  height: 100%;
+}
+
+.card-section-header {
+  margin-bottom: 20px;
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 12px;
+}
+
+.card-section-header h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 4px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.card-section-header h3 i {
+  color: #2563eb;
+}
+
+.sec-subtitle {
+  font-size: 0.82rem;
+  color: #64748b;
+}
+
+.spec-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.spec-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 16px;
+  background: #f8fafc;
+  border-radius: 10px;
+  border: 1px solid #f1f5f9;
+}
+
+.spec-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.spec-value {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.spec-value.highlight {
+  color: #2563eb;
+}
+
+.spec-value.pay-amount {
+  color: #059669;
+  font-size: 1.05rem;
+}
+
+.spec-subtext {
+  font-size: 0.78rem;
+  color: #64748b;
+}
+
+/* Accordion */
+.terms-accordion-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.term-accordion-item {
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+
+.term-accordion-item.expanded {
+  border-color: #2563eb;
+}
+
+.term-header-btn {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px;
+  background: #f8fafc;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.2s;
+}
+
+.term-accordion-item.expanded .term-header-btn {
+  background: #eff6ff;
+}
+
+.term-title-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.term-num-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  background: #cbd5e1;
+  color: #334155;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.term-accordion-item.expanded .term-num-badge {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.term-title-left i {
+  color: #2563eb;
+  font-size: 1.1rem;
+}
+
+.term-title-text {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.term-header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.term-category-tag {
+  font-size: 0.75rem;
+  color: #64748b;
+  background: #ffffff;
+  padding: 3px 10px;
+  border-radius: 20px;
+  border: 1px solid #e2e8f0;
+}
+
+.toggle-icon {
+  transition: transform 0.2s;
+  color: #64748b;
+}
+
+.term-accordion-item.expanded .toggle-icon {
+  transform: rotate(180deg);
+  color: #2563eb;
+}
+
+.term-body {
+  padding: 16px 18px;
+  background: #ffffff;
+  border-top: 1px solid #e2e8f0;
+}
+
+.term-description {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: #334155;
+}
+
+/* Footer Notice */
+.contract-footer-note {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 12px;
+  padding: 16px 20px;
+  color: #1e3a8a;
+}
+
+.note-icon {
+  font-size: 1.4rem;
+  color: #2563eb;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.note-content strong {
+  display: block;
+  font-size: 0.88rem;
+  margin-bottom: 4px;
+}
+
+.note-content p {
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: #1e40af;
+}
+
+@media (max-width: 992px) {
+  .contract-grid-two-col {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-header-row {
+    flex-direction: column;
+  }
+  .tenure-info-row {
+    flex-direction: column;
+    text-align: center;
+  }
+  .tenure-date-box.align-right {
+    text-align: center;
+  }
+  .spec-grid {
+    grid-template-columns: 1fr;
+  }
+}

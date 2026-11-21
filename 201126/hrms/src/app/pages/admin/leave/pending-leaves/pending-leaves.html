@@ -1,0 +1,642 @@
+<div class="leave-admin-wrapper">
+  <!-- Leave Management Section Card -->
+  <section class="leave-module-card">
+    <!-- Header Banner -->
+    <div class="rs-header">
+      <div class="rs-icon bg-amber-soft">
+        <i class="bi bi-calendar-range text-warning"></i>
+      </div>
+      <div class="rs-header-text">
+        <div class="pe-badge-row mb-1">
+          <span class="pe-portal-tag">{{ language.t('HRMS Portal', 'HRMS Portal') }}</span>
+          <span class="pe-status-tag">{{ language.t('Reporting Officer Leave Administration', 'Reporting Officer Leave Administration') }}</span>
+        </div>
+        <h1 class="rs-title">{{ language.t('Reporting Officer Leave Management & Sanctioning', 'Reporting Officer Leave Management & Sanctioning') }}</h1>
+        <p class="rs-sub">
+          {{ language.t('Review, sanction, and audit leave quotas for contractual staff directly reporting to you. Real-time data strictly filtered by reporting hierarchy.', 'Review, sanction, and audit leave quotas for contractual staff directly reporting to you. Real-time data strictly filtered by reporting hierarchy.') }}
+        </p>
+      </div>
+      <div class="header-action-wrap ms-auto">
+        <button type="button" class="btn-refresh" (click)="loadAllData()" [disabled]="isLoading()" title="Refresh applications">
+          <i class="bi bi-arrow-clockwise" [class.spin]="isLoading()"></i>
+          <span>{{ language.t('Refresh', 'Refresh') }}</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="leave-nav-tabs mb-4">
+      <button type="button"
+              class="tab-btn"
+              [class.active]="activeTab() === 'pending-applications'"
+              (click)="setTab('pending-applications')">
+        <i class="bi bi-hourglass-split"></i>
+        <span>{{ language.t('Pending Leave Applications', 'Pending Leave Applications') }}</span>
+        <span class="tab-count-badge warning" *ngIf="pendingLeaves().length > 0">{{ pendingLeaves().length }}</span>
+      </button>
+
+      <button type="button"
+              class="tab-btn"
+              [class.active]="activeTab() === 'leave-history-ro'"
+              (click)="setTab('leave-history-ro')">
+        <i class="bi bi-clock-history"></i>
+        <span>{{ language.t('Subordinate Leave History', 'Subordinate Leave History') }}</span>
+        <span class="tab-count-badge info" *ngIf="leaveHistory().length > 0">{{ leaveHistory().length }}</span>
+      </button>
+
+      <button type="button"
+              class="tab-btn"
+              [class.active]="activeTab() === 'leave-reports'"
+              (click)="setTab('leave-reports')">
+        <i class="bi bi-bar-chart-line"></i>
+        <span>{{ language.t('Leave Reports & Register', 'Leave Reports & Register') }}</span>
+      </button>
+    </div>
+
+    <!-- Real-Time KPI Metric Cards Grid -->
+    <div class="kpi-grid mb-4">
+      <div class="kpi-card" (click)="setTab('pending-applications')" style="cursor: pointer;">
+        <div class="kpi-icon-box bg-amber"><i class="bi bi-hourglass-split"></i></div>
+        <div class="kpi-data">
+          <span class="kpi-label">{{ language.t('Pending Approval', 'Pending Approval') }}</span>
+          <strong class="kpi-number">{{ leaveStats()?.pendingApprovalCount ?? pendingLeaves().length }}</strong>
+          <small class="kpi-trend text-warning"><i class="bi bi-clock"></i> {{ language.t('Awaiting Officer Action', 'Awaiting Officer Action') }}</small>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-icon-box bg-emerald"><i class="bi bi-check-circle"></i></div>
+        <div class="kpi-data">
+          <span class="kpi-label">{{ language.t('Sanctioned This Month', 'Sanctioned This Month') }}</span>
+          <strong class="kpi-number">{{ leaveStats()?.sanctionedThisMonthCount ?? 0 }}</strong>
+          <small class="kpi-trend text-success"><i class="bi bi-shield-check"></i> {{ language.t('Approved Leaves', 'Approved Leaves') }}</small>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-icon-box bg-blue"><i class="bi bi-calendar-check"></i></div>
+        <div class="kpi-data">
+          <span class="kpi-label">{{ language.t('Staff on Leave Today', 'Staff on Leave Today') }}</span>
+          <strong class="kpi-number">{{ leaveStats()?.staffOnLeaveTodayCount ?? 0 }}</strong>
+          <small class="kpi-trend text-info"><i class="bi bi-person-check"></i> {{ language.t('Authorized Absences', 'Authorized Absences') }}</small>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-icon-box bg-indigo"><i class="bi bi-people-fill"></i></div>
+        <div class="kpi-data">
+          <span class="kpi-label">{{ language.t('Total Subordinates', 'Total Subordinates') }}</span>
+          <strong class="kpi-number">{{ leaveStats()?.totalSubordinatesCount ?? 0 }}</strong>
+          <small class="kpi-trend text-primary"><i class="bi bi-diagram-3"></i> {{ language.t('Reporting to You', 'Reporting to You') }}</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- Alert Banners -->
+    <div *ngIf="errorMessage()" class="alert-box alert-box-danger mb-3">
+      <i class="bi bi-exclamation-triangle-fill fs-5"></i>
+      <div class="alert-msg">{{ errorMessage() }}</div>
+      <button type="button" class="btn-alert-close" (click)="errorMessage.set(null)" aria-label="Close">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <div *ngIf="successMessage()" class="alert-box alert-box-success mb-3">
+      <i class="bi bi-check-circle-fill fs-5"></i>
+      <div class="alert-msg">{{ successMessage() }}</div>
+      <button type="button" class="btn-alert-close" (click)="successMessage.set(null)" aria-label="Close">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- TAB 1: Pending Leave Applications -->
+    <!-- ================================================================= -->
+    <div *ngIf="activeTab() === 'pending-applications'">
+      <!-- Toolbar: Search filter -->
+      <div class="table-toolbar mb-3">
+        <div class="search-input-wrap">
+          <i class="bi bi-search"></i>
+          <input type="text"
+                 class="search-input"
+                 [placeholder]="language.t('Search staff by name, code, designation, or leave type...', 'Search staff by name, code, designation, or leave type...')"
+                 [ngModel]="searchTerm()"
+                 (ngModelChange)="searchTerm.set($event)" />
+        </div>
+        <div class="toolbar-info-text ms-auto">
+          {{ language.t('Showing', 'Showing') }} <strong>{{ filteredLeaves().length }}</strong> {{ language.t('pending application(s)', 'pending application(s)') }}
+        </div>
+      </div>
+
+      <!-- Main Pending Applications Table -->
+      <div class="leave-content-box">
+        <div class="table-responsive">
+          <table class="emp-table">
+            <thead>
+              <tr>
+                <th style="width: 45px;">#</th>
+                <th>{{ language.t('Staff Name & Code', 'Staff Name & Code') }}</th>
+                <th>{{ language.t('Designation & Office', 'Designation & Office') }}</th>
+                <th>{{ language.t('Leave Type', 'Leave Type') }}</th>
+                <th>{{ language.t('Leave Reason', 'Leave Reason') }}</th>
+                <th>{{ language.t('From - To Duration', 'From - To Duration') }}</th>
+                <th style="text-align: center;">{{ language.t('Days', 'Days') }}</th>
+                <th>{{ language.t('Applicant Remarks', 'Applicant Remarks') }}</th>
+                <th>{{ language.t('Status', 'Status') }}</th>
+                <th style="text-align: center; min-width: 190px;">{{ language.t('Action', 'Action') }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Real Pending Leaves from Subordinates -->
+              <tr *ngFor="let item of filteredLeaves(); let idx = index">
+                <td class="text-muted fw-bold">{{ idx + 1 }}</td>
+                <td>
+                  <div class="staff-cell-name">{{ item.empName }}</div>
+                  <div class="staff-code-pill"><i class="bi bi-person-badge"></i> {{ item.contractNo }}</div>
+                </td>
+                <td>
+                  <div class="fw-semibold text-dark">{{ item.designationName || 'Contractual Staff' }}</div>
+                  <div class="text-muted small"><i class="bi bi-building me-1"></i>{{ item.officeName || 'Department Office' }}</div>
+                </td>
+                <td>
+                  <span class="leave-type-chip" [ngClass]="{
+                    'chip-cl': item.leaveTypeCode === 'CL',
+                    'chip-el': item.leaveTypeCode === 'EL',
+                    'chip-pl': item.leaveTypeCode === 'PL',
+                    'chip-sl': item.leaveTypeCode === 'SL'
+                  }">
+                    <strong>{{ item.leaveTypeCode }}</strong> - {{ item.leaveTypeName }}
+                  </span>
+                </td>
+                <td>
+                  <span class="badge bg-light text-primary border fw-semibold">
+                    <i class="bi bi-tag-fill me-1"></i>{{ item.reasonName || 'Personal Work' }}
+                  </span>
+                </td>
+                <td>
+                  <div class="date-range-badge">
+                    <span class="date-part">{{ item.fromDate | date:'dd MMM yyyy' }}</span>
+                    <span class="date-divider">to</span>
+                    <span class="date-part">{{ item.toDate | date:'dd MMM yyyy' }}</span>
+                  </div>
+                </td>
+                <td style="text-align: center;">
+                  <strong class="days-badge">{{ item.totalDays }} {{ language.t('Days', 'Days') }}</strong>
+                </td>
+                <td>
+                  <div class="reason-cell" [title]="item.reason || ''">
+                    <i class="bi bi-chat-quote-fill me-1 text-muted"></i>
+                    <span>{{ item.reason || '—' }}</span>
+                  </div>
+                </td>
+                <td>
+                  <span class="status-pill status-pending">
+                    <i class="bi bi-clock-history"></i> {{ language.t('Pending Sanction', 'Pending Sanction') }}
+                  </span>
+                </td>
+                <td style="text-align: center;">
+                  <div class="action-btn-group">
+                    <button type="button"
+                            class="btn-action-approve"
+                            (click)="approveLeave(item)"
+                            [disabled]="isSubmitting()"
+                            title="Approve this leave application">
+                      <i class="bi bi-check2"></i> {{ language.t('Approve', 'Approve') }}
+                    </button>
+                    <button type="button"
+                            class="btn-action-reject"
+                            (click)="openRejectModal(item)"
+                            [disabled]="isSubmitting()"
+                            title="Reject with remarks">
+                      <i class="bi bi-x"></i> {{ language.t('Reject', 'Reject') }}
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Empty State -->
+              <tr *ngIf="filteredLeaves().length === 0 && !isLoading()">
+                <td colspan="10" class="text-center py-5">
+                  <div class="empty-state-box">
+                    <div class="empty-state-icon text-success">
+                      <i class="bi bi-check2-circle"></i>
+                    </div>
+                    <strong class="empty-state-title">{{ language.t('No Pending Leave Applications', 'No Pending Leave Applications') }}</strong>
+                    <p class="empty-state-desc">{{ language.t('All leave requests from your reporting subordinates have been processed.', 'All leave requests from your reporting subordinates have been processed.') }}</p>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Loading State -->
+              <tr *ngIf="isLoading()">
+                <td colspan="10" class="text-center py-4">
+                  <div class="spinner-inline">
+                    <div class="spinner-border spinner-border-sm text-primary me-2"></div>
+                    <span>{{ language.t('Loading pending applications from server...', 'Loading pending applications from server...') }}</span>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- TAB 2: Subordinate Leave History & Decisions -->
+    <!-- ================================================================= -->
+    <div *ngIf="activeTab() === 'leave-history-ro'" class="leave-history-ro-view">
+      <!-- Toolbar with Segmented Filter Pills & Search -->
+      <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+        <div class="filter-pill-bar">
+          <button type="button" 
+                  class="filter-pill-btn" 
+                  [class.active]="historyStatusFilter() === 'ALL'"
+                  (click)="onFilterStatusChange('ALL')">
+            <i class="bi bi-grid-fill me-1"></i> {{ language.t('All Decisions', 'All Decisions') }}
+          </button>
+          <button type="button" 
+                  class="filter-pill-btn success" 
+                  [class.active]="historyStatusFilter() === 'APPROVED'"
+                  (click)="onFilterStatusChange('APPROVED')">
+            <i class="bi bi-check-circle-fill me-1"></i> {{ language.t('Approved / Sanctioned', 'Approved / Sanctioned') }}
+          </button>
+          <button type="button" 
+                  class="filter-pill-btn danger" 
+                  [class.active]="historyStatusFilter() === 'REJECTED'"
+                  (click)="onFilterStatusChange('REJECTED')">
+            <i class="bi bi-x-circle-fill me-1"></i> {{ language.t('Rejected', 'Rejected') }}
+          </button>
+          <button type="button" 
+                  class="filter-pill-btn secondary" 
+                  [class.active]="historyStatusFilter() === 'CANCELLED'"
+                  (click)="onFilterStatusChange('CANCELLED')">
+            <i class="bi bi-slash-circle-fill me-1"></i> {{ language.t('Cancelled', 'Cancelled') }}
+          </button>
+        </div>
+
+        <div class="search-input-wrap">
+          <i class="bi bi-search"></i>
+          <input type="text"
+                 class="search-input"
+                 [placeholder]="language.t('Search subordinate, code, or remarks...', 'Search subordinate, code, or remarks...')"
+                 [ngModel]="historySearchTerm()"
+                 (ngModelChange)="historySearchTerm.set($event)" />
+        </div>
+      </div>
+
+      <div class="leave-content-box">
+        <div class="table-responsive">
+          <table class="emp-table">
+            <thead>
+              <tr>
+                <th style="width: 45px;">#</th>
+                <th>{{ language.t('Subordinate Name & Code', 'Subordinate Name & Code') }}</th>
+                <th>{{ language.t('Designation & Office', 'Designation & Office') }}</th>
+                <th>{{ language.t('Leave Type', 'Leave Type') }}</th>
+                <th>{{ language.t('Leave Reason', 'Leave Reason') }}</th>
+                <th>{{ language.t('Duration', 'Duration') }}</th>
+                <th style="text-align: center;">{{ language.t('Days', 'Days') }}</th>
+                <th>{{ language.t('Status', 'Status') }}</th>
+                <th>{{ language.t('Action Date & Official', 'Action Date & Official') }}</th>
+                <th>{{ language.t('Official Remarks / Sanction Info', 'Official Remarks / Sanction Info') }}</th>
+                <th style="text-align: center;">{{ language.t('Action', 'Action') }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Real Subordinates Leave History From API -->
+              <tr *ngFor="let h of filteredHistory(); let idx = index">
+                <td class="text-muted fw-bold">{{ idx + 1 }}</td>
+                <td>
+                  <div class="staff-cell-name">{{ h.empName }}</div>
+                  <div class="staff-code-pill"><i class="bi bi-person-badge"></i> {{ h.contractNo }}</div>
+                </td>
+                <td>
+                  <div class="fw-semibold text-dark">{{ h.designationName }}</div>
+                  <small class="text-muted"><i class="bi bi-building me-1"></i>{{ h.officeName }}</small>
+                </td>
+                <td>
+                  <span class="leave-type-chip chip-neutral">
+                    <strong>{{ h.leaveTypeCode }}</strong> - {{ h.leaveTypeName }}
+                  </span>
+                </td>
+                <td>
+                  <span class="badge bg-light text-primary border fw-semibold">
+                    <i class="bi bi-tag-fill me-1"></i>{{ h.reasonName || 'Personal Work' }}
+                  </span>
+                </td>
+                <td>
+                  <div class="date-range-badge">
+                    <span class="date-part">{{ h.fromDate | date:'dd MMM yyyy' }}</span>
+                    <span class="date-divider">to</span>
+                    <span class="date-part">{{ h.toDate | date:'dd MMM yyyy' }}</span>
+                  </div>
+                </td>
+                <td style="text-align: center;">
+                  <span class="days-badge">{{ h.totalDays }} {{ language.t('Days', 'Days') }}</span>
+                </td>
+                <td>
+                  <span *ngIf="h.leaveStatus === 'APPROVED'" class="status-pill status-approved">
+                    <i class="bi bi-check-circle-fill"></i> {{ language.t('Approved', 'Approved') }}
+                  </span>
+                  <span *ngIf="h.leaveStatus === 'REJECTED'" class="status-pill status-rejected">
+                    <i class="bi bi-x-circle-fill"></i> {{ language.t('Rejected', 'Rejected') }}
+                  </span>
+                  <span *ngIf="h.leaveStatus === 'PENDING' || h.leaveStatus === 'APPLIED'" class="status-pill status-pending">
+                    <i class="bi bi-hourglass-split"></i> {{ language.t('Pending', 'Pending') }}
+                  </span>
+                  <span *ngIf="h.leaveStatus === 'CANCELLED'" class="status-pill status-cancelled">
+                    <i class="bi bi-slash-circle-fill"></i> {{ language.t('Cancelled', 'Cancelled') }}
+                  </span>
+                </td>
+                <td>
+                  <!-- Logically correct action info: only show action metadata if already decided -->
+                  <div *ngIf="h.leaveStatus !== 'APPLIED' && h.leaveStatus !== 'PENDING' && h.actionDate" class="action-meta-box">
+                    <div class="action-date-line">
+                      <i class="bi bi-calendar3 me-1 text-muted"></i>
+                      <span>{{ h.actionDate | date:'dd MMM yyyy, hh:mm a' }}</span>
+                    </div>
+                    <div class="action-officer-line" *ngIf="h.actionOfficialName">
+                      <i class="bi bi-person-check-fill me-1 text-primary"></i>
+                      <span>{{ h.actionOfficialName }}</span>
+                    </div>
+                  </div>
+                  <div *ngIf="h.leaveStatus === 'APPLIED' || h.leaveStatus === 'PENDING'" class="text-muted small fst-italic">
+                    <i class="bi bi-hourglass-split me-1 text-warning"></i>
+                    <span>{{ language.t('Awaiting Action', 'Awaiting Action') }}</span>
+                  </div>
+                </td>
+                <td>
+                  <div *ngIf="h.rejectionReason" class="remark-rejected-card">
+                    <i class="bi bi-x-octagon-fill me-1"></i>
+                    <strong>{{ language.t('Rejection Reason', 'Rejection Reason') }}:</strong> {{ h.rejectionReason }}
+                  </div>
+                  <div *ngIf="h.cancellationReason" class="remark-rejected-card text-secondary">
+                    <i class="bi bi-slash-circle-fill me-1"></i>
+                    <strong>{{ language.t('Cancellation Reason', 'Cancellation Reason') }}:</strong> {{ h.cancellationReason }}
+                  </div>
+                  <div *ngIf="!h.rejectionReason && !h.cancellationReason && h.leaveStatus === 'APPROVED'" class="remark-approved-card">
+                    <i class="bi bi-shield-check me-1"></i>
+                    <span>{{ language.t('Sanctioned by Reporting Authority', 'Sanctioned by Reporting Authority') }}</span>
+                  </div>
+                  <div *ngIf="h.reason" class="applicant-reason-text">
+                    <i class="bi bi-chat-left-quote me-1"></i>
+                    <em>{{ h.reason }}</em>
+                  </div>
+                </td>
+                <td style="text-align: center;">
+                  <button *ngIf="h.leaveStatus === 'APPROVED'"
+                          type="button"
+                          class="btn btn-sm btn-outline-danger py-0 px-2 rounded-pill"
+                          (click)="cancelSubordinateLeave(h)"
+                          [disabled]="isSubmitting()"
+                          title="Authorize cancellation of approved leave and restore balance">
+                    <i class="bi bi-slash-circle me-1"></i>{{ language.t('Cancel Leave', 'Cancel Leave') }}
+                  </button>
+                  <span *ngIf="h.leaveStatus !== 'APPROVED'" class="text-muted small">—</span>
+                </td>
+              </tr>
+
+              <!-- Empty State -->
+              <tr *ngIf="filteredHistory().length === 0 && !isLoadingHistory()">
+                <td colspan="11" class="text-center py-5">
+                  <div class="empty-state-box">
+                    <i class="bi bi-inbox fs-1 text-muted mb-2 d-block"></i>
+                    <strong class="empty-state-title">{{ language.t('No Leave History Records Found', 'No Leave History Records Found') }}</strong>
+                    <p class="empty-state-desc">{{ language.t('No processed leave records match the selected filter criteria.', 'No processed leave records match the selected filter criteria.') }}</p>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Loading State -->
+              <tr *ngIf="isLoadingHistory()">
+                <td colspan="11" class="text-center py-4">
+                  <div class="spinner-inline">
+                    <div class="spinner-border spinner-border-sm text-primary me-2"></div>
+                    <span>{{ language.t('Loading leave history from server...', 'Loading leave history from server...') }}</span>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- TAB 3: Leave Reports & Quota Register -->
+    <!-- ================================================================= -->
+    <div *ngIf="activeTab() === 'leave-reports'" class="leave-reports-view">
+      <!-- Top Section: Quota Cards & Export Card -->
+      <div class="reports-top-grid mb-4">
+        <!-- Quota Cards Container -->
+        <div class="reports-card quota-overview-card">
+          <div class="reports-card-header">
+            <div class="card-icon bg-primary-soft">
+              <i class="bi bi-pie-chart-fill text-primary"></i>
+            </div>
+            <div>
+              <h5 class="reports-card-title">{{ language.t('Subordinate Quota Consumption', 'Subordinate Quota Consumption') }}</h5>
+              <p class="reports-card-sub">{{ language.t('Live utilization across reporting subordinates based on 10 allowed days per category.', 'Live utilization across reporting subordinates based on 10 allowed days per category.') }}</p>
+            </div>
+          </div>
+
+          <!-- 4-Card Utilization Grid -->
+          <div class="quota-cards-grid mt-3">
+            <div *ngFor="let q of leaveStats()?.quotaUtilization" class="quota-mini-card">
+              <div class="q-card-head">
+                <span class="q-badge" [ngClass]="{
+                  'q-cl': q.leaveTypeCode === 'CL',
+                  'q-el': q.leaveTypeCode === 'EL',
+                  'q-pl': q.leaveTypeCode === 'PL',
+                  'q-sl': q.leaveTypeCode === 'SL'
+                }">{{ q.leaveTypeCode }}</span>
+                <span class="q-name">{{ q.leaveTypeName }}</span>
+                <span class="q-percent">{{ q.utilizationPercentage }}%</span>
+              </div>
+              <div class="q-stats-row">
+                <strong class="q-days-used">{{ q.totalSanctionedDays }}</strong>
+                <span class="q-days-sep">/</span>
+                <span class="q-days-total">{{ q.totalAllocatedDays }} {{ language.t('Days', 'Days') }}</span>
+              </div>
+              <div class="q-progress-track">
+                <div class="q-progress-fill"
+                     [ngClass]="{
+                       'fill-cl': q.leaveTypeCode === 'CL',
+                       'fill-el': q.leaveTypeCode === 'EL',
+                       'fill-pl': q.leaveTypeCode === 'PL',
+                       'fill-sl': q.leaveTypeCode === 'SL'
+                     }"
+                     [style.width.%]="q.utilizationPercentage > 100 ? 100 : (q.utilizationPercentage < 4 && q.utilizationPercentage > 0 ? 5 : q.utilizationPercentage)">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Official Register Export Card -->
+        <div class="reports-card export-overview-card">
+          <div class="reports-card-header">
+            <div class="card-icon bg-emerald-soft">
+              <i class="bi bi-file-earmark-spreadsheet-fill text-success"></i>
+            </div>
+            <div>
+              <h5 class="reports-card-title">{{ language.t('Official Register Export', 'Official Register Export') }}</h5>
+              <p class="reports-card-sub">{{ language.t('Export complete leave balance and attendance register for monthly salary & billing clearance.', 'Export complete leave balance and attendance register for monthly salary & billing clearance.') }}</p>
+            </div>
+          </div>
+
+          <div class="export-body mt-auto">
+            <div class="export-notice-box mb-3">
+              <i class="bi bi-info-circle-fill text-primary me-2"></i>
+              <span>{{ language.t('Download real-time leave consumption register mapped to official financial year audit standards.', 'Download real-time leave consumption register mapped to official financial year audit standards.') }}</span>
+            </div>
+
+            <button type="button" class="btn-export-csv" (click)="exportRegisterCsv()">
+              <i class="bi bi-filetype-csv fs-4 text-white"></i>
+              <div class="btn-export-text">
+                <strong>{{ language.t('Export Subordinates Leave Register (.csv)', 'Export Subordinates Leave Register (.csv)') }}</strong>
+                <small>{{ language.t('Download complete live staff breakdown', 'Download complete live staff breakdown') }}</small>
+              </div>
+              <i class="bi bi-download ms-auto fs-5"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Real Subordinate Leave Register Table -->
+      <div class="leave-content-box">
+        <div class="table-card-header">
+          <div class="d-flex align-items-center gap-2">
+            <i class="bi bi-table text-primary fs-5"></i>
+            <h5 class="mb-0 fw-bold">{{ language.t('Subordinates Financial Year Leave Summary Register', 'Subordinates Financial Year Leave Summary Register') }}</h5>
+          </div>
+          <span class="register-count-pill">{{ subordinateRegister().length }} {{ language.t('Reporting Staff', 'Reporting Staff') }}</span>
+        </div>
+        <div class="table-responsive">
+          <table class="emp-table">
+            <thead>
+              <tr>
+                <th style="width: 45px;">#</th>
+                <th>{{ language.t('Staff Name & Code', 'Staff Name & Code') }}</th>
+                <th>{{ language.t('Designation & Office', 'Designation & Office') }}</th>
+                <th style="text-align: center;">{{ language.t('CL Days', 'CL Days') }}</th>
+                <th style="text-align: center;">{{ language.t('EL Days', 'EL Days') }}</th>
+                <th style="text-align: center;">{{ language.t('PL Days', 'PL Days') }}</th>
+                <th style="text-align: center;">{{ language.t('SL Days', 'SL Days') }}</th>
+                <th style="text-align: center;">{{ language.t('Total Days Availed', 'Total Days Availed') }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let s of subordinateRegister(); let idx = index">
+                <td class="text-muted fw-bold">{{ idx + 1 }}</td>
+                <td>
+                  <div class="staff-cell-name">{{ s.empName }}</div>
+                  <div class="staff-code-pill"><i class="bi bi-person-badge"></i> {{ s.contractNo }}</div>
+                </td>
+                <td>
+                  <div class="fw-semibold text-dark">{{ s.designationName }}</div>
+                  <small class="text-muted"><i class="bi bi-building me-1"></i>{{ s.officeName }}</small>
+                </td>
+                <td style="text-align: center;">
+                  <span class="quota-val-badge" [class.used]="s.clDays > 0">{{ s.clDays }}</span>
+                </td>
+                <td style="text-align: center;">
+                  <span class="quota-val-badge" [class.used]="s.elDays > 0">{{ s.elDays }}</span>
+                </td>
+                <td style="text-align: center;">
+                  <span class="quota-val-badge" [class.used]="s.plDays > 0">{{ s.plDays }}</span>
+                </td>
+                <td style="text-align: center;">
+                  <span class="quota-val-badge" [class.used]="s.slDays > 0">{{ s.slDays }}</span>
+                </td>
+                <td style="text-align: center;">
+                  <strong class="total-days-pill" [class.has-leaves]="s.totalDays > 0">{{ s.totalDays }} {{ language.t('Days', 'Days') }}</strong>
+                </td>
+              </tr>
+
+              <tr *ngIf="subordinateRegister().length === 0 && !isLoadingReports()">
+                <td colspan="8" class="text-center py-5 text-muted">
+                  <div class="empty-state-box">
+                    <i class="bi bi-people fs-1 text-muted mb-2 d-block"></i>
+                    <strong>{{ language.t('No Subordinate Staff Found', 'No Subordinate Staff Found') }}</strong>
+                    <p class="small text-muted mb-0">{{ language.t('No subordinates registered under your reporting authority.', 'No subordinates registered under your reporting authority.') }}</p>
+                  </div>
+                </td>
+              </tr>
+
+              <tr *ngIf="isLoadingReports()">
+                <td colspan="8" class="text-center py-4">
+                  <div class="spinner-inline">
+                    <div class="spinner-border spinner-border-sm text-primary me-2"></div>
+                    <span>{{ language.t('Loading leave register...', 'Loading leave register...') }}</span>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================= -->
+  <!-- REJECTION REASON MODAL DIALOG -->
+  <!-- ================================================================= -->
+  <div class="modal-backdrop-custom" *ngIf="selectedLeaveForReject()">
+    <div class="modal-card-custom">
+      <div class="modal-header-custom">
+        <h4 class="modal-title-custom text-danger">
+          <i class="bi bi-x-octagon-fill me-2"></i>{{ language.t('Reject Leave Application', 'Reject Leave Application') }}
+        </h4>
+        <button type="button" class="btn-modal-close" (click)="closeRejectModal()" aria-label="Close">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+
+      <div class="modal-body-custom">
+        <div class="applicant-summary-box mb-3" *ngIf="selectedLeaveForReject() as sel">
+          <div class="d-flex justify-content-between align-items-center mb-1">
+            <strong>{{ sel.empName }}</strong>
+            <span class="leave-type-chip chip-neutral">{{ sel.leaveTypeCode }} - {{ sel.leaveTypeName }}</span>
+          </div>
+          <div class="text-muted small">
+            <span><i class="bi bi-calendar3 me-1"></i>{{ sel.fromDate | date:'dd MMM yyyy' }} to {{ sel.toDate | date:'dd MMM yyyy' }}</span>
+            <span class="ms-3 fw-bold text-dark">({{ sel.totalDays }} {{ language.t('Days', 'Days') }})</span>
+          </div>
+          <div class="small text-muted mt-2 fst-italic" *ngIf="sel.reason">
+            "{{ sel.reason }}"
+          </div>
+        </div>
+
+        <form [formGroup]="rejectForm" (ngSubmit)="submitReject()">
+          <div class="form-group mb-3">
+            <label class="form-label fw-bold">
+              {{ language.t('Reason for Rejection', 'Reason for Rejection') }} <span class="text-danger">*</span>
+            </label>
+            <textarea class="form-control text-area-custom"
+                      rows="4"
+                      formControlName="rejectionReason"
+                      [placeholder]="language.t('Specify mandatory official reason for rejection (e.g. urgent department duty, overlapping staff roster)...', 'Specify mandatory official reason for rejection (e.g. urgent department duty, overlapping staff roster)...')"></textarea>
+            <div class="text-danger small mt-1" *ngIf="rejectForm.get('rejectionReason')?.touched && rejectForm.get('rejectionReason')?.hasError('required')">
+              {{ language.t('Rejection reason is mandatory.', 'Rejection reason is mandatory.') }}
+            </div>
+            <div class="text-danger small mt-1" *ngIf="rejectForm.get('rejectionReason')?.hasError('minlength')">
+              {{ language.t('Reason must be at least 5 characters long.', 'Reason must be at least 5 characters long.') }}
+            </div>
+          </div>
+
+          <div class="modal-footer-custom">
+            <button type="button" class="btn-modal-cancel" (click)="closeRejectModal()" [disabled]="isSubmitting()">
+              {{ language.t('Cancel', 'Cancel') }}
+            </button>
+            <button type="submit" class="btn-modal-submit-reject" [disabled]="isSubmitting() || rejectForm.invalid">
+              <i class="bi bi-x-circle me-1"></i>
+              <span>{{ isSubmitting() ? language.t('Rejecting...', 'Rejecting...') : language.t('Confirm Rejection', 'Confirm Rejection') }}</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

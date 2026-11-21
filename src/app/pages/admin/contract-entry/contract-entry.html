@@ -1,0 +1,384 @@
+<div class="om-container">
+  <!-- Top Header Banner -->
+  <header class="om-header-card">
+    <div class="om-header-main">
+      <div class="om-header-icon">
+        <i class="bi bi-journal-check"></i>
+      </div>
+      <div>
+        <div class="om-badge-row">
+          <span class="om-portal-tag"><i class="bi bi-shield-lock-fill me-1"></i>{{ language.t('DADM PORTAL', 'DADM PORTAL') }}</span>
+          <span class="om-dept-tag"><i class="bi bi-file-earmark-text me-1"></i>{{ language.t('Contract Agreement Provisioning', 'Contract Agreement Provisioning') }}</span>
+        </div>
+        <h1 class="om-header-title">{{ language.t('Contract Entry & Renewal Management', 'Contract Entry & Renewal Management') }}</h1>
+        <p class="om-header-sub">
+          {{ language.t('Record contractual employment terms, sanctioned consolidated pay, appointment sanction orders, and validity periods for contractual staff.', 'Record contractual employment terms, sanctioned consolidated pay, appointment sanction orders, and validity periods for contractual staff.') }}
+        </p>
+      </div>
+    </div>
+
+    <div class="om-header-actions">
+      <button
+        type="button"
+        class="tab-toggle-btn"
+        [class.active]="activeTab === 'entry'"
+        (click)="activeTab = 'entry'"
+      >
+        <i class="bi bi-plus-circle me-1"></i> {{ language.t('New Contract Entry', 'New Contract Entry') }}
+      </button>
+      <button
+        type="button"
+        class="tab-toggle-btn"
+        [class.active]="activeTab === 'list'"
+        (click)="activeTab = 'list'"
+      >
+        <i class="bi bi-list-check me-1"></i> {{ language.t('Active Contracts List', 'Active Contracts List') }} ({{ activeContracts().length }})
+      </button>
+    </div>
+  </header>
+
+  <!-- Validation & Feedback Alert Banners -->
+  <div *ngIf="errorMessage()" class="alert-banner alert-danger" role="alert">
+    <i class="bi bi-exclamation-triangle-fill alert-icon"></i>
+    <div class="alert-text">{{ errorMessage() }}</div>
+    <button type="button" class="btn-close-alert" (click)="errorMessage.set(null)" aria-label="Close">
+      <i class="bi bi-x-lg"></i>
+    </button>
+  </div>
+
+  <div *ngIf="successMessage()" class="alert-banner alert-success" role="alert">
+    <i class="bi bi-check-circle-fill alert-icon"></i>
+    <div class="alert-text">{{ successMessage() }}</div>
+    <button type="button" class="btn-close-alert" (click)="successMessage.set(null)" aria-label="Close">
+      <i class="bi bi-x-lg"></i>
+    </button>
+  </div>
+
+  <!-- TAB 1: NEW CONTRACT ENTRY FORM -->
+  <section *ngIf="activeTab === 'entry'" class="contract-card">
+    <div class="contract-card-header">
+      <div class="card-header-left">
+        <div class="header-icon-wrap">
+          <i class="bi bi-pencil-square"></i>
+        </div>
+        <div>
+          <h3 class="card-title">{{ language.t('Contractual Agreement Registration Form', 'Contractual Agreement Registration Form') }}</h3>
+          <p class="card-desc">{{ language.t('Enter appointment particulars to legally provision employee service term and compensation.', 'Enter appointment particulars to legally provision employee service term and compensation.') }}</p>
+        </div>
+      </div>
+      <span class="jurisdiction-badge">
+        <i class="bi bi-building-check me-1"></i> {{ language.t('DADM Office Jurisdiction', 'DADM Office Jurisdiction') }}
+      </span>
+    </div>
+
+    <form (ngSubmit)="submitContract()" class="contract-form-body">
+      <!-- Section 1: Staff & Contract Identity -->
+      <div class="form-section-block">
+        <div class="section-title-strip">
+          <span class="sec-dot"></span>
+          <h4>{{ language.t('Contractual Staff & Agreement Identity', 'Contractual Staff & Agreement Identity') }}</h4>
+        </div>
+        <div class="form-grid-2">
+          <!-- Select Employee -->
+          <div class="form-group">
+            <label class="form-label-custom">
+              <i class="bi bi-person-badge me-1"></i> {{ language.t('Select Contractual Employee', 'Select Contractual Employee') }} <span class="req-star">*</span>
+            </label>
+            <div class="input-with-icon">
+              <i class="bi bi-person-fill input-icon-lead"></i>
+              <select
+                class="form-control-custom has-lead-icon"
+                [ngModel]="selectedEmpId"
+                (ngModelChange)="onSelectEmployee($event)"
+                name="selectedEmpId"
+                required
+              >
+                <option [ngValue]="null" disabled>{{ language.t('-- Choose Registered Staff Member --', '-- Choose Registered Staff Member --') }}</option>
+                <option *ngFor="let emp of employees()" [ngValue]="emp.employeeId">
+                  {{ emp.employeeName }} ({{ emp.contractNo || 'EMP-' + emp.employeeId }}) &bull; {{ emp.designationName || 'Contractual Staff' }}
+                </option>
+              </select>
+            </div>
+            <span class="field-hint">{{ language.t('Selecting an employee auto-generates contract agreement number and sanction prefix.', 'Selecting an employee auto-generates contract agreement number and sanction prefix.') }}</span>
+          </div>
+
+          <!-- Contract Agreement Number -->
+          <div class="form-group">
+            <label class="form-label-custom">
+              <i class="bi bi-hash me-1"></i> {{ language.t('Contract Agreement Number', 'Contract Agreement Number') }} <span class="req-star">*</span>
+            </label>
+            <div class="input-with-icon">
+              <i class="bi bi-file-earmark-code input-icon-lead"></i>
+              <input
+                type="text"
+                class="form-control-custom has-lead-icon font-monospace"
+                [(ngModel)]="contractNumber"
+                name="contractNumber"
+                placeholder="e.g. BRDS-CON-2026-0001"
+                required
+              />
+            </div>
+            <span class="field-hint">{{ language.t('Unique government contractual agreement identifier.', 'Unique government contractual agreement identifier.') }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 2: Validity Period & Compensation -->
+      <div class="form-section-block">
+        <div class="section-title-strip">
+          <span class="sec-dot"></span>
+          <h4>{{ language.t('Tenure Validity Period & Remuneration', 'Tenure Validity Period & Remuneration') }}</h4>
+        </div>
+        <div class="form-grid-3">
+          <!-- Contract Start Date -->
+          <div class="form-group">
+            <label class="form-label-custom">
+              <i class="bi bi-calendar-event me-1"></i> {{ language.t('Contract Start Date', 'Contract Start Date') }} <span class="req-star">*</span>
+            </label>
+            <input
+              type="date"
+              class="form-control-custom"
+              [(ngModel)]="startDate"
+              name="startDate"
+              required
+            />
+            <span class="field-hint">{{ language.t('Effective engagement start date.', 'Effective engagement start date.') }}</span>
+          </div>
+
+          <!-- Contract End Date -->
+          <div class="form-group">
+            <label class="form-label-custom">
+              <i class="bi bi-calendar-check me-1"></i> {{ language.t('Contract End Date', 'Contract End Date') }} <span class="req-star">*</span>
+            </label>
+            <input
+              type="date"
+              class="form-control-custom"
+              [(ngModel)]="endDate"
+              name="endDate"
+              required
+            />
+            <span class="field-hint">{{ language.t('Date on which current tenure lapses.', 'Date on which current tenure lapses.') }}</span>
+          </div>
+
+          <!-- Monthly Remuneration -->
+          <div class="form-group">
+            <label class="form-label-custom">
+              <i class="bi bi-cash-stack me-1"></i> {{ language.t('Monthly Remuneration (₹)', 'Monthly Remuneration (₹)') }} <span class="req-star">*</span>
+            </label>
+            <div class="input-group-currency">
+              <span class="currency-prefix">₹</span>
+              <input
+                type="number"
+                class="form-control-custom currency-input"
+                [(ngModel)]="monthlyPay"
+                name="monthlyPay"
+                min="1000"
+                step="500"
+                required
+              />
+              <span class="currency-suffix">/ {{ language.t('month', 'month') }}</span>
+            </div>
+            <span class="field-hint">{{ language.t('Consolidated monthly pay as sanctioned by department.', 'Consolidated monthly pay as sanctioned by department.') }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 3: Official Sanction Order & Authority -->
+      <div class="form-section-block">
+        <div class="section-title-strip">
+          <span class="sec-dot"></span>
+          <h4>{{ language.t('Department Sanction Order & Appointing Authority', 'Department Sanction Order & Appointing Authority') }}</h4>
+        </div>
+        <div class="form-grid-3">
+          <!-- Sanction Order No -->
+          <div class="form-group">
+            <label class="form-label-custom">
+              <i class="bi bi-file-earmark-text me-1"></i> {{ language.t('Appointment / Sanction Order No.', 'Appointment / Sanction Order No.') }} <span class="req-star">*</span>
+            </label>
+            <input
+              type="text"
+              class="form-control-custom font-monospace"
+              [(ngModel)]="orderNo"
+              name="orderNo"
+              placeholder="e.g. BRDS/HR/ORD/2026/089"
+              required
+            />
+            <span class="field-hint">{{ language.t('Dispatch or memo number on sanction order.', 'Dispatch or memo number on sanction order.') }}</span>
+          </div>
+
+          <!-- Sanction Order Date -->
+          <div class="form-group">
+            <label class="form-label-custom">
+              <i class="bi bi-calendar2-date me-1"></i> {{ language.t('Sanction Order Date', 'Sanction Order Date') }}
+            </label>
+            <input
+              type="date"
+              class="form-control-custom"
+              [(ngModel)]="orderDate"
+              name="orderDate"
+            />
+            <span class="field-hint">{{ language.t('Must be on or before start date.', 'Must be on or before start date.') }}</span>
+          </div>
+
+          <!-- Appointing Authority -->
+          <div class="form-group">
+            <label class="form-label-custom">
+              <i class="bi bi-award me-1"></i> {{ language.t('Appointing Authority', 'Appointing Authority') }}
+            </label>
+            <input
+              type="text"
+              class="form-control-custom"
+              [(ngModel)]="appointingAuthority"
+              name="appointingAuthority"
+              placeholder="e.g. Chief Executive Officer, BRDS"
+            />
+            <span class="field-hint">{{ language.t('Competent authority executing agreement.', 'Competent authority executing agreement.') }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 4: Agreement Status & Terms Remarks -->
+      <div class="form-section-block">
+        <div class="section-title-strip">
+          <span class="sec-dot"></span>
+          <h4>{{ language.t('Agreement Status & Jurisdictional Conditions', 'Agreement Status & Jurisdictional Conditions') }}</h4>
+        </div>
+        <div class="form-grid-2">
+          <!-- Contract Status -->
+          <div class="form-group">
+            <label class="form-label-custom">
+              <i class="bi bi-patch-check me-1"></i> {{ language.t('Contract Agreement Status', 'Contract Agreement Status') }}
+            </label>
+            <div class="status-readonly-box">
+              <span class="status-badge-live">
+                <i class="bi bi-check-circle-fill"></i> ACTIVE (Legally Executed)
+              </span>
+              <span class="status-sub">Ready for immediate employee portal synchronization</span>
+            </div>
+          </div>
+
+          <!-- Remarks -->
+          <div class="form-group">
+            <label class="form-label-custom">
+              <i class="bi bi-chat-left-text me-1"></i> {{ language.t('Remarks / Special Conditions', 'Remarks / Special Conditions') }}
+            </label>
+            <textarea
+              class="form-control-custom textarea-custom"
+              [(ngModel)]="remarks"
+              name="remarks"
+              rows="3"
+              placeholder="Enter special contract clauses, project designations, or terms..."
+            ></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form Action Buttons -->
+      <div class="form-actions-bar">
+        <button type="button" class="btn-action-secondary" (click)="resetForm()">
+          <i class="bi bi-arrow-counterclockwise me-1"></i> {{ language.t('Reset Form', 'Reset Form') }}
+        </button>
+        <button type="submit" class="btn-action-primary" [disabled]="isSubmitting()">
+          <i class="bi bi-check2-circle me-1" *ngIf="!isSubmitting()"></i>
+          <span class="spinner-border spinner-border-sm me-1" *ngIf="isSubmitting()"></span>
+          {{ language.t('Record & Activate Contract Agreement', 'Record & Activate Contract Agreement') }}
+        </button>
+      </div>
+    </form>
+  </section>
+
+  <!-- TAB 2: ACTIVE CONTRACTS TABLE -->
+  <section *ngIf="activeTab === 'list'" class="contract-card">
+    <div class="contract-card-header">
+      <div class="card-header-left">
+        <div class="header-icon-wrap bg-green">
+          <i class="bi bi-file-earmark-spreadsheet"></i>
+        </div>
+        <div>
+          <h3 class="card-title">{{ language.t('Recorded Contracts in Jurisdiction', 'Recorded Contracts in Jurisdiction') }}</h3>
+          <p class="card-desc">{{ language.t('Official ledger of active contractual appointments and sanctioned pay rates.', 'Official ledger of active contractual appointments and sanctioned pay rates.') }}</p>
+        </div>
+      </div>
+
+      <div class="card-header-right">
+        <div class="table-search-box">
+          <i class="bi bi-search search-icon"></i>
+          <input
+            type="text"
+            class="search-input"
+            [ngModel]="tableSearchTerm()"
+            (ngModelChange)="tableSearchTerm.set($event)"
+            placeholder="Search employee, contract no..."
+          />
+        </div>
+        <span class="active-count-chip">
+          <i class="bi bi-check2-all me-1"></i> {{ filteredContracts.length }} {{ language.t('Active', 'Active') }}
+        </span>
+      </div>
+    </div>
+
+    <div class="table-container">
+      <table class="enterprise-table">
+        <thead>
+          <tr>
+            <th class="th-num">#</th>
+            <th>{{ language.t('Employee Particulars', 'Employee Particulars') }}</th>
+            <th>{{ language.t('Contract Ref & Agreement No.', 'Contract Ref & Agreement No.') }}</th>
+            <th>{{ language.t('Tenure Validity Period', 'Tenure Validity Period') }}</th>
+            <th>{{ language.t('Monthly Remuneration', 'Monthly Remuneration') }}</th>
+            <th>{{ language.t('Sanction Order Memo', 'Sanction Order Memo') }}</th>
+            <th class="th-status">{{ language.t('Status', 'Status') }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let c of filteredContracts; let i = index">
+            <td class="td-num">{{ i + 1 }}</td>
+            <td>
+              <div class="emp-name-row">
+                <span class="emp-avatar-mini">{{ c.employeeName ? c.employeeName[0] : 'E' }}</span>
+                <div>
+                  <strong class="emp-name-text">{{ c.employeeName }}</strong>
+                  <div class="emp-meta-text">
+                    <i class="bi bi-person-badge"></i> {{ c.employeeCode }} &bull; {{ c.designation }}
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="contract-code-tag">{{ c.contractNumber }}</span>
+            </td>
+            <td>
+              <div class="date-range-text">
+                <i class="bi bi-calendar3 me-1 text-primary"></i> {{ c.startDate }} &rarr; {{ c.endDate }}
+              </div>
+              <small [ngClass]="c.status === 'ACTIVE' ? 'term-status-active' : 'term-status-expired'">
+                <i class="bi bi-clock-history me-1"></i> {{ c.status === 'ACTIVE' ? 'Active Term' : 'Superseded / Expired' }}
+              </small>
+            </td>
+            <td>
+              <strong class="remun-amount">₹{{ c.monthlyPay | number }}</strong>
+              <span class="remun-unit">/ month</span>
+            </td>
+            <td>
+              <div class="memo-title font-monospace">{{ c.orderNo }}</div>
+              <small class="memo-date"><i class="bi bi-calendar-check me-1"></i> {{ c.orderDate }}</small>
+            </td>
+            <td class="td-status">
+              <span [ngClass]="c.status === 'ACTIVE' ? 'status-pill-active' : 'status-pill-expired'">
+                <i class="bi bi-patch-check-fill me-1" *ngIf="c.status === 'ACTIVE'"></i>
+                <i class="bi bi-clock-history me-1" *ngIf="c.status !== 'ACTIVE'"></i>
+                {{ c.status }}
+              </span>
+            </td>
+          </tr>
+          <tr *ngIf="filteredContracts.length === 0">
+            <td colspan="7" class="text-center py-4 text-muted">
+              <i class="bi bi-inbox fs-3 d-block mb-2"></i>
+              {{ language.t('No contractual records matching your search criteria.', 'No contractual records matching your search criteria.') }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>

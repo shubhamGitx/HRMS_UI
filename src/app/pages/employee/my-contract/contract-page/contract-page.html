@@ -1,0 +1,36 @@
+<div class="pf contract-module-page">
+  <!-- Page Header & Breadcrumb -->
+  <div class="page-title-strip">
+    <div class="title-left">
+      <p class="crumb-navigation">
+        <i class="bi bi-file-earmark-check-fill crumb-icon" aria-hidden="true"></i> {{ language.t('My Contract', 'My Contract') }}
+        <i class="bi bi-chevron-right sep-icon" aria-hidden="true"></i>
+        <strong>{{ language.t(pageTitle()) }}</strong>
+      </p>
+      <h2 class="module-heading">{{ language.t('Contractual Service & Appointment Portal', 'Contractual Service & Appointment Portal') }}</h2>
+    </div>
+  </div>
+
+  <app-employee-header />
+
+  <!-- Tab Navigation Bar -->
+  <div class="contract-tabs-nav">
+    <button
+      type="button"
+      class="tab-nav-btn"
+      *ngFor="let tab of tabs"
+      [class.active]="activeTab() === tab.key"
+      (click)="selectTab(tab.key)"
+    >
+      <i class="bi" [ngClass]="tab.icon"></i>
+      <span>{{ language.t(tab.title) }}</span>
+    </button>
+  </div>
+
+  <!-- Active Tab Content Area -->
+  <div class="contract-tab-content">
+    <app-current-contract *ngIf="activeTab() === 'current-contract'"></app-current-contract>
+    <app-renewal-history *ngIf="activeTab() === 'renewal-history'"></app-renewal-history>
+    <app-appointment-orders *ngIf="activeTab() === 'appointment-orders'"></app-appointment-orders>
+  </div>
+</div>

@@ -1,0 +1,6 @@
+<app-topbar *ngIf="!isLoginPage && !isDashboardPage"></app-topbar>
+<app-header [showNavigation]="!isDashboardPage && !isLoginPage" [compact]="isLoginPage" [dashboardMode]="isDashboardPage"></app-header>
+
+<router-outlet></router-outlet>
+
+<app-footer *ngIf="!isLoginPage && !isDashboardPage"></app-footer>

@@ -1,0 +1,362 @@
+D:\NIC\Project HRMS\141026\hrmsAPI\bin\Debug\net8.0\appsettings.Development.json
+D:\NIC\Project HRMS\141026\hrmsAPI\bin\Debug\net8.0\appsettings.json
+D:\NIC\Project HRMS\141026\hrmsAPI\bin\Debug\net8.0\hrmsAPI.staticwebassets.endpoints.json
+D:\NIC\Project HRMS\141026\hrmsAPI\bin\Debug\net8.0\hrmsAPI.exe
+D:\NIC\Project HRMS\141026\hrmsAPI\bin\Debug\net8.0\hrmsAPI.deps.json
+D:\NIC\Project HRMS\141026\hrmsAPI\bin\Debug\net8.0\hrmsAPI.runtimeconfig.json
+D:\NIC\Project HRMS\141026\hrmsAPI\bin\Debug\net8.0\hrmsAPI.dll
+D:\NIC\Project HRMS\141026\hrmsAPI\bin\Debug\net8.0\hrmsAPI.pdb
+D:\NIC\Project HRMS\141026\hrmsAPI\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\NIC\Project HRMS\141026\hrmsAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+D:\NIC\Project HRMS\141026\hrmsAPI\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\NIC\Project HRMS\141026\hrmsAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+D:\NIC\Project HRMS\141026\hrmsAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+D:\NIC\Project HRMS\141026\hrmsAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+D:\NIC\Project HRMS\141026\hrmsAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+D:\NIC\Project HRMS\141026\hrmsAPI\bin\Debug\net8.0\Microsoft.OpenApi.dll
+D:\NIC\Project HRMS\141026\hrmsAPI\bin\Debug\net8.0\Npgsql.dll
+D:\NIC\Project HRMS\141026\hrmsAPI\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
+D:\NIC\Project HRMS\141026\hrmsAPI\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+D:\NIC\Project HRMS\141026\hrmsAPI\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+D:\NIC\Project HRMS\141026\hrmsAPI\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+D:\NIC\Project HRMS\141026\hrmsAPI\obj\Debug\net8.0\hrmsAPI.csproj.AssemblyReference.cache
+D:\NIC\Project HRMS\141026\hrmsAPI\obj\Debug\net8.0\rpswa.dswa.cache.json
+D:\NIC\Project HRMS\141026\hrmsAPI\obj\Debug\net8.0\hrmsAPI.GeneratedMSBuildEditorConfig.editorconfig
+D:\NIC\Project HRMS\141026\hrmsAPI\obj\Debug\net8.0\hrmsAPI.AssemblyInfoInputs.cache
+D:\NIC\Project HRMS\141026\hrmsAPI\obj\Debug\net8.0\hrmsAPI.AssemblyInfo.cs
+D:\NIC\Project HRMS\141026\hrmsAPI\obj\Debug\net8.0\hrmsAPI.csproj.CoreCompileInputs.cache
+D:\NIC\Project HRMS\141026\hrmsAPI\obj\Debug\net8.0\hrmsAPI.MvcApplicationPartsAssemblyInfo.cs
+D:\NIC\Project HRMS\141026\hrmsAPI\obj\Debug\net8.0\hrmsAPI.MvcApplicationPartsAssemblyInfo.cache
+D:\NIC\Project HRMS\141026\hrmsAPI\obj\Debug\net8.0\rjimswa.dswa.cache.json
+D:\NIC\Project HRMS\141026\hrmsAPI\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
+D:\NIC\Project HRMS\141026\hrmsAPI\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
+D:\NIC\Project HRMS\141026\hrmsAPI\obj\Debug\net8.0\scopedcss\bundle\hrmsAPI.styles.css
+D:\NIC\Project HRMS\141026\hrmsAPI\obj\Debug\net8.0\staticwebassets.build.json
+D:\NIC\Project HRMS\141026\hrmsAPI\obj\Debug\net8.0\staticwebassets.build.json.cache
+D:\NIC\Project HRMS\141026\hrmsAPI\obj\Debug\net8.0\staticwebassets.development.json
+D:\NIC\Project HRMS\141026\hrmsAPI\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+D:\NIC\Project HRMS\141026\hrmsAPI\obj\Debug\net8.0\hrmsAPI.csproj.Up2Date
+D:\NIC\Project HRMS\141026\hrmsAPI\obj\Debug\net8.0\hrmsAPI.dll
+D:\NIC\Project HRMS\141026\hrmsAPI\obj\Debug\net8.0\refint\hrmsAPI.dll
+D:\NIC\Project HRMS\141026\hrmsAPI\obj\Debug\net8.0\hrmsAPI.pdb
+D:\NIC\Project HRMS\141026\hrmsAPI\obj\Debug\net8.0\hrmsAPI.genruntimeconfig.cache
+D:\NIC\Project HRMS\141026\hrmsAPI\obj\Debug\net8.0\ref\hrmsAPI.dll
+D:\NIC\Project HRMS\141026\hrmsAPI\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+D:\JIGANSHU\211026\hrmsAPI\bin\Debug\net8.0\appsettings.Development.json
+D:\JIGANSHU\211026\hrmsAPI\bin\Debug\net8.0\appsettings.json
+D:\JIGANSHU\211026\hrmsAPI\bin\Debug\net8.0\hrmsAPI.staticwebassets.endpoints.json
+D:\JIGANSHU\211026\hrmsAPI\bin\Debug\net8.0\hrmsAPI.exe
+D:\JIGANSHU\211026\hrmsAPI\bin\Debug\net8.0\hrmsAPI.deps.json
+D:\JIGANSHU\211026\hrmsAPI\bin\Debug\net8.0\hrmsAPI.runtimeconfig.json
+D:\JIGANSHU\211026\hrmsAPI\bin\Debug\net8.0\hrmsAPI.dll
+D:\JIGANSHU\211026\hrmsAPI\bin\Debug\net8.0\hrmsAPI.pdb
+D:\JIGANSHU\211026\hrmsAPI\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\JIGANSHU\211026\hrmsAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+D:\JIGANSHU\211026\hrmsAPI\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\JIGANSHU\211026\hrmsAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+D:\JIGANSHU\211026\hrmsAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+D:\JIGANSHU\211026\hrmsAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+D:\JIGANSHU\211026\hrmsAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+D:\JIGANSHU\211026\hrmsAPI\bin\Debug\net8.0\Microsoft.OpenApi.dll
+D:\JIGANSHU\211026\hrmsAPI\bin\Debug\net8.0\Npgsql.dll
+D:\JIGANSHU\211026\hrmsAPI\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
+D:\JIGANSHU\211026\hrmsAPI\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+D:\JIGANSHU\211026\hrmsAPI\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+D:\JIGANSHU\211026\hrmsAPI\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+D:\JIGANSHU\211026\hrmsAPI\obj\Debug\net8.0\hrmsAPI.csproj.AssemblyReference.cache
+D:\JIGANSHU\211026\hrmsAPI\obj\Debug\net8.0\rpswa.dswa.cache.json
+D:\JIGANSHU\211026\hrmsAPI\obj\Debug\net8.0\hrmsAPI.GeneratedMSBuildEditorConfig.editorconfig
+D:\JIGANSHU\211026\hrmsAPI\obj\Debug\net8.0\hrmsAPI.AssemblyInfoInputs.cache
+D:\JIGANSHU\211026\hrmsAPI\obj\Debug\net8.0\hrmsAPI.AssemblyInfo.cs
+D:\JIGANSHU\211026\hrmsAPI\obj\Debug\net8.0\hrmsAPI.csproj.CoreCompileInputs.cache
+D:\JIGANSHU\211026\hrmsAPI\obj\Debug\net8.0\hrmsAPI.MvcApplicationPartsAssemblyInfo.cs
+D:\JIGANSHU\211026\hrmsAPI\obj\Debug\net8.0\hrmsAPI.MvcApplicationPartsAssemblyInfo.cache
+D:\JIGANSHU\211026\hrmsAPI\obj\Debug\net8.0\rjimswa.dswa.cache.json
+D:\JIGANSHU\211026\hrmsAPI\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
+D:\JIGANSHU\211026\hrmsAPI\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
+D:\JIGANSHU\211026\hrmsAPI\obj\Debug\net8.0\scopedcss\bundle\hrmsAPI.styles.css
+D:\JIGANSHU\211026\hrmsAPI\obj\Debug\net8.0\staticwebassets.build.json
+D:\JIGANSHU\211026\hrmsAPI\obj\Debug\net8.0\staticwebassets.build.json.cache
+D:\JIGANSHU\211026\hrmsAPI\obj\Debug\net8.0\staticwebassets.development.json
+D:\JIGANSHU\211026\hrmsAPI\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+D:\JIGANSHU\211026\hrmsAPI\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+D:\JIGANSHU\211026\hrmsAPI\obj\Debug\net8.0\hrmsAPI.csproj.Up2Date
+D:\JIGANSHU\211026\hrmsAPI\obj\Debug\net8.0\hrmsAPI.dll
+D:\JIGANSHU\211026\hrmsAPI\obj\Debug\net8.0\refint\hrmsAPI.dll
+D:\JIGANSHU\211026\hrmsAPI\obj\Debug\net8.0\hrmsAPI.pdb
+D:\JIGANSHU\211026\hrmsAPI\obj\Debug\net8.0\hrmsAPI.genruntimeconfig.cache
+D:\JIGANSHU\211026\hrmsAPI\obj\Debug\net8.0\ref\hrmsAPI.dll
+E:\project_hrms\231026\Risha\hrmsRisha\hrmsAPI\bin\Debug\net8.0\appsettings.Development.json
+E:\project_hrms\231026\Risha\hrmsRisha\hrmsAPI\bin\Debug\net8.0\appsettings.json
+E:\project_hrms\231026\Risha\hrmsRisha\hrmsAPI\bin\Debug\net8.0\hrmsAPI.staticwebassets.endpoints.json
+E:\project_hrms\231026\Risha\hrmsRisha\hrmsAPI\bin\Debug\net8.0\hrmsAPI.exe
+E:\project_hrms\231026\Risha\hrmsRisha\hrmsAPI\bin\Debug\net8.0\hrmsAPI.deps.json
+E:\project_hrms\231026\Risha\hrmsRisha\hrmsAPI\bin\Debug\net8.0\hrmsAPI.runtimeconfig.json
+E:\project_hrms\231026\Risha\hrmsRisha\hrmsAPI\bin\Debug\net8.0\hrmsAPI.dll
+E:\project_hrms\231026\Risha\hrmsRisha\hrmsAPI\bin\Debug\net8.0\hrmsAPI.pdb
+E:\project_hrms\231026\Risha\hrmsRisha\hrmsAPI\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+E:\project_hrms\231026\Risha\hrmsRisha\hrmsAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+E:\project_hrms\231026\Risha\hrmsRisha\hrmsAPI\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+E:\project_hrms\231026\Risha\hrmsRisha\hrmsAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+E:\project_hrms\231026\Risha\hrmsRisha\hrmsAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+E:\project_hrms\231026\Risha\hrmsRisha\hrmsAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+E:\project_hrms\231026\Risha\hrmsRisha\hrmsAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+E:\project_hrms\231026\Risha\hrmsRisha\hrmsAPI\bin\Debug\net8.0\Microsoft.OpenApi.dll
+E:\project_hrms\231026\Risha\hrmsRisha\hrmsAPI\bin\Debug\net8.0\Npgsql.dll
+E:\project_hrms\231026\Risha\hrmsRisha\hrmsAPI\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
+E:\project_hrms\231026\Risha\hrmsRisha\hrmsAPI\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+E:\project_hrms\231026\Risha\hrmsRisha\hrmsAPI\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+E:\project_hrms\231026\Risha\hrmsRisha\hrmsAPI\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+E:\project_hrms\231026\Risha\hrmsRisha\hrmsAPI\obj\Debug\net8.0\hrmsAPI.csproj.AssemblyReference.cache
+E:\project_hrms\231026\Risha\hrmsRisha\hrmsAPI\obj\Debug\net8.0\rpswa.dswa.cache.json
+E:\project_hrms\231026\Risha\hrmsRisha\hrmsAPI\obj\Debug\net8.0\hrmsAPI.GeneratedMSBuildEditorConfig.editorconfig
+E:\project_hrms\231026\Risha\hrmsRisha\hrmsAPI\obj\Debug\net8.0\hrmsAPI.AssemblyInfoInputs.cache
+E:\project_hrms\231026\Risha\hrmsRisha\hrmsAPI\obj\Debug\net8.0\hrmsAPI.AssemblyInfo.cs
+E:\project_hrms\231026\Risha\hrmsRisha\hrmsAPI\obj\Debug\net8.0\hrmsAPI.csproj.CoreCompileInputs.cache
+E:\project_hrms\231026\Risha\hrmsRisha\hrmsAPI\obj\Debug\net8.0\hrmsAPI.MvcApplicationPartsAssemblyInfo.cs
+E:\project_hrms\231026\Risha\hrmsRisha\hrmsAPI\obj\Debug\net8.0\hrmsAPI.MvcApplicationPartsAssemblyInfo.cache
+E:\project_hrms\231026\Risha\hrmsRisha\hrmsAPI\obj\Debug\net8.0\rjimswa.dswa.cache.json
+E:\project_hrms\231026\Risha\hrmsRisha\hrmsAPI\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
+E:\project_hrms\231026\Risha\hrmsRisha\hrmsAPI\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
+E:\project_hrms\231026\Risha\hrmsRisha\hrmsAPI\obj\Debug\net8.0\scopedcss\bundle\hrmsAPI.styles.css
+E:\project_hrms\231026\Risha\hrmsRisha\hrmsAPI\obj\Debug\net8.0\staticwebassets.build.json
+E:\project_hrms\231026\Risha\hrmsRisha\hrmsAPI\obj\Debug\net8.0\staticwebassets.build.json.cache
+E:\project_hrms\231026\Risha\hrmsRisha\hrmsAPI\obj\Debug\net8.0\staticwebassets.development.json
+E:\project_hrms\231026\Risha\hrmsRisha\hrmsAPI\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+E:\project_hrms\231026\Risha\hrmsRisha\hrmsAPI\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+E:\project_hrms\231026\Risha\hrmsRisha\hrmsAPI\obj\Debug\net8.0\hrmsAPI.csproj.Up2Date
+E:\project_hrms\231026\Risha\hrmsRisha\hrmsAPI\obj\Debug\net8.0\hrmsAPI.dll
+E:\project_hrms\231026\Risha\hrmsRisha\hrmsAPI\obj\Debug\net8.0\refint\hrmsAPI.dll
+E:\project_hrms\231026\Risha\hrmsRisha\hrmsAPI\obj\Debug\net8.0\hrmsAPI.pdb
+E:\project_hrms\231026\Risha\hrmsRisha\hrmsAPI\obj\Debug\net8.0\hrmsAPI.genruntimeconfig.cache
+E:\project_hrms\231026\Risha\hrmsRisha\hrmsAPI\obj\Debug\net8.0\ref\hrmsAPI.dll
+E:\project_hrms\231026\hrmsAPI\bin\Debug\net8.0\appsettings.Development.json
+E:\project_hrms\231026\hrmsAPI\bin\Debug\net8.0\appsettings.json
+E:\project_hrms\231026\hrmsAPI\bin\Debug\net8.0\hrmsAPI.staticwebassets.endpoints.json
+E:\project_hrms\231026\hrmsAPI\bin\Debug\net8.0\hrmsAPI.exe
+E:\project_hrms\231026\hrmsAPI\bin\Debug\net8.0\hrmsAPI.deps.json
+E:\project_hrms\231026\hrmsAPI\bin\Debug\net8.0\hrmsAPI.runtimeconfig.json
+E:\project_hrms\231026\hrmsAPI\bin\Debug\net8.0\hrmsAPI.dll
+E:\project_hrms\231026\hrmsAPI\bin\Debug\net8.0\hrmsAPI.pdb
+E:\project_hrms\231026\hrmsAPI\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+E:\project_hrms\231026\hrmsAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+E:\project_hrms\231026\hrmsAPI\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+E:\project_hrms\231026\hrmsAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+E:\project_hrms\231026\hrmsAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+E:\project_hrms\231026\hrmsAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+E:\project_hrms\231026\hrmsAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+E:\project_hrms\231026\hrmsAPI\bin\Debug\net8.0\Microsoft.OpenApi.dll
+E:\project_hrms\231026\hrmsAPI\bin\Debug\net8.0\Npgsql.dll
+E:\project_hrms\231026\hrmsAPI\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
+E:\project_hrms\231026\hrmsAPI\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+E:\project_hrms\231026\hrmsAPI\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+E:\project_hrms\231026\hrmsAPI\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+E:\project_hrms\231026\hrmsAPI\obj\Debug\net8.0\hrmsAPI.csproj.AssemblyReference.cache
+E:\project_hrms\231026\hrmsAPI\obj\Debug\net8.0\rpswa.dswa.cache.json
+E:\project_hrms\231026\hrmsAPI\obj\Debug\net8.0\hrmsAPI.GeneratedMSBuildEditorConfig.editorconfig
+E:\project_hrms\231026\hrmsAPI\obj\Debug\net8.0\hrmsAPI.AssemblyInfoInputs.cache
+E:\project_hrms\231026\hrmsAPI\obj\Debug\net8.0\hrmsAPI.AssemblyInfo.cs
+E:\project_hrms\231026\hrmsAPI\obj\Debug\net8.0\hrmsAPI.csproj.CoreCompileInputs.cache
+E:\project_hrms\231026\hrmsAPI\obj\Debug\net8.0\hrmsAPI.MvcApplicationPartsAssemblyInfo.cs
+E:\project_hrms\231026\hrmsAPI\obj\Debug\net8.0\hrmsAPI.MvcApplicationPartsAssemblyInfo.cache
+E:\project_hrms\231026\hrmsAPI\obj\Debug\net8.0\rjimswa.dswa.cache.json
+E:\project_hrms\231026\hrmsAPI\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
+E:\project_hrms\231026\hrmsAPI\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
+E:\project_hrms\231026\hrmsAPI\obj\Debug\net8.0\scopedcss\bundle\hrmsAPI.styles.css
+E:\project_hrms\231026\hrmsAPI\obj\Debug\net8.0\staticwebassets.build.json
+E:\project_hrms\231026\hrmsAPI\obj\Debug\net8.0\staticwebassets.build.json.cache
+E:\project_hrms\231026\hrmsAPI\obj\Debug\net8.0\staticwebassets.development.json
+E:\project_hrms\231026\hrmsAPI\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+E:\project_hrms\231026\hrmsAPI\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+E:\project_hrms\231026\hrmsAPI\obj\Debug\net8.0\hrmsAPI.csproj.Up2Date
+E:\project_hrms\231026\hrmsAPI\obj\Debug\net8.0\hrmsAPI.dll
+E:\project_hrms\231026\hrmsAPI\obj\Debug\net8.0\refint\hrmsAPI.dll
+E:\project_hrms\231026\hrmsAPI\obj\Debug\net8.0\hrmsAPI.pdb
+E:\project_hrms\231026\hrmsAPI\obj\Debug\net8.0\hrmsAPI.genruntimeconfig.cache
+E:\project_hrms\231026\hrmsAPI\obj\Debug\net8.0\ref\hrmsAPI.dll
+D:\HRMS_Project_NIC\Main_project\hrms271026\hrmsAPI\bin\Debug\net8.0\appsettings.Development.json
+D:\HRMS_Project_NIC\Main_project\hrms271026\hrmsAPI\bin\Debug\net8.0\appsettings.json
+D:\HRMS_Project_NIC\Main_project\hrms271026\hrmsAPI\bin\Debug\net8.0\hrmsAPI.staticwebassets.endpoints.json
+D:\HRMS_Project_NIC\Main_project\hrms271026\hrmsAPI\bin\Debug\net8.0\hrmsAPI.exe
+D:\HRMS_Project_NIC\Main_project\hrms271026\hrmsAPI\bin\Debug\net8.0\hrmsAPI.deps.json
+D:\HRMS_Project_NIC\Main_project\hrms271026\hrmsAPI\bin\Debug\net8.0\hrmsAPI.runtimeconfig.json
+D:\HRMS_Project_NIC\Main_project\hrms271026\hrmsAPI\bin\Debug\net8.0\hrmsAPI.dll
+D:\HRMS_Project_NIC\Main_project\hrms271026\hrmsAPI\bin\Debug\net8.0\hrmsAPI.pdb
+D:\HRMS_Project_NIC\Main_project\hrms271026\hrmsAPI\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\HRMS_Project_NIC\Main_project\hrms271026\hrmsAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+D:\HRMS_Project_NIC\Main_project\hrms271026\hrmsAPI\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\HRMS_Project_NIC\Main_project\hrms271026\hrmsAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+D:\HRMS_Project_NIC\Main_project\hrms271026\hrmsAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+D:\HRMS_Project_NIC\Main_project\hrms271026\hrmsAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+D:\HRMS_Project_NIC\Main_project\hrms271026\hrmsAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+D:\HRMS_Project_NIC\Main_project\hrms271026\hrmsAPI\bin\Debug\net8.0\Microsoft.OpenApi.dll
+D:\HRMS_Project_NIC\Main_project\hrms271026\hrmsAPI\bin\Debug\net8.0\Npgsql.dll
+D:\HRMS_Project_NIC\Main_project\hrms271026\hrmsAPI\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
+D:\HRMS_Project_NIC\Main_project\hrms271026\hrmsAPI\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+D:\HRMS_Project_NIC\Main_project\hrms271026\hrmsAPI\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+D:\HRMS_Project_NIC\Main_project\hrms271026\hrmsAPI\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+D:\HRMS_Project_NIC\Main_project\hrms271026\hrmsAPI\obj\Debug\net8.0\hrmsAPI.csproj.AssemblyReference.cache
+D:\HRMS_Project_NIC\Main_project\hrms271026\hrmsAPI\obj\Debug\net8.0\rpswa.dswa.cache.json
+D:\HRMS_Project_NIC\Main_project\hrms271026\hrmsAPI\obj\Debug\net8.0\hrmsAPI.GeneratedMSBuildEditorConfig.editorconfig
+D:\HRMS_Project_NIC\Main_project\hrms271026\hrmsAPI\obj\Debug\net8.0\hrmsAPI.AssemblyInfoInputs.cache
+D:\HRMS_Project_NIC\Main_project\hrms271026\hrmsAPI\obj\Debug\net8.0\hrmsAPI.AssemblyInfo.cs
+D:\HRMS_Project_NIC\Main_project\hrms271026\hrmsAPI\obj\Debug\net8.0\hrmsAPI.csproj.CoreCompileInputs.cache
+D:\HRMS_Project_NIC\Main_project\hrms271026\hrmsAPI\obj\Debug\net8.0\hrmsAPI.MvcApplicationPartsAssemblyInfo.cs
+D:\HRMS_Project_NIC\Main_project\hrms271026\hrmsAPI\obj\Debug\net8.0\hrmsAPI.MvcApplicationPartsAssemblyInfo.cache
+D:\HRMS_Project_NIC\Main_project\hrms271026\hrmsAPI\obj\Debug\net8.0\rjimswa.dswa.cache.json
+D:\HRMS_Project_NIC\Main_project\hrms271026\hrmsAPI\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
+D:\HRMS_Project_NIC\Main_project\hrms271026\hrmsAPI\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
+D:\HRMS_Project_NIC\Main_project\hrms271026\hrmsAPI\obj\Debug\net8.0\scopedcss\bundle\hrmsAPI.styles.css
+D:\HRMS_Project_NIC\Main_project\hrms271026\hrmsAPI\obj\Debug\net8.0\staticwebassets.build.json
+D:\HRMS_Project_NIC\Main_project\hrms271026\hrmsAPI\obj\Debug\net8.0\staticwebassets.build.json.cache
+D:\HRMS_Project_NIC\Main_project\hrms271026\hrmsAPI\obj\Debug\net8.0\staticwebassets.development.json
+D:\HRMS_Project_NIC\Main_project\hrms271026\hrmsAPI\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+D:\HRMS_Project_NIC\Main_project\hrms271026\hrmsAPI\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+D:\HRMS_Project_NIC\Main_project\hrms271026\hrmsAPI\obj\Debug\net8.0\hrmsAPI.csproj.Up2Date
+D:\HRMS_Project_NIC\Main_project\hrms271026\hrmsAPI\obj\Debug\net8.0\hrmsAPI.dll
+D:\HRMS_Project_NIC\Main_project\hrms271026\hrmsAPI\obj\Debug\net8.0\refint\hrmsAPI.dll
+D:\HRMS_Project_NIC\Main_project\hrms271026\hrmsAPI\obj\Debug\net8.0\hrmsAPI.pdb
+D:\HRMS_Project_NIC\Main_project\hrms271026\hrmsAPI\obj\Debug\net8.0\hrmsAPI.genruntimeconfig.cache
+D:\HRMS_Project_NIC\Main_project\hrms271026\hrmsAPI\obj\Debug\net8.0\ref\hrmsAPI.dll
+C:\Users\neeto\Desktop\Contractual_HRMS\hrmsAPI\hrmsAPI\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\neeto\Desktop\Contractual_HRMS\hrmsAPI\hrmsAPI\bin\Debug\net8.0\appsettings.json
+C:\Users\neeto\Desktop\Contractual_HRMS\hrmsAPI\hrmsAPI\bin\Debug\net8.0\hrmsAPI.staticwebassets.endpoints.json
+C:\Users\neeto\Desktop\Contractual_HRMS\hrmsAPI\hrmsAPI\bin\Debug\net8.0\hrmsAPI.exe
+C:\Users\neeto\Desktop\Contractual_HRMS\hrmsAPI\hrmsAPI\bin\Debug\net8.0\hrmsAPI.deps.json
+C:\Users\neeto\Desktop\Contractual_HRMS\hrmsAPI\hrmsAPI\bin\Debug\net8.0\hrmsAPI.runtimeconfig.json
+C:\Users\neeto\Desktop\Contractual_HRMS\hrmsAPI\hrmsAPI\bin\Debug\net8.0\hrmsAPI.dll
+C:\Users\neeto\Desktop\Contractual_HRMS\hrmsAPI\hrmsAPI\bin\Debug\net8.0\hrmsAPI.pdb
+C:\Users\neeto\Desktop\Contractual_HRMS\hrmsAPI\hrmsAPI\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\neeto\Desktop\Contractual_HRMS\hrmsAPI\hrmsAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\neeto\Desktop\Contractual_HRMS\hrmsAPI\hrmsAPI\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\neeto\Desktop\Contractual_HRMS\hrmsAPI\hrmsAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\neeto\Desktop\Contractual_HRMS\hrmsAPI\hrmsAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\neeto\Desktop\Contractual_HRMS\hrmsAPI\hrmsAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\neeto\Desktop\Contractual_HRMS\hrmsAPI\hrmsAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\neeto\Desktop\Contractual_HRMS\hrmsAPI\hrmsAPI\bin\Debug\net8.0\Microsoft.OpenApi.dll
+C:\Users\neeto\Desktop\Contractual_HRMS\hrmsAPI\hrmsAPI\bin\Debug\net8.0\Npgsql.dll
+C:\Users\neeto\Desktop\Contractual_HRMS\hrmsAPI\hrmsAPI\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\neeto\Desktop\Contractual_HRMS\hrmsAPI\hrmsAPI\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\neeto\Desktop\Contractual_HRMS\hrmsAPI\hrmsAPI\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\neeto\Desktop\Contractual_HRMS\hrmsAPI\hrmsAPI\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\neeto\Desktop\Contractual_HRMS\hrmsAPI\hrmsAPI\obj\Debug\net8.0\hrmsAPI.csproj.AssemblyReference.cache
+C:\Users\neeto\Desktop\Contractual_HRMS\hrmsAPI\hrmsAPI\obj\Debug\net8.0\rpswa.dswa.cache.json
+C:\Users\neeto\Desktop\Contractual_HRMS\hrmsAPI\hrmsAPI\obj\Debug\net8.0\hrmsAPI.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\neeto\Desktop\Contractual_HRMS\hrmsAPI\hrmsAPI\obj\Debug\net8.0\hrmsAPI.AssemblyInfoInputs.cache
+C:\Users\neeto\Desktop\Contractual_HRMS\hrmsAPI\hrmsAPI\obj\Debug\net8.0\hrmsAPI.AssemblyInfo.cs
+C:\Users\neeto\Desktop\Contractual_HRMS\hrmsAPI\hrmsAPI\obj\Debug\net8.0\hrmsAPI.csproj.CoreCompileInputs.cache
+C:\Users\neeto\Desktop\Contractual_HRMS\hrmsAPI\hrmsAPI\obj\Debug\net8.0\hrmsAPI.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\neeto\Desktop\Contractual_HRMS\hrmsAPI\hrmsAPI\obj\Debug\net8.0\hrmsAPI.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\neeto\Desktop\Contractual_HRMS\hrmsAPI\hrmsAPI\obj\Debug\net8.0\rjimswa.dswa.cache.json
+C:\Users\neeto\Desktop\Contractual_HRMS\hrmsAPI\hrmsAPI\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
+C:\Users\neeto\Desktop\Contractual_HRMS\hrmsAPI\hrmsAPI\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
+C:\Users\neeto\Desktop\Contractual_HRMS\hrmsAPI\hrmsAPI\obj\Debug\net8.0\scopedcss\bundle\hrmsAPI.styles.css
+C:\Users\neeto\Desktop\Contractual_HRMS\hrmsAPI\hrmsAPI\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\neeto\Desktop\Contractual_HRMS\hrmsAPI\hrmsAPI\obj\Debug\net8.0\staticwebassets.build.json.cache
+C:\Users\neeto\Desktop\Contractual_HRMS\hrmsAPI\hrmsAPI\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\neeto\Desktop\Contractual_HRMS\hrmsAPI\hrmsAPI\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\Users\neeto\Desktop\Contractual_HRMS\hrmsAPI\hrmsAPI\obj\Debug\net8.0\swae.build.ex.cache
+C:\Users\neeto\Desktop\Contractual_HRMS\hrmsAPI\hrmsAPI\obj\Debug\net8.0\hrmsAPI.csproj.Up2Date
+C:\Users\neeto\Desktop\Contractual_HRMS\hrmsAPI\hrmsAPI\obj\Debug\net8.0\hrmsAPI.dll
+C:\Users\neeto\Desktop\Contractual_HRMS\hrmsAPI\hrmsAPI\obj\Debug\net8.0\refint\hrmsAPI.dll
+C:\Users\neeto\Desktop\Contractual_HRMS\hrmsAPI\hrmsAPI\obj\Debug\net8.0\hrmsAPI.pdb
+C:\Users\neeto\Desktop\Contractual_HRMS\hrmsAPI\hrmsAPI\obj\Debug\net8.0\hrmsAPI.genruntimeconfig.cache
+C:\Users\neeto\Desktop\Contractual_HRMS\hrmsAPI\hrmsAPI\obj\Debug\net8.0\ref\hrmsAPI.dll
+C:\Users\neeto\Desktop\Contractual_HRMS\hrmsAPI\hrmsAPI\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+D:\hrms\HRMS_02112026\Contractual_HRMS\Contractual_HRMS\hrmsAPI\hrmsAPI\bin\Debug\net8.0\appsettings.Development.json
+D:\hrms\HRMS_02112026\Contractual_HRMS\Contractual_HRMS\hrmsAPI\hrmsAPI\bin\Debug\net8.0\appsettings.json
+D:\hrms\HRMS_02112026\Contractual_HRMS\Contractual_HRMS\hrmsAPI\hrmsAPI\bin\Debug\net8.0\hrmsAPI.staticwebassets.endpoints.json
+D:\hrms\HRMS_02112026\Contractual_HRMS\Contractual_HRMS\hrmsAPI\hrmsAPI\bin\Debug\net8.0\hrmsAPI.exe
+D:\hrms\HRMS_02112026\Contractual_HRMS\Contractual_HRMS\hrmsAPI\hrmsAPI\bin\Debug\net8.0\hrmsAPI.deps.json
+D:\hrms\HRMS_02112026\Contractual_HRMS\Contractual_HRMS\hrmsAPI\hrmsAPI\bin\Debug\net8.0\hrmsAPI.runtimeconfig.json
+D:\hrms\HRMS_02112026\Contractual_HRMS\Contractual_HRMS\hrmsAPI\hrmsAPI\bin\Debug\net8.0\hrmsAPI.dll
+D:\hrms\HRMS_02112026\Contractual_HRMS\Contractual_HRMS\hrmsAPI\hrmsAPI\bin\Debug\net8.0\hrmsAPI.pdb
+D:\hrms\HRMS_02112026\Contractual_HRMS\Contractual_HRMS\hrmsAPI\hrmsAPI\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\hrms\HRMS_02112026\Contractual_HRMS\Contractual_HRMS\hrmsAPI\hrmsAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+D:\hrms\HRMS_02112026\Contractual_HRMS\Contractual_HRMS\hrmsAPI\hrmsAPI\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\hrms\HRMS_02112026\Contractual_HRMS\Contractual_HRMS\hrmsAPI\hrmsAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+D:\hrms\HRMS_02112026\Contractual_HRMS\Contractual_HRMS\hrmsAPI\hrmsAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+D:\hrms\HRMS_02112026\Contractual_HRMS\Contractual_HRMS\hrmsAPI\hrmsAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+D:\hrms\HRMS_02112026\Contractual_HRMS\Contractual_HRMS\hrmsAPI\hrmsAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+D:\hrms\HRMS_02112026\Contractual_HRMS\Contractual_HRMS\hrmsAPI\hrmsAPI\bin\Debug\net8.0\Microsoft.OpenApi.dll
+D:\hrms\HRMS_02112026\Contractual_HRMS\Contractual_HRMS\hrmsAPI\hrmsAPI\bin\Debug\net8.0\Npgsql.dll
+D:\hrms\HRMS_02112026\Contractual_HRMS\Contractual_HRMS\hrmsAPI\hrmsAPI\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
+D:\hrms\HRMS_02112026\Contractual_HRMS\Contractual_HRMS\hrmsAPI\hrmsAPI\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+D:\hrms\HRMS_02112026\Contractual_HRMS\Contractual_HRMS\hrmsAPI\hrmsAPI\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+D:\hrms\HRMS_02112026\Contractual_HRMS\Contractual_HRMS\hrmsAPI\hrmsAPI\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+D:\hrms\HRMS_02112026\Contractual_HRMS\Contractual_HRMS\hrmsAPI\hrmsAPI\obj\Debug\net8.0\hrmsAPI.csproj.AssemblyReference.cache
+D:\hrms\HRMS_02112026\Contractual_HRMS\Contractual_HRMS\hrmsAPI\hrmsAPI\obj\Debug\net8.0\rpswa.dswa.cache.json
+D:\hrms\HRMS_02112026\Contractual_HRMS\Contractual_HRMS\hrmsAPI\hrmsAPI\obj\Debug\net8.0\hrmsAPI.GeneratedMSBuildEditorConfig.editorconfig
+D:\hrms\HRMS_02112026\Contractual_HRMS\Contractual_HRMS\hrmsAPI\hrmsAPI\obj\Debug\net8.0\hrmsAPI.AssemblyInfoInputs.cache
+D:\hrms\HRMS_02112026\Contractual_HRMS\Contractual_HRMS\hrmsAPI\hrmsAPI\obj\Debug\net8.0\hrmsAPI.AssemblyInfo.cs
+D:\hrms\HRMS_02112026\Contractual_HRMS\Contractual_HRMS\hrmsAPI\hrmsAPI\obj\Debug\net8.0\hrmsAPI.csproj.CoreCompileInputs.cache
+D:\hrms\HRMS_02112026\Contractual_HRMS\Contractual_HRMS\hrmsAPI\hrmsAPI\obj\Debug\net8.0\hrmsAPI.MvcApplicationPartsAssemblyInfo.cs
+D:\hrms\HRMS_02112026\Contractual_HRMS\Contractual_HRMS\hrmsAPI\hrmsAPI\obj\Debug\net8.0\hrmsAPI.MvcApplicationPartsAssemblyInfo.cache
+D:\hrms\HRMS_02112026\Contractual_HRMS\Contractual_HRMS\hrmsAPI\hrmsAPI\obj\Debug\net8.0\rjimswa.dswa.cache.json
+D:\hrms\HRMS_02112026\Contractual_HRMS\Contractual_HRMS\hrmsAPI\hrmsAPI\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
+D:\hrms\HRMS_02112026\Contractual_HRMS\Contractual_HRMS\hrmsAPI\hrmsAPI\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
+D:\hrms\HRMS_02112026\Contractual_HRMS\Contractual_HRMS\hrmsAPI\hrmsAPI\obj\Debug\net8.0\scopedcss\bundle\hrmsAPI.styles.css
+D:\hrms\HRMS_02112026\Contractual_HRMS\Contractual_HRMS\hrmsAPI\hrmsAPI\obj\Debug\net8.0\staticwebassets.build.json
+D:\hrms\HRMS_02112026\Contractual_HRMS\Contractual_HRMS\hrmsAPI\hrmsAPI\obj\Debug\net8.0\staticwebassets.build.json.cache
+D:\hrms\HRMS_02112026\Contractual_HRMS\Contractual_HRMS\hrmsAPI\hrmsAPI\obj\Debug\net8.0\staticwebassets.development.json
+D:\hrms\HRMS_02112026\Contractual_HRMS\Contractual_HRMS\hrmsAPI\hrmsAPI\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+D:\hrms\HRMS_02112026\Contractual_HRMS\Contractual_HRMS\hrmsAPI\hrmsAPI\obj\Debug\net8.0\swae.build.ex.cache
+D:\hrms\HRMS_02112026\Contractual_HRMS\Contractual_HRMS\hrmsAPI\hrmsAPI\obj\Debug\net8.0\hrmsAPI.csproj.Up2Date
+D:\hrms\HRMS_02112026\Contractual_HRMS\Contractual_HRMS\hrmsAPI\hrmsAPI\obj\Debug\net8.0\hrmsAPI.dll
+D:\hrms\HRMS_02112026\Contractual_HRMS\Contractual_HRMS\hrmsAPI\hrmsAPI\obj\Debug\net8.0\refint\hrmsAPI.dll
+D:\hrms\HRMS_02112026\Contractual_HRMS\Contractual_HRMS\hrmsAPI\hrmsAPI\obj\Debug\net8.0\hrmsAPI.pdb
+D:\hrms\HRMS_02112026\Contractual_HRMS\Contractual_HRMS\hrmsAPI\hrmsAPI\obj\Debug\net8.0\hrmsAPI.genruntimeconfig.cache
+D:\hrms\HRMS_02112026\Contractual_HRMS\Contractual_HRMS\hrmsAPI\hrmsAPI\obj\Debug\net8.0\ref\hrmsAPI.dll
+E:\project_hrms\viraj\hrmsAPI\hrmsAPI\bin\Debug\net8.0\appsettings.Development.json
+E:\project_hrms\viraj\hrmsAPI\hrmsAPI\bin\Debug\net8.0\hrmsAPI.staticwebassets.endpoints.json
+E:\project_hrms\viraj\hrmsAPI\hrmsAPI\bin\Debug\net8.0\appsettings.json
+E:\project_hrms\viraj\hrmsAPI\hrmsAPI\bin\Debug\net8.0\hrmsAPI.exe
+E:\project_hrms\viraj\hrmsAPI\hrmsAPI\bin\Debug\net8.0\hrmsAPI.deps.json
+E:\project_hrms\viraj\hrmsAPI\hrmsAPI\bin\Debug\net8.0\hrmsAPI.runtimeconfig.json
+E:\project_hrms\viraj\hrmsAPI\hrmsAPI\bin\Debug\net8.0\hrmsAPI.dll
+E:\project_hrms\viraj\hrmsAPI\hrmsAPI\bin\Debug\net8.0\hrmsAPI.pdb
+E:\project_hrms\viraj\hrmsAPI\hrmsAPI\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+E:\project_hrms\viraj\hrmsAPI\hrmsAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+E:\project_hrms\viraj\hrmsAPI\hrmsAPI\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+E:\project_hrms\viraj\hrmsAPI\hrmsAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+E:\project_hrms\viraj\hrmsAPI\hrmsAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+E:\project_hrms\viraj\hrmsAPI\hrmsAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+E:\project_hrms\viraj\hrmsAPI\hrmsAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+E:\project_hrms\viraj\hrmsAPI\hrmsAPI\bin\Debug\net8.0\Microsoft.OpenApi.dll
+E:\project_hrms\viraj\hrmsAPI\hrmsAPI\bin\Debug\net8.0\Npgsql.dll
+E:\project_hrms\viraj\hrmsAPI\hrmsAPI\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
+E:\project_hrms\viraj\hrmsAPI\hrmsAPI\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+E:\project_hrms\viraj\hrmsAPI\hrmsAPI\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+E:\project_hrms\viraj\hrmsAPI\hrmsAPI\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+E:\project_hrms\viraj\hrmsAPI\hrmsAPI\obj\Debug\net8.0\hrmsAPI.csproj.AssemblyReference.cache
+E:\project_hrms\viraj\hrmsAPI\hrmsAPI\obj\Debug\net8.0\rpswa.dswa.cache.json
+E:\project_hrms\viraj\hrmsAPI\hrmsAPI\obj\Debug\net8.0\hrmsAPI.GeneratedMSBuildEditorConfig.editorconfig
+E:\project_hrms\viraj\hrmsAPI\hrmsAPI\obj\Debug\net8.0\hrmsAPI.AssemblyInfoInputs.cache
+E:\project_hrms\viraj\hrmsAPI\hrmsAPI\obj\Debug\net8.0\hrmsAPI.AssemblyInfo.cs
+E:\project_hrms\viraj\hrmsAPI\hrmsAPI\obj\Debug\net8.0\hrmsAPI.csproj.CoreCompileInputs.cache
+E:\project_hrms\viraj\hrmsAPI\hrmsAPI\obj\Debug\net8.0\hrmsAPI.MvcApplicationPartsAssemblyInfo.cs
+E:\project_hrms\viraj\hrmsAPI\hrmsAPI\obj\Debug\net8.0\hrmsAPI.MvcApplicationPartsAssemblyInfo.cache
+E:\project_hrms\viraj\hrmsAPI\hrmsAPI\obj\Debug\net8.0\rjimswa.dswa.cache.json
+E:\project_hrms\viraj\hrmsAPI\hrmsAPI\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
+E:\project_hrms\viraj\hrmsAPI\hrmsAPI\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
+E:\project_hrms\viraj\hrmsAPI\hrmsAPI\obj\Debug\net8.0\scopedcss\bundle\hrmsAPI.styles.css
+E:\project_hrms\viraj\hrmsAPI\hrmsAPI\obj\Debug\net8.0\staticwebassets.build.json
+E:\project_hrms\viraj\hrmsAPI\hrmsAPI\obj\Debug\net8.0\staticwebassets.build.json.cache
+E:\project_hrms\viraj\hrmsAPI\hrmsAPI\obj\Debug\net8.0\staticwebassets.development.json
+E:\project_hrms\viraj\hrmsAPI\hrmsAPI\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+E:\project_hrms\viraj\hrmsAPI\hrmsAPI\obj\Debug\net8.0\hrmsAPI.csproj.Up2Date
+E:\project_hrms\viraj\hrmsAPI\hrmsAPI\obj\Debug\net8.0\hrmsAPI.dll
+E:\project_hrms\viraj\hrmsAPI\hrmsAPI\obj\Debug\net8.0\refint\hrmsAPI.dll
+E:\project_hrms\viraj\hrmsAPI\hrmsAPI\obj\Debug\net8.0\hrmsAPI.pdb
+E:\project_hrms\viraj\hrmsAPI\hrmsAPI\obj\Debug\net8.0\hrmsAPI.genruntimeconfig.cache
+E:\project_hrms\viraj\hrmsAPI\hrmsAPI\obj\Debug\net8.0\ref\hrmsAPI.dll
+E:\project_hrms\viraj\hrmsAPI\hrmsAPI\bin\Debug\net8.0\Dapper.dll
+E:\project_hrms\viraj\hrmsAPI\hrmsAPI\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+E:\project_hrms\viraj\hrmsAPI\hrmsAPI\bin\Debug\net8.0\ClosedXML.dll
+E:\project_hrms\viraj\hrmsAPI\hrmsAPI\bin\Debug\net8.0\ClosedXML.Parser.dll
+E:\project_hrms\viraj\hrmsAPI\hrmsAPI\bin\Debug\net8.0\DocumentFormat.OpenXml.dll
+E:\project_hrms\viraj\hrmsAPI\hrmsAPI\bin\Debug\net8.0\DocumentFormat.OpenXml.Framework.dll
+E:\project_hrms\viraj\hrmsAPI\hrmsAPI\bin\Debug\net8.0\ExcelNumberFormat.dll
+E:\project_hrms\viraj\hrmsAPI\hrmsAPI\bin\Debug\net8.0\RBush.dll
+E:\project_hrms\viraj\hrmsAPI\hrmsAPI\bin\Debug\net8.0\SixLabors.Fonts.dll
+E:\project_hrms\viraj\hrmsAPI\hrmsAPI\bin\Debug\net8.0\System.IO.Packaging.dll

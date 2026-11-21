@@ -1,0 +1,59 @@
+<header class="portal-header" [class.compact-header]="compact" [class.dashboard-header]="dashboardMode">
+  <div class="identity-band">
+    <div class="header-container identity-grid">
+      <a routerLink="/" class="government-brand" aria-label="Government of Bihar home">
+        <span class="identity-logo"><img src="assets/images/bihar-government-emblem.svg" alt="Official Government of Bihar emblem"></span>
+        <span class="government-copy"><strong>बिहार सरकार</strong><small>{{ language.t('Government of Bihar') }}</small></span>
+      </a>
+
+      <div class="portal-identity">
+        <span class="portal-kicker">{{ language.t('Official Government HR Platform') }}</span>
+        <h1>{{ language.t('Nexa HRMS') }}</h1>
+        <!-- <div class="department-title"><i></i><strong>{{ language.t('Bihar Rural Development Society') }}</strong><i></i></div> -->
+        <div class="department-title"><i></i><strong>{{ language.t('HUMAN RESOURCE MANAGEMENT SYSTEM') }}</strong><i></i></div>
+
+      </div>
+
+      <div class="department-brand">
+        <span class="identity-logo department-logo"><img src="assets/images/brds-mark.svg" alt="Bihar Rural Development Society logo"></span>
+        <strong>{{ language.t('Bihar Rural Development Society') }}</strong>
+      </div>
+    </div>
+  </div>
+
+  <div class="navigation-band" *ngIf="showNavigation">
+    <div class="header-container navigation-content">
+      <button class="mobile-toggle-btn" (click)="toggleMobileMenu()" aria-label="Toggle Navigation">
+        <i class="bi" [ngClass]="isMobileMenuOpen ? 'bi-x-lg' : 'bi-list'"></i>
+      </button>
+
+      <nav class="header-center" [class.show]="isMobileMenuOpen" aria-label="Primary navigation">
+        <ul class="nav-links">
+          <li><a routerLink="/" class="nav-item active"><i class="bi bi-house-door"></i> {{ language.t('Home') }}</a></li>
+          <li><a href="#" class="nav-item"><i class="bi bi-info-circle"></i> {{ language.t('About Us') }}</a></li>
+          <li class="dropdown-container" (click)="toggleDropdown($event)">
+            <a href="javascript:void(0)" class="nav-item dropdown-toggle"><i class="bi bi-briefcase"></i> {{ language.t('Services') }} <i class="bi bi-chevron-down arrow-icon" [class.rotate]="isDropdownOpen"></i></a>
+            <div class="dropdown-menu-custom" [class.show]="isDropdownOpen">
+              <div class="dropdown-step-column"><span class="step-title">{{ language.t('Staff & Deployment') }}</span><a href="#" class="dropdown-sub-item"><i class="bi bi-people"></i> {{ language.t('Staff Directory') }}</a><a href="#" class="dropdown-sub-item"><i class="bi bi-geo-alt"></i> {{ language.t('Placement & Posting') }}</a><a href="#" class="dropdown-sub-item"><i class="bi bi-file-earmark-ruled"></i> {{ language.t('Contract Renewals') }}</a></div>
+              <div class="dropdown-step-column"><span class="step-title">{{ language.t('Attendance & Leave') }}</span><a href="#" class="dropdown-sub-item"><i class="bi bi-calendar-check"></i> {{ language.t('Daily Attendance') }}</a><a href="#" class="dropdown-sub-item"><i class="bi bi-calendar-minus"></i> {{ language.t('Leave Management') }}</a><a href="#" class="dropdown-sub-item"><i class="bi bi-table"></i> {{ language.t('Duty Roster') }}</a></div>
+              <div class="dropdown-step-column"><span class="step-title">{{ language.t('Payroll & Claims') }}</span><a href="#" class="dropdown-sub-item"><i class="bi bi-cash-stack"></i> {{ language.t('Salary & Honorarium') }}</a><a href="#" class="dropdown-sub-item"><i class="bi bi-shield-check"></i> {{ language.t('PF / ESI Details') }}</a><a href="#" class="dropdown-sub-item"><i class="bi bi-file-earmark-arrow-down"></i> {{ language.t('Payslip Download') }}</a></div>
+            </div>
+          </li>
+          <li><a href="#" class="nav-item"><i class="bi bi-megaphone"></i> {{ language.t('Notices') }}</a></li>
+          <li><a href="#" class="nav-item"><i class="bi bi-headset"></i> {{ language.t('Help & Support') }}</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions login-nav-wrapper" (click)="toggleLoginDropdown($event)">
+        <button type="button" class="nav-login" aria-label="Open login menu" [attr.aria-expanded]="isLoginDropdownOpen">
+          <i class="bi bi-person-circle"></i><span>{{ language.t('Login') }}</span>
+          <i class="bi bi-chevron-down login-chevron" [class.rotate]="isLoginDropdownOpen"></i>
+        </button>
+        <div class="login-nav-menu" [class.show]="isLoginDropdownOpen">
+          <a [routerLink]="['/login']" [queryParams]="{role: 'employee'}" (click)="isLoginDropdownOpen = false"><i class="bi bi-person-badge"></i><span><strong>{{ language.t('Employee Login') }}</strong><small>{{ language.t('Attendance, leave and profile') }}</small></span></a>
+          <a [routerLink]="['/login']" [queryParams]="{role: 'admin'}" (click)="isLoginDropdownOpen = false"><i class="bi bi-shield-lock"></i><span><strong>{{ language.t('Official Login') }}</strong><small>{{ language.t('Department and office access') }}</small></span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

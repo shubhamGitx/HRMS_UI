@@ -1,0 +1,218 @@
+<div class="appointment-orders-container">
+  <!-- Loading state indicator -->
+  <div *ngIf="isLoading()" class="contract-loading-bar">
+    <i class="bi bi-arrow-repeat spin-icon"></i> {{ language.t('Syncing appointment orders with server...', 'Syncing appointment orders with server...') }}
+  </div>
+
+  <!-- Top Filter Bar -->
+  <div class="orders-filter-bar">
+    <div class="filter-left">
+      <span class="filter-label"><i class="bi bi-funnel-fill"></i> {{ language.t('Filter Category:', 'Filter Category:') }}</span>
+      <div class="chip-group">
+        <button
+          type="button"
+          class="filter-chip"
+          [class.active]="selectedCategory === 'All'"
+          (click)="setCategory('All')"
+        >
+          {{ language.t('All Orders', 'All Orders') }} ({{ orderList().length }})
+        </button>
+
+        <button
+          type="button"
+          class="filter-chip"
+          [class.active]="selectedCategory === 'Renewal Order'"
+          (click)="setCategory('Renewal Order')"
+        >
+          {{ language.t('Renewal Orders', 'Renewal Orders') }}
+        </button>
+
+        <button
+          type="button"
+          class="filter-chip"
+          [class.active]="selectedCategory === 'Initial Appointment'"
+          (click)="setCategory('Initial Appointment')"
+        >
+          {{ language.t('Initial Offer', 'Initial Offer') }}
+        </button>
+
+        <button
+          type="button"
+          class="filter-chip"
+          [class.active]="selectedCategory === 'Posting / Transfer'"
+          (click)="setCategory('Posting / Transfer')"
+        >
+          {{ language.t('Posting / Transfer', 'Posting / Transfer') }}
+        </button>
+      </div>
+    </div>
+
+    <div class="filter-right">
+      <span class="total-docs-count"><i class="bi bi-file-earmark-pdf-fill"></i> {{ language.t('Showing', 'Showing') }} {{ filteredOrders.length }} {{ language.t('Documents', 'Documents') }}</span>
+    </div>
+  </div>
+
+  <!-- Document Cards Grid -->
+  <div class="orders-grid">
+    <div
+      class="doc-card"
+      *ngFor="let doc of filteredOrders"
+      [class.latest-card]="doc.isLatest"
+    >
+      <div class="card-top-strip">
+        <span class="doc-category-badge" [ngClass]="{
+          'cat-renewal': doc.category === 'Renewal Order',
+          'cat-initial': doc.category === 'Initial Appointment',
+          'cat-posting': doc.category === 'Posting / Transfer'
+        }">
+          {{ language.t(doc.category) }}
+        </span>
+
+        <span class="latest-tag" *ngIf="doc.isLatest">
+          <i class="bi bi-star-fill"></i> {{ language.t('LATEST SANCTION', 'LATEST SANCTION') }}
+        </span>
+      </div>
+
+      <div class="doc-main-info">
+        <div class="doc-icon-wrapper">
+          <i class="bi bi-file-earmark-pdf-fill"></i>
+        </div>
+
+        <div class="doc-text-block">
+          <h4 class="doc-title">{{ language.t(doc.documentTitle) }}</h4>
+          <p class="doc-memo">{{ language.t('Memo No:', 'Memo No:') }} <strong>{{ doc.memoNumber }}</strong></p>
+          <p class="doc-desc">{{ language.t(doc.description) }}</p>
+        </div>
+      </div>
+
+      <div class="doc-meta-footer">
+        <div class="meta-details-box">
+          <div class="meta-row-two">
+            <div class="meta-cell">
+              <span class="m-lbl"><i class="bi bi-calendar3"></i> {{ language.t('Issued On', 'Issued On') }}</span>
+              <strong class="m-val">{{ doc.issueDate }}</strong>
+            </div>
+
+            <div class="meta-cell align-right">
+              <span class="m-lbl"><i class="bi bi-file-earmark-code"></i> {{ language.t('File Info', 'File Info') }}</span>
+              <strong class="m-val file-badge">{{ doc.fileType }} ({{ doc.fileSize }})</strong>
+            </div>
+          </div>
+
+          <div class="meta-row-full">
+            <span class="m-lbl"><i class="bi bi-building"></i> {{ language.t('Issuing Authority', 'Issuing Authority') }}</span>
+            <strong class="m-val auth-val">{{ doc.issuingAuthority }}</strong>
+          </div>
+        </div>
+
+        <div class="doc-actions-row">
+          <button type="button" class="btn-doc btn-view" (click)="openPreview(doc)">
+            <i class="bi bi-eye"></i> {{ language.t('View PDF', 'View PDF') }}
+          </button>
+          <button type="button" class="btn-doc btn-download" (click)="downloadDocument(doc, $event)">
+            <i class="bi bi-download"></i> {{ language.t('Download', 'Download') }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Document Preview Modal -->
+  <div class="modal-backdrop" *ngIf="showPreviewModal" (click)="closePreview()">
+    <div class="modal-dialog-custom" (click)="$event.stopPropagation()">
+      <div class="modal-header-custom">
+        <div class="header-left">
+          <i class="bi bi-file-earmark-pdf-fill modal-icon"></i>
+          <div>
+            <h4 class="modal-title">{{ selectedDocument?.documentTitle }}</h4>
+            <span class="modal-subtitle">Memo No: {{ selectedDocument?.memoNumber }} &bull; Issued on {{ selectedDocument?.issueDate }}</span>
+          </div>
+        </div>
+        <div class="header-right">
+          <button type="button" class="modal-btn-action" (click)="printDocument()">
+            <i class="bi bi-printer"></i> {{ language.t('Print', 'Print') }}
+          </button>
+          <button type="button" class="modal-btn-action primary" (click)="selectedDocument && downloadDocument(selectedDocument)">
+            <i class="bi bi-download"></i> {{ language.t('Download', 'Download') }}
+          </button>
+          <button type="button" class="close-btn" (click)="closePreview()">&times;</button>
+        </div>
+      </div>
+
+      <div class="modal-body-custom">
+        <!-- Dynamic PDF Document Layout -->
+        <div class="pdf-viewer-paper">
+          <!-- Bihar Government Header -->
+          <div class="paper-govt-header">
+            <svg viewBox="0 0 24 24" width="48" height="48" fill="#1e3a8a">
+              <path d="M12 2C11.5 2 11 2.3 10.8 2.7L8.5 7H15.5L13.2 2.7C13 2.3 12.5 2 12 2ZM7.2 8L6 11.5H18L16.8 8H7.2ZM5.5 12.5L4.5 16.5H19.5L18.5 12.5H5.5ZM3 17.5V19.5C3 20.3 3.7 21 4.5 21H19.5C20.3 21 21 20.3 21 19.5V17.5H3Z"/>
+            </svg>
+            <h3 class="govt-heading">GOVERNMENT OF BIHAR</h3>
+            <h4 class="govt-subheading">DEPARTMENT OF IT & e-GOVERNANCE</h4>
+            <p class="govt-address">Main Secretariat, Patna - 800015</p>
+          </div>
+
+          <div class="paper-memo-line">
+            <span>Ref No: <strong>{{ selectedDocument?.memoNumber }}</strong></span>
+            <span>Date: <strong>{{ selectedDocument?.issueDate }}</strong></span>
+          </div>
+
+          <div class="paper-subject">
+            <strong>SUBJECT: {{ selectedDocument?.documentTitle | uppercase }}</strong>
+          </div>
+
+          <div class="paper-content-text">
+            <p>In pursuance of Departmental Sanction Order, sanction is hereby accorded for the engagement / continuation of service for the undermentioned contractual employee under the Rural Works Department / HRMS Portal System:</p>
+
+            <table class="paper-details-table">
+              <tr>
+                <td><strong>Employee Name:</strong></td>
+                <td>{{ currentContract().employeeName }}</td>
+                <td><strong>Emp. Code:</strong></td>
+                <td>{{ currentContract().employeeCode }}</td>
+              </tr>
+              <tr>
+                <td><strong>Designation:</strong></td>
+                <td>{{ currentContract().designation }}</td>
+                <td><strong>Category:</strong></td>
+                <td>{{ currentContract().contractType }}</td>
+              </tr>
+              <tr>
+                <td><strong>Posting Unit:</strong></td>
+                <td>{{ currentContract().postingUnit }}</td>
+                <td><strong>Monthly Remuneration:</strong></td>
+                <td>₹{{ currentContract().monthlyConsolidatedPay | number }}/- (Consolidated)</td>
+              </tr>
+              <tr>
+                <td><strong>Effective Tenure:</strong></td>
+                <td>{{ selectedDocument?.effectiveDate }} onwards</td>
+                <td><strong>Sanction Auth:</strong></td>
+                <td>{{ selectedDocument?.issuingAuthority }}</td>
+              </tr>
+            </table>
+
+            <p class="clause-text">
+              1. The terms and conditions of service shall be governed by the standard contractual policy of the Department of Personnel & Administrative Reforms, Government of Bihar.<br>
+              2. This order is subject to satisfactory performance and periodic evaluation by the Reporting Officer.<br>
+              3. The engagement does not confer any right or claim for permanent absorption or regular appointment in the State Government.
+            </p>
+          </div>
+
+          <div class="paper-signature-section">
+            <div class="sig-seal">
+              <span class="seal-circle"><i class="bi bi-patch-check-fill"></i> DIGITALLY SIGNED</span>
+              <span class="seal-date">Signed on {{ selectedDocument?.issueDate }}</span>
+            </div>
+
+            <div class="sig-block">
+              <strong>By Order of the Governor of Bihar</strong>
+              <br><br>
+              <span class="officer-sig">(Under Secretary to Government)</span>
+              <p>Department of IT & e-Governance, Patna</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,105 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "E:\\project_hrms\\viraj\\hrmsAPI\\hrmsAPI\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{3DCCCD85-09AE-4C39-8593-FADD848B6376}|hrmsAPI.csproj|e:\\project_hrms\\viraj\\hrmsapi\\hrmsapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{3DCCCD85-09AE-4C39-8593-FADD848B6376}|hrmsAPI.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3DCCCD85-09AE-4C39-8593-FADD848B6376}|hrmsAPI.csproj|e:\\project_hrms\\viraj\\hrmsapi\\hrmsapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3DCCCD85-09AE-4C39-8593-FADD848B6376}|hrmsAPI.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3DCCCD85-09AE-4C39-8593-FADD848B6376}|hrmsAPI.csproj|e:\\project_hrms\\viraj\\hrmsapi\\hrmsapi\\dal\\leave\\leaverepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3DCCCD85-09AE-4C39-8593-FADD848B6376}|hrmsAPI.csproj|solutionrelative:dal\\leave\\leaverepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3DCCCD85-09AE-4C39-8593-FADD848B6376}|hrmsAPI.csproj|e:\\project_hrms\\viraj\\hrmsapi\\hrmsapi\\controllers\\admin\\employeeexcelcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3DCCCD85-09AE-4C39-8593-FADD848B6376}|hrmsAPI.csproj|solutionrelative:controllers\\admin\\employeeexcelcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3DCCCD85-09AE-4C39-8593-FADD848B6376}|hrmsAPI.csproj|e:\\project_hrms\\viraj\\hrmsapi\\hrmsapi\\controllers\\office\\officecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3DCCCD85-09AE-4C39-8593-FADD848B6376}|hrmsAPI.csproj|solutionrelative:controllers\\office\\officecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1547168514:0:{81164725-9a96-4ece-a4cb-440d8fd285e5}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "E:\\project_hrms\\viraj\\hrmsAPI\\hrmsAPI\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "E:\\project_hrms\\viraj\\hrmsAPI\\hrmsAPI\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-11-18T06:05:28.773Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "E:\\project_hrms\\viraj\\hrmsAPI\\hrmsAPI\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "E:\\project_hrms\\viraj\\hrmsAPI\\hrmsAPI\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAAABQAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-19T10:47:02.04Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "EmployeeExcelController.cs",
+              "DocumentMoniker": "E:\\project_hrms\\viraj\\hrmsAPI\\hrmsAPI\\Controllers\\Admin\\EmployeeExcelController.cs",
+              "RelativeDocumentMoniker": "Controllers\\Admin\\EmployeeExcelController.cs",
+              "ToolTip": "E:\\project_hrms\\viraj\\hrmsAPI\\hrmsAPI\\Controllers\\Admin\\EmployeeExcelController.cs",
+              "RelativeToolTip": "Controllers\\Admin\\EmployeeExcelController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAA7AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-19T10:43:53.065Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "OfficeController.cs",
+              "DocumentMoniker": "E:\\project_hrms\\viraj\\hrmsAPI\\hrmsAPI\\Controllers\\Office\\OfficeController.cs",
+              "RelativeDocumentMoniker": "Controllers\\Office\\OfficeController.cs",
+              "ToolTip": "E:\\project_hrms\\viraj\\hrmsAPI\\hrmsAPI\\Controllers\\Office\\OfficeController.cs",
+              "RelativeToolTip": "Controllers\\Office\\OfficeController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-19T10:09:08.031Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "LeaveRepository.cs",
+              "DocumentMoniker": "E:\\project_hrms\\viraj\\hrmsAPI\\hrmsAPI\\DAL\\Leave\\LeaveRepository.cs",
+              "RelativeDocumentMoniker": "DAL\\Leave\\LeaveRepository.cs",
+              "ToolTip": "E:\\project_hrms\\viraj\\hrmsAPI\\hrmsAPI\\DAL\\Leave\\LeaveRepository.cs",
+              "RelativeToolTip": "DAL\\Leave\\LeaveRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-10T10:41:04.026Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

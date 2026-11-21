@@ -1,0 +1,153 @@
+<section class="mp-card">
+  <div class="mp-tabs" role="tablist">
+    @for (t of tabs; track t.key) {
+      <button type="button" role="tab" class="mp-tab" [class.active]="tab() === t.key" (click)="tab.set(t.key)">{{ t.label | translate }}</button>
+    }
+  </div>
+
+  <div class="mp-card-body" style="background:#fbfcfe">
+    @switch (tab()) {
+      @case ('employment') {
+        <div class="mp-layout" style="grid-template-columns:minmax(0,1fr) minmax(300px, 400px)">
+          <div class="mp-col">
+            <section class="mp-card">
+              <div class="mp-card-head"><h3><i class="bi bi-person-workspace"></i> {{ 'Current Employment Details' | translate }}</h3></div>
+              <div class="mp-card-body mp-kv-cols">
+                <dl class="mp-kv lined">
+                  <dt>{{ 'Employee ID' | translate }}</dt><dd>{{ e.employeeId || '1' }}</dd>
+                  <dt>{{ 'Employee Code' | translate }}</dt><dd>{{ e.employeeCode }}</dd>
+                  <dt>{{ 'Designation' | translate }}</dt><dd>{{ e.designation | translate }}</dd>
+                  <dt>{{ 'Department' | translate }}</dt><dd>{{ e.department | translate }}</dd>
+                  <dt>{{ 'Office / Place of Posting' | translate }}</dt><dd>{{ e.office | translate }}</dd>
+                  <dt>{{ 'Employee Type' | translate }}</dt><dd>{{ e.employeeType | translate }}</dd>
+                  <dt>{{ 'Engagement Type' | translate }}</dt><dd>{{ e.engagementType | translate }}</dd>
+                  <dt>{{ 'Employee Category' | translate }}</dt><dd>{{ e.employeeCategory | translate }}</dd>
+                  <dt>{{ 'Organizational Unit' | translate }}</dt><dd>{{ e.orgUnit | translate }}</dd>
+                </dl>
+                <dl class="mp-kv lined">
+                  <dt>{{ 'Date of Joining' | translate }}</dt><dd>{{ fmt(e.joiningDate) }}</dd>
+                  <dt>{{ 'Effective From' | translate }}</dt><dd>{{ fmt(e.effectiveFrom) }}</dd>
+                  <dt>{{ 'Effective To' | translate }}</dt><dd>{{ fmt(e.effectiveTo) }}</dd>
+                  <dt>{{ 'Employment Status' | translate }}</dt><dd><span class="mp-pill green">{{ e.status | translate }}</span></dd>
+                  <dt>{{ 'Reporting Officer' | translate }}</dt><dd>{{ e.reportingOfficer }}<br /><small>({{ e.reportingOfficerDesignation | translate }})</small></dd>
+                  <dt>{{ 'Designation Level' | translate }}</dt><dd>{{ e.designationLevel | translate }}</dd>
+                  <dt>{{ 'Office Phone' | translate }}</dt><dd>{{ e.officePhone }}</dd>
+                  <dt>{{ 'Work Location' | translate }}</dt><dd>{{ e.workLocation | translate }}</dd>
+                </dl>
+              </div>
+            </section>
+
+            <section class="mp-card">
+              <div class="mp-card-head"><h3><i class="bi bi-file-earmark-text"></i> {{ 'Contract Information' | translate }}</h3></div>
+              <div class="mp-card-body mp-kv-cols">
+                <dl class="mp-kv lined">
+                  <dt>{{ 'Contract Number' | translate }}</dt><dd>{{ c.contractNo }}</dd>
+                  <dt>{{ 'Contract Type' | translate }}</dt><dd>{{ c.contractType | translate }}</dd>
+                  <dt>{{ 'Contract Start Date' | translate }}</dt><dd>{{ fmt(c.startDate) }}</dd>
+                  <dt>{{ 'Contract End Date' | translate }}</dt><dd>{{ fmt(c.endDate) }}</dd>
+                  <dt>{{ 'Pay Structure' | translate }}</dt><dd>{{ c.payStructure | translate }}</dd>
+                  <dt>{{ 'Monthly Remuneration' | translate }}</dt><dd>{{ c.remuneration }}</dd>
+                </dl>
+                <dl class="mp-kv lined">
+                  <dt>{{ 'Appointment Order No.' | translate }}</dt><dd>{{ c.appointmentOrderNo }}</dd>
+                  <dt>{{ 'Appointment Order Date' | translate }}</dt><dd>{{ fmt(c.appointmentOrderDate) }}</dd>
+                  <dt>{{ 'Issuing Authority' | translate }}</dt><dd>{{ c.issuingAuthority | translate }}</dd>
+                  <dt>{{ 'Contract Status' | translate }}</dt><dd><span class="mp-pill green">{{ c.status | translate }}</span></dd>
+                  <dt>{{ 'Remarks' | translate }}</dt><dd>{{ c.remarks }}</dd>
+                </dl>
+              </div>
+            </section>
+          </div>
+
+          <div class="mp-col">
+            <section class="mp-card">
+              <div class="mp-card-head"><h3><i class="bi bi-calendar3"></i> {{ 'Employment Timeline' | translate }}</h3></div>
+              <ul class="mp-tl">
+                @for (t of profile.employmentTimeline; track t.title) {
+                  <li>
+                    <span class="dot" [class.green]="t.green"></span>
+                    <div class="mp-tl-row"><b>{{ t.title | translate }}</b>@if (t.badge) { <span class="mp-pill green">{{ t.badge | translate }}</span> }</div>
+                    <small>{{ t.sub }}</small>
+                  </li>
+                }
+              </ul>
+            </section>
+
+            <section class="mp-card">
+              <div class="mp-card-head"><h3><i class="bi bi-link-45deg"></i> {{ 'Quick Links' | translate }}</h3></div>
+              <div class="mp-links">
+                <button type="button" class="mp-link" (click)="openDoc('Contract document')"><i class="bi bi-file-earmark-text"></i><span>{{ 'View Contract Document' | translate }}</span><i class="bi bi-chevron-right"></i></button>
+                <button type="button" class="mp-link" (click)="openDoc('Appointment order')"><i class="bi bi-file-earmark-richtext"></i><span>{{ 'View Appointment Order' | translate }}</span><i class="bi bi-chevron-right"></i></button>
+                <button type="button" class="mp-link" (click)="tab.set('contract')"><i class="bi bi-arrow-repeat"></i><span>{{ 'Contract Renewal History' | translate }}</span><i class="bi bi-chevron-right"></i></button>
+                <button type="button" class="mp-link" (click)="openDoc('Joining letter')"><i class="bi bi-download"></i><span>{{ 'Download Joining Letter' | translate }}</span><i class="bi bi-chevron-right"></i></button>
+              </div>
+            </section>
+
+            <section class="mp-card">
+              <div class="mp-card-head"><h3><i class="bi bi-info-circle"></i> {{ 'Important Information' | translate }}</h3></div>
+              <div class="mp-info">
+                <i class="bi bi-info-circle-fill"></i>
+                <div>{{ 'Your contract is valid up to' | translate }} <b>{{ fmt(e.effectiveTo) }}</b>.<br />{{ profile.contractDaysLeft() }} {{ 'days remaining' | translate }}.</div>
+              </div>
+            </section>
+          </div>
+        </div>
+      }
+
+      @case ('organization') {
+        <div class="mp-table-wrap" style="background:#fff">
+          <table class="mp-table">
+            <thead><tr><th>{{ 'From' | translate }}</th><th>{{ 'To' | translate }}</th><th>{{ 'Department' | translate }}</th><th>{{ 'Office' | translate }}</th><th>{{ 'Organizational Unit' | translate }}</th><th>{{ 'Order No.' | translate }}</th></tr></thead>
+            <tbody>
+              @for (r of profile.orgHistory; track $index) {
+                <tr><td>{{ fmt(r['from']) }}</td><td>{{ r['to'] }}</td><td>{{ r['department'] | translate }}</td><td>{{ r['office'] | translate }}</td><td>{{ r['unit'] | translate }}</td><td>{{ r['order'] }}</td></tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+
+      @case ('contract') {
+        <div class="mp-table-wrap" style="background:#fff">
+          <table class="mp-table">
+            <thead><tr><th>{{ 'Contract No' | translate }}.</th><th>{{ 'Period' | translate }}</th><th>{{ 'Monthly Remuneration' | translate }}</th><th>{{ 'Status' | translate }}</th></tr></thead>
+            <tbody>
+              @for (r of profile.contractHistory; track r['contractNo']) {
+                <tr>
+                  <td style="font-weight:600">{{ r['contractNo'] }}</td><td>{{ r['period'] }}</td><td>{{ r['remuneration'] }}</td>
+                  <td><span class="mp-pill" [class.green]="r['status'] === 'Active'" [class.grey]="r['status'] !== 'Active'">{{ r['status'] | translate }}</span></td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+
+      @case ('status') {
+        <div class="mp-table-wrap" style="background:#fff">
+          <table class="mp-table">
+            <thead><tr><th>{{ 'Date' | translate }}</th><th>{{ 'Status' | translate }}</th><th>{{ 'Remark' | translate }}</th><th>{{ 'Updated By' | translate }}</th></tr></thead>
+            <tbody>
+              @for (r of profile.statusHistory; track $index) {
+                <tr><td>{{ fmt(r['date']) }}</td><td><span class="mp-pill green">{{ r['status'] | translate }}</span></td><td>{{ r['remark'] | translate }}</td><td>{{ r['by'] | translate }}</td></tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+
+      @case ('reporting') {
+        <div class="mp-table-wrap" style="background:#fff">
+          <table class="mp-table">
+            <thead><tr><th>{{ 'From' | translate }}</th><th>{{ 'To' | translate }}</th><th>{{ 'Reporting Officer' | translate }}</th><th>{{ 'Designation' | translate }}</th><th>{{ 'Order No.' | translate }}</th></tr></thead>
+            <tbody>
+              @for (r of profile.reportingHistory; track $index) {
+                <tr><td>{{ fmt(r['from']) }}</td><td>{{ r['to'] }}</td><td style="font-weight:600">{{ r['officer'] }}</td><td>{{ r['designation'] | translate }}</td><td>{{ r['order'] }}</td></tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+    }
+  </div>
+</section>

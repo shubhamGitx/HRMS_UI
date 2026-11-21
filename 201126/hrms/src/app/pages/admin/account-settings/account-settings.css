@@ -1,0 +1,607 @@
+/* ===================================================
+   ACCOUNT SETTINGS - CONSISTENT DESIGN SYSTEM
+   Matches Profile Entry & Bihar HRMS Theme
+   =================================================== */
+:host {
+  display: block;
+  width: 100%;
+}
+
+.account-settings-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+/* ===================================================
+   1. HEADER BANNER CARD (Exact Match to Profile Entry)
+   =================================================== */
+.pe-header-card {
+  background: linear-gradient(135deg, #052a4a 0%, #073d63 55%, #0c5d83 100%);
+  border-radius: 12px;
+  padding: 22px 28px;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 8px 20px rgba(5, 42, 74, 0.16);
+}
+
+.pe-header-main {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  width: 100%;
+}
+
+.pe-header-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  color: #7dd3fc;
+  flex-shrink: 0;
+}
+
+.pe-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  flex-wrap: wrap;
+}
+
+.pe-portal-tag {
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  color: #bae6fd;
+}
+
+.pe-code-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  background: #38bdf8;
+  color: #032b4b;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+}
+
+.pe-office-tag {
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  border-radius: 4px;
+}
+
+.pe-header-title {
+  margin: 0 0 4px;
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.pe-header-sub {
+  margin: 0;
+  font-size: 0.82rem;
+  color: #d1e7f3;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.dot-sep {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* ===================================================
+   2. WIZARD STEP TABS (Exact Match to Profile Entry)
+   =================================================== */
+.pe-wizard-nav {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  background: #ffffff;
+  padding: 8px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+}
+
+.wizard-step-tab {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 18px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.wizard-step-tab:hover {
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+.wizard-step-tab.active {
+  background: #e0f2fe;
+  color: #0369a1;
+  border-color: #bae6fd;
+}
+
+.wizard-step-tab .step-num {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: #f1f5f9;
+  color: #475569;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.wizard-step-tab.active .step-num {
+  background: #0284c7;
+  color: #ffffff;
+}
+
+.step-text-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.step-title {
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.step-sub {
+  font-size: 0.74rem;
+  opacity: 0.85;
+}
+
+/* ===================================================
+   3. CARD BODY & SECTIONS (Exact Match to Profile Entry)
+   =================================================== */
+.pe-card-body {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  padding: 28px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.form-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 12px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.section-title {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 750;
+  color: #0f172a;
+  display: flex;
+  align-items: center;
+}
+
+.section-badge {
+  font-size: 0.74rem;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.badge-active {
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+}
+
+.badge-security {
+  background: #eff6ff;
+  color: #1e40af;
+  border: 1px solid #bfdbfe;
+}
+
+/* Security Info Strip */
+.credentials-badge-box {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-bottom: 24px;
+}
+
+.credential-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 0;
+  border-bottom: 1px solid #f1f5f9;
+  font-size: 0.84rem;
+  color: #475569;
+}
+
+.credential-row:last-child {
+  border-bottom: none;
+}
+
+.credential-row strong {
+  color: #0f172a;
+  font-weight: 600;
+}
+
+/* Alert Banners */
+.alert-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 18px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  margin-bottom: 20px;
+  position: relative;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.alert-success {
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  color: #065f46;
+}
+
+.alert-danger {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+}
+
+.alert-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.alert-content p {
+  margin: 3px 0 0;
+  font-size: 0.8rem;
+}
+
+.alert-close {
+  margin-left: auto;
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  color: inherit;
+  opacity: 0.6;
+}
+
+/* ===================================================
+   4. FORM FIELDS & INPUT SYSTEM (Consistent 100% Width)
+   =================================================== */
+.form-body {
+  width: 100%;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.form-group label,
+.form-group .field-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #334155;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin: 0;
+}
+
+.form-group .req {
+  color: #ef4444;
+}
+
+.form-fields-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+
+@media (max-width: 768px) {
+  .form-fields-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form-grid-mobile-action {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+@media (max-width: 768px) {
+  .form-grid-mobile-action {
+    flex-direction: column;
+  }
+  .form-grid-mobile-action .action-col {
+    width: 100%;
+  }
+}
+
+.action-col {
+  width: 280px;
+  flex-shrink: 0;
+}
+
+/* Standard Full-Width Input */
+.form-input-custom {
+  display: block;
+  width: 100%;
+  height: 42px;
+  padding: 0 14px;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  background: #f8fafc;
+  color: #0f172a;
+  font-size: 0.88rem;
+  outline: none;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.form-input-custom:focus {
+  background: #ffffff;
+  border-color: #0284c7;
+  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.12);
+}
+
+.field-hint {
+  display: block;
+  font-size: 0.75rem;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+/* Input With +91 Prefix */
+.input-wrapper-with-prefix {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+}
+
+.input-prefix-tag {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 14px;
+  height: 42px;
+  background: #e2e8f0;
+  border: 1px solid #cbd5e1;
+  border-right: none;
+  border-radius: 6px 0 0 6px;
+  color: #334155;
+  font-weight: 700;
+  font-size: 0.88rem;
+  flex-shrink: 0;
+}
+
+.form-input-custom.with-prefix {
+  border-radius: 0 6px 6px 0;
+  border: 1px solid #cbd5e1;
+}
+
+/* Input With Action Button (Eye Icon for Password) */
+.input-wrapper-with-action {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.form-input-custom.with-action-btn {
+  padding-right: 44px;
+}
+
+.btn-input-action {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: #64748b;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.15rem;
+  transition: all 0.15s ease;
+}
+
+.btn-input-action:hover {
+  color: #0284c7;
+  background: #f1f5f9;
+}
+
+/* Dual OTP Sub-Container */
+.dual-otp-container {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.sub-heading {
+  margin: 0 0 14px 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #0284c7;
+  display: flex;
+  align-items: center;
+}
+
+.dev-otp-helper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  padding: 10px 16px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.dev-badge {
+  font-size: 0.7rem;
+  font-weight: 800;
+  background: #059669;
+  color: #ffffff;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.dev-otp-codes {
+  font-size: 0.85rem;
+  color: #065f46;
+}
+
+.otp-digit-input {
+  letter-spacing: 8px;
+  font-weight: 800;
+  font-size: 1.25rem;
+  text-align: center;
+  font-family: monospace;
+  color: #03446c;
+}
+
+/* ===================================================
+   5. FORM ACTIONS BAR & BUTTONS (Exact Match to Profile Entry)
+   =================================================== */
+.form-actions-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 28px;
+  padding-top: 18px;
+  border-top: 1px solid #e2e8f0;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.btn-submit-custom {
+  background: linear-gradient(95deg, #0284c7 0%, #0369a1 100%);
+  border: none;
+  color: #ffffff;
+  font-size: 0.88rem;
+  font-weight: 700;
+  padding: 11px 26px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.28);
+}
+
+.btn-submit-custom:hover:not(:disabled) {
+  background: linear-gradient(95deg, #0369a1 0%, #075985 100%);
+  transform: translateY(-1px);
+}
+
+.btn-submit-custom:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-success-custom {
+  background: linear-gradient(95deg, #10b981 0%, #059669 100%);
+  border: none;
+  color: #ffffff;
+  font-size: 0.88rem;
+  font-weight: 700;
+  padding: 11px 26px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+}
+
+.btn-success-custom:hover:not(:disabled) {
+  background: linear-gradient(95deg, #059669 0%, #047857 100%);
+  transform: translateY(-1px);
+}
+
+.btn-success-custom:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.countdown-text {
+  font-size: 0.84rem;
+  color: #64748b;
+}
+
+.btn-link-resend {
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: #0284c7;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+}
+
+.btn-link-resend:hover {
+  text-decoration: underline;
+}

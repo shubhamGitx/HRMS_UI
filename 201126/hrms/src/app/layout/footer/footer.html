@@ -1,0 +1,50 @@
+<footer class="portal-footer">
+  <div class="footer-accent" aria-hidden="true"></div>
+  <div class="footer-main">
+    <div class="footer-grid">
+      <section class="footer-intro" aria-label="Portal information">
+        <p class="footer-kicker"><i></i> {{ language.t('Government of Bihar') }}</p>
+        <h2>{{ language.t('Samvida HR System') }}</h2>
+        <span class="title-rule"></span>
+        <strong>{{ language.t('Bihar Rural Development Society') }}</strong>
+      </section>
+      <section class="footer-section">
+        <h3>{{ language.t('Important Links') }}</h3>
+        <nav aria-label="Important links">
+          <a href="#"><i class="bi bi-dot"></i>{{ language.t('Accessibility') }}</a>
+          <a href="#"><i class="bi bi-dot"></i>{{ language.t('Website Policies') }}</a>
+          <a href="#"><i class="bi bi-dot"></i>{{ language.t('Help & Support') }}</a>
+        </nav>
+      </section>
+      <section class="footer-section social-section">
+        <h3>{{ language.t('Connect With Us') }}</h3>
+        <nav aria-label="Social media links">
+          <a href="#" aria-label="Facebook"><span class="social-icon facebook"><i class="bi bi-facebook"></i></span>Facebook</a>
+          <a href="#" aria-label="X / Twitter"><span class="social-icon twitter">X</span>X / Twitter</a>
+          <a href="#" aria-label="Instagram"><span class="social-icon instagram"><i class="bi bi-instagram"></i></span>Instagram</a>
+        </nav>
+      </section>
+      <section class="nic-section" aria-label="Website developer">
+        <img src="assets/images/nic-logo.png" alt="National Informatics Centre logo">
+        <div>
+          <small>{{ language.t('Designed & Developed by') }}</small>
+          <strong>{{ language.t('NIC Bihar') }}</strong>
+          <span>{{ language.t('National Informatics Centre') }}</span>
+        </div>
+      </section>
+    </div>
+  </div>
+  <div class="copyright-bar">
+    <div>
+      <span>© {{ currentYear }} {{ language.t('Government of Bihar. All rights reserved.') }}</span>
+      <span>{{ language.t('Content owned and maintained by Bihar Rural Development Society.') }}</span>
+    </div>
+  </div>
+  <button class="scroll-top" *ngIf="showScrollTop" (click)="scrollToTop()" aria-label="Scroll to top">
+    <svg class="progress-ring" viewBox="0 0 50 50">
+      <circle class="progress-ring-bg" cx="25" cy="25" r="22"></circle>
+      <circle class="progress-ring-circle" cx="25" cy="25" r="22" [attr.stroke-dasharray]="circumference" [attr.stroke-dashoffset]="progressOffset"></circle>
+    </svg>
+    <i class="bi bi-arrow-up"> Last modified - 19/11/2026</i>
+  </button>
+</footer>

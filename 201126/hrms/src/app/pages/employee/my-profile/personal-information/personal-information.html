@@ -1,0 +1,211 @@
+<div class="mp-layout">
+  <!-- ================= MAIN ================= -->
+  <section class="mp-card mp-print">
+    <div class="mp-tabs" role="tablist">
+      <button type="button" role="tab" class="mp-tab" [class.active]="tab() === 'personal'" (click)="tab.set('personal')">{{ 'Personal Details' | translate }}</button>
+      <!-- <button type="button" role="tab" class="mp-tab" [class.active]="tab() === 'address'" (click)="tab.set('address')">{{ 'Address Details' | translate }}</button>
+      <button type="button" role="tab" class="mp-tab" [class.active]="tab() === 'other'" (click)="tab.set('other')">{{ 'Other Details' | translate }}</button> -->
+    </div>
+
+    <div class="mp-card-body">
+      @switch (tab()) {
+        <!-- ---------- Personal Details ---------- -->
+        @case ('personal') {
+          <div class="mp-basic">
+            <div>
+              <h4 class="mp-section-title"><i class="bi bi-person-lines-fill"></i> {{ 'Basic Information' | translate }}</h4>
+              <dl class="mp-kv" style="padding-left:16px">
+                <dt>{{ 'Full Name' | translate }}</dt><dd>{{ d().personal.fullName }}</dd>
+                <dt>{{ 'Employee Name (Hindi)' | translate }}</dt><dd>{{ d().personal.fullNameHindi || '-' }}</dd>
+                <dt>{{ 'Employee Code' | translate }}</dt><dd>{{ emp.employeeCode }}</dd>
+                <dt>{{ 'Employee No.' | translate }}</dt><dd>{{ emp.employeeNo }}</dd>
+                <dt>{{ 'Title' | translate }}</dt><dd>{{ d().personal.title || 'Mr./Ms.' }}</dd>
+                <dt>{{ 'Date of Birth' | translate }}</dt><dd>{{ fmt(d().personal.dob) }} <small>({{ age(d().personal.dob) }} {{ 'Years' | translate }})</small></dd>
+                <dt>{{ 'Gender' | translate }}</dt><dd>{{ gender() | translate }}</dd>
+                <dt>{{ 'Marital Status' | translate }}</dt><dd>{{ (d().personal.maritalStatus || '-') | translate }}</dd>
+                <dt>{{ 'Blood Group' | translate }}</dt><dd>{{ bloodGroup() }}</dd>
+                <dt>{{ 'Aadhaar Number' | translate }}</dt><dd>{{ aadhaarNumber() }}</dd>
+                <dt>{{ 'PAN Number' | translate }}</dt><dd>{{ panNumber() }}</dd>
+                <dt>{{ 'Nationality' | translate }}</dt><dd>{{ (d().personal.nationality || 'Indian') | translate }}</dd>
+                <dt>{{ 'Religion' | translate }}</dt><dd>{{ (d().personal.religion || '-') | translate }}</dd>
+                <dt>{{ "Father's Name" | translate }}</dt><dd>{{ d().personal.fatherName }}</dd>
+                <dt>{{ "Mother's Name" | translate }}</dt><dd>{{ d().personal.motherName || '-' }}</dd>
+                <dt>{{ 'Spouse Name' | translate }}</dt><dd>{{ d().personal.spouseName || '-' }}</dd>
+              </dl>
+            </div>
+
+            <div class="mp-photo-card">
+              <div class="ph"><app-profile-avatar [src]="d().photo" /></div>
+              <p><i class="bi bi-check-circle-fill"></i> {{ 'Photo Uploaded' | translate }}</p>
+              <small>({{ fmt(d().photoUploadedOn) }})</small>
+            </div>
+
+            <div class="mp-summary">
+              <div class="mp-card-head"><h3><i class="bi bi-person-fill"></i> {{ 'Quick Summary' | translate }}</h3></div>
+              <div class="mp-summary-row"><i class="bi bi-calendar-event"></i><span>{{ 'Joining Date' | translate }}</span><b>{{ fmt(emp.joiningDate) }}</b></div>
+              <div class="mp-summary-row"><i class="bi bi-calendar-x"></i><span>{{ 'Contract End Date' | translate }}</span><b>{{ fmt(emp.effectiveTo) }}</b></div>
+              <div class="mp-summary-row"><i class="bi bi-hourglass-split"></i><span>{{ 'Days Remaining' | translate }}</span><b class="green">{{ profile.contractDaysLeft() }} {{ 'Days' | translate }}</b></div>
+              <div class="mp-summary-row"><i class="bi bi-check2"></i><span>{{ 'Current Designation' | translate }}</span><b>{{ emp.designation | translate }}</b></div>
+              <div class="mp-summary-row"><i class="bi bi-building"></i><span>{{ 'Department' | translate }}</span><b>{{ emp.department | translate }}</b></div>
+            </div>
+          </div>
+        }
+
+        <!-- ---------- Address Details ---------- -->
+        @case ('address') {
+          <hr class="mp-divider" />
+
+          <h4 class="mp-section-title">
+            <i class="bi bi-geo-alt"></i> {{ 'Address Information' | translate }}
+          </h4>
+
+          <div class="mp-grid2">
+            <div class="mp-addr">
+              <div class="mp-addr-head">
+                <span>
+                  <i class="bi bi-geo-alt-fill"></i> {{ 'Present Address' | translate }}
+                </span>
+              </div>
+
+              <div class="mp-addr-body">
+                {{ d().presentAddress.line1 }}<br />
+
+                @if (d().presentAddress.line2) {
+                  {{ d().presentAddress.line2 }}<br />
+                }
+
+                {{ d().presentAddress.city | translate }}@if (d().presentAddress.district) {, {{ resolveDistrict(d().presentAddress.district) }}} -
+                {{ d().presentAddress.pincode }}<br />
+
+                {{ resolveState(d().presentAddress.state) }}
+              </div>
+            </div>
+
+            <div class="mp-addr">
+              <div class="mp-addr-head">
+                <span>
+                  <i class="bi bi-house-door-fill"></i> {{ 'Permanent Address' | translate }}
+                </span>
+              </div>
+
+              <div class="mp-addr-body">
+                {{ d().permanentAddress.line1 }}<br />
+
+                @if (d().permanentAddress.line2) {
+                  {{ d().permanentAddress.line2 }}<br />
+                }
+
+                {{ d().permanentAddress.city | translate }}@if (d().permanentAddress.district) {, {{ resolveDistrict(d().permanentAddress.district) }}} -
+                {{ d().permanentAddress.pincode }}<br />
+
+                {{ resolveState(d().permanentAddress.state) }}
+              </div>
+            </div>
+          </div>
+        }
+
+        <!-- ---------- Qualification Details ---------- -->
+        @case ('other') {
+          <h4 class="mp-section-title">
+            <i class="bi bi-mortarboard"></i> {{ 'Educational Qualifications' | translate }}
+          </h4>
+
+          <div class="mp-table-wrap">
+            <table class="mp-table">
+              <thead>
+                <tr>
+                  <th>{{ 'Qualification' | translate }}</th>
+                  <th>{{ 'Institution' | translate }}</th>
+                  <th>{{ 'Passing Year' | translate }}</th>
+                  <th>{{ 'Marks (%)' | translate }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (q of d().education; track $index) {
+                  <tr>
+                    <td><strong style="color:var(--pf-navy)">{{ resolveQual(q.qualification) }}</strong></td>
+                    <td>{{ q.board }}</td>
+                    <td>{{ q.year }}</td>
+                    <td>{{ q.percentage || '-' }}</td>
+                  </tr>
+                } @empty {
+                  <tr>
+                    <td colspan="4">{{ 'No qualification details found.' | translate }}</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+
+          <hr class="mp-divider" />
+
+          <h4 class="mp-section-title">
+            <i class="bi bi-briefcase"></i> {{ 'Work Experience' | translate }}
+          </h4>
+
+          <div class="mp-table-wrap">
+            <table class="mp-table">
+              <thead>
+                <tr>
+                  <th>{{ 'Organisation' | translate }}</th>
+                  <th>{{ 'Designation' | translate }}</th>
+                  <th>{{ 'From Date' | translate }}</th>
+                  <th>{{ 'To Date' | translate }}</th>
+                  <th>{{ 'Responsibilities' | translate }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (e of d().experience; track $index) {
+                  <tr>
+                    <td>{{ e.organisation }}</td>
+                    <td>{{ e.designation }}</td>
+                    <td>{{ e.from }}</td>
+                    <td>{{ (e.to || 'Present') | translate }}</td>
+                    <td>{{ e.responsibilities }}</td>
+                  </tr>
+                } @empty {
+                  <tr>
+                    <td colspan="5">{{ 'No experience details found.' | translate }}</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        }
+      }
+    </div>
+  </section>
+
+  <!-- ================= SIDE ================= -->
+  <aside class="mp-col mp-no-print">
+    <section class="mp-card">
+      <div class="mp-card-head"><h3><i class="bi bi-lightning-charge"></i> {{ 'Quick Actions' | translate }}</h3></div>
+      <div class="mp-actions">
+        <a class="mp-action" [routerLink]="['/dashboard', 'my-profile', 'employment-details']" queryParamsHandling="preserve"><span class="ic"><i class="bi bi-briefcase"></i></span> {{ 'Employment Details' | translate }}</a>
+        <a class="mp-action" [routerLink]="['/dashboard', 'my-profile', 'documents']" queryParamsHandling="preserve"><span class="ic"><i class="bi bi-person-vcard"></i></span> {{ 'View Documents' | translate }}</a>
+        <button type="button" class="mp-action" (click)="print()"><span class="ic"><i class="bi bi-download"></i></span> {{ 'Download Profile (PDF)' | translate }}</button>
+      </div>
+    </section>
+
+    <section class="mp-card">
+      <div class="mp-card-head"><h3><i class="bi bi-arrow-repeat"></i> {{ 'Recent Updates' | translate }}</h3></div>
+      <ul class="mp-updates">
+        @for (u of profile.recentUpdates(); track $index) {
+          <li><span class="dot" [class.green]="$first"></span><b>{{ u.title | translate }}</b><small>{{ fmt(u.date) }} &nbsp;|&nbsp; {{ 'By' | translate }} {{ u.by | translate }}</small></li>
+        }
+      </ul>
+    </section>
+
+    <section class="mp-card">
+      <div class="mp-card-head"><h3><i class="bi bi-file-earmark-text"></i> {{ 'Documents' | translate }}</h3></div>
+      @for (doc of identityDocs(); track doc.name) {
+        <div class="mp-doc">
+          <span class="ic"><i class="bi bi-file-earmark-person"></i></span>
+          <div>{{ doc.name | translate }}<small>({{ doc.fileType }}, {{ doc.size }})</small></div>
+          <button type="button" class="mp-icon-btn" (click)="viewDoc(doc.name)" [attr.aria-label]="('Download' | translate) + ' ' + (doc.name | translate)"><i class="bi bi-download"></i></button>
+        </div>
+      }
+      <a class="mp-link-all" [routerLink]="['/dashboard', 'my-profile', 'documents']" queryParamsHandling="preserve">{{ 'View All' | translate }}</a>
+    </section>
+  </aside>
+</div>
