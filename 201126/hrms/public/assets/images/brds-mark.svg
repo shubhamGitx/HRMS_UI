@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" role="img" aria-labelledby="title desc">
-  <title id="title">Bihar Rural Development Society</title><desc id="desc">BRDS departmental emblem</desc>
-  <defs><linearGradient id="ring" x1="18" y1="16" x2="162" y2="164" gradientUnits="userSpaceOnUse"><stop stop-color="#f08a43"/><stop offset=".48" stop-color="#cf647f"/><stop offset="1" stop-color="#3b8b68"/></linearGradient><linearGradient id="field" x1="90" y1="42" x2="90" y2="138" gradientUnits="userSpaceOnUse"><stop stop-color="#16719b"/><stop offset="1" stop-color="#073a62"/></linearGradient></defs>
-  <circle cx="90" cy="90" r="84" fill="#fff" stroke="url(#ring)" stroke-width="6"/><circle cx="90" cy="90" r="70" fill="#edf7f4" stroke="#d7e8e2" stroke-width="2"/>
-  <path d="M37 116c18-24 39-32 53-18 16-20 37-17 54 17v17H37z" fill="#5aa56f"/><path d="M44 121c17-14 32-17 46-7 17-13 33-10 48 5v13H44z" fill="#88bd64" opacity=".95"/>
-  <circle cx="90" cy="80" r="40" fill="url(#field)"/><path d="M74 53h21c15 0 24 7 24 18 0 7-4 12-10 15 8 3 13 9 13 18 0 14-11 22-28 22H74zm19 28c7 0 11-3 11-8s-4-7-11-7h-4v15zm2 31c8 0 12-3 12-9 0-5-4-8-12-8h-6v17z" fill="#fff"/>
-  <text x="90" y="151" text-anchor="middle" fill="#073a62" font-family="Arial,sans-serif" font-size="14" font-weight="800" letter-spacing="2">BRDS</text>
-</svg>
