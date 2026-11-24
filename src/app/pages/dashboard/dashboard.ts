@@ -20,6 +20,8 @@ import { PendingLeavesComponent } from '../admin/leave/pending-leaves/pending-le
 import { DocumentVerificationComponent } from '../admin/document-verification/document-verification';
 import { ContractEntryComponent } from '../admin/contract-entry/contract-entry';
 import { AttendanceComponent } from '../admin/attendance/attendance';
+import { SalaryConfigurationComponent } from '../admin/payroll/salary-configuration';
+import { PayComponentsMasterComponent } from '../admin/payroll/pay-components-master';
 
 export interface QuickActionItem {
   id: string;
@@ -64,7 +66,9 @@ export interface ContractTimelinePeriod {
     PendingLeavesComponent,
     DocumentVerificationComponent,
     ContractEntryComponent,
-    AttendanceComponent
+    AttendanceComponent,
+    SalaryConfigurationComponent,
+    PayComponentsMasterComponent
   ],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',

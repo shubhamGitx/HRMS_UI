@@ -648,8 +648,25 @@
         <app-attendance [role]="role" [action]="currentAction || 'daily-attendance'"></app-attendance>
       </ng-container>
 
+      <!-- Admin Payroll configuration and component master -->
+      <ng-container *ngIf="currentSection === 'payroll' && (currentAction === 'salary-header' || currentAction === 'salary-configuration' || currentAction === 'configure-salary')">
+        <app-salary-configuration *ngIf="role === 'admin'"></app-salary-configuration>
+        <section *ngIf="role !== 'admin'" class="module-placeholder-card">
+          <div class="placeholder-icon"><i class="bi bi-shield-lock-fill text-warning"></i></div>
+          <h3>{{ language.t('Access Restricted', 'Access Restricted') }}</h3>
+          <p class="text-muted">Salary configuration is available to authorized payroll administrators only.</p>
+          <a routerLink="/dashboard" [queryParams]="{role: role}" class="btn btn-outline-secondary mt-3">
+            <i class="bi bi-arrow-left"></i> {{ language.t('Back to Dashboard Overview', 'Back to Dashboard Overview') }}
+          </a>
+        </section>
+      </ng-container>
+      <ng-container *ngIf="currentSection === 'payroll' && currentAction === 'pay-components'">
+        <app-pay-components-master *ngIf="role === 'admin'"></app-pay-components-master>
+        <section *ngIf="role !== 'admin'" class="module-placeholder-card"><h3>{{ language.t('Access Restricted', 'Access Restricted') }}</h3><p>Pay component master management is available to authorized administrators only.</p></section>
+      </ng-container>
+
       <!-- Placeholder for other sections in progress -->
-      <ng-container *ngIf="currentSection && currentSection !== 'employees' && currentSection !== 'profile-entry' && currentSection !== 'my-profile' && currentSection !== 'my-contract' && currentSection !== 'account-settings' && currentSection !== 'reporting-structure' && currentSection !== 'leave' && currentSection !== 'offices' && currentSection !== 'document-verification' && currentSection !== 'contract-entry' && currentSection !== 'attendance'">
+      <ng-container *ngIf="currentSection && currentSection !== 'employees' && currentSection !== 'profile-entry' && currentSection !== 'my-profile' && currentSection !== 'my-contract' && currentSection !== 'account-settings' && currentSection !== 'reporting-structure' && currentSection !== 'leave' && currentSection !== 'offices' && currentSection !== 'document-verification' && currentSection !== 'contract-entry' && currentSection !== 'attendance' && !(currentSection === 'payroll' && ['salary-header','salary-configuration','configure-salary','pay-components'].includes(currentAction || ''))">
         <section class="module-placeholder-card">
           <div class="placeholder-icon"><i class="bi bi-gear-wide-connected"></i></div>
           <h3>Module: {{ currentSection | titlecase }}</h3>

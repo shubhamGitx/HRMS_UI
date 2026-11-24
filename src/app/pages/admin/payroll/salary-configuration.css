@@ -1,0 +1,159 @@
+.payroll-admin{--navy:#102d4b;--blue:#176eae;--muted:#687b8e;--line:#dce5ee;color:#20364b}.payroll-admin *{box-sizing:border-box}.pc-crumb{display:flex;gap:9px;align-items:center;font-size:.82rem;color:var(--muted);margin-bottom:18px}.pc-crumb a{color:#176eae;text-decoration:none;cursor:pointer}.pc-crumb i{font-size:.65rem;color:#9aa8b5}.pc-heading,.pc-topline{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.pc-kicker{font-size:.68rem;font-weight:800;letter-spacing:.1em;color:#2974a5}.pc-heading h1,.pc-topline h1{font-size:1.55rem;margin:4px 0;color:var(--navy)}.pc-heading p,.pc-topline p{margin:0;color:var(--muted);font-size:.86rem}.pc-topline h1 small{font-size:1rem;color:#5d7186}.pc-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-bottom:18px}.pc-stats article,.pc-card,.pc-preview{background:white;border:1px solid var(--line);border-radius:12px;box-shadow:0 3px 12px #17334b0b}.pc-stats article{padding:17px 20px;border-top:3px solid #2879b6}.pc-stats article.amber{border-top-color:#d39a24}.pc-stats article.green{border-top-color:#18a477}.pc-stats span,.pc-stats small{display:block;color:var(--muted);font-size:.78rem}.pc-stats strong{display:block;font-size:1.7rem;color:var(--navy);margin:3px 0}.pc-card{overflow:hidden;margin-bottom:16px}.pc-filters{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px;padding:16px;border-bottom:1px solid var(--line)}.pc-search{display:flex;align-items:center;gap:10px;border:1px solid #cbd6e0;border-radius:8px;padding:0 12px;color:#75899b}.pc-search input{border:0!important;box-shadow:none!important;padding-left:0!important}.pc-filters input,.pc-filters select,.pc-form-grid input,.pc-modal input,.pc-modal select,.pc-modal textarea{width:100%;padding:10px 12px;border:1px solid #cbd6e0;border-radius:8px;background:white;color:#253d54;font:inherit;font-size:.84rem}.pc-table-wrap{overflow:auto}.pc-table-wrap table{width:100%;border-collapse:collapse;min-width:760px}.pc-table-wrap th{background:#f4f8fb;color:#61778b;text-transform:uppercase;font-size:.68rem;letter-spacing:.05em;text-align:left;padding:11px 14px;white-space:nowrap}.pc-table-wrap td{padding:13px 14px;border-top:1px solid #e8eef3;font-size:.8rem}.pc-table-wrap td strong,.pc-table-wrap td small{display:block}.pc-table-wrap td small{color:#8191a0;font-size:.7rem;margin-top:3px}.pc-primary,.pc-secondary{display:inline-flex;align-items:center;justify-content:center;gap:7px;border-radius:8px;padding:9px 13px;font:inherit;font-size:.78rem;font-weight:700;cursor:pointer}.pc-primary{border:1px solid #123f68;background:linear-gradient(120deg,#12385c,#176fa9);color:#fff}.pc-primary:disabled,.pc-secondary:disabled{opacity:.48;cursor:not-allowed}.pc-primary.small{white-space:nowrap}.pc-secondary{border:1px solid #bdcbd8;background:white;color:#28455f}.pc-badge,.pc-type{display:inline-flex;border-radius:999px;padding:5px 9px;background:#fff3d5;color:#96680d;font-size:.67rem;font-weight:800;letter-spacing:.04em}.pc-badge.locked{background:#e3f7ed;color:#138158}.pc-badge.draft{background:#e7f1fd;color:#246ba2}.pc-empty{text-align:center;color:var(--muted);padding:32px!important}.pc-config-grid{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(260px,.85fr);gap:16px}.pc-main-col,.pc-side-col{min-width:0}.pc-section-title{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:18px 20px;border-bottom:1px solid var(--line)}.pc-section-title h2,.pc-history h2,.pc-lock h2{margin:0;color:var(--navy);font-size:1.02rem}.pc-section-title p{font-size:.77rem;color:var(--muted);margin:4px 0 0}.pc-revision{background:#edf5fb;color:#28668e;padding:5px 9px;border-radius:7px;font-size:.72rem;font-weight:700}.pc-form-grid{padding:18px 20px;display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.pc-form-grid label,.pc-modal label{display:flex;flex-direction:column;gap:6px;color:#51687e;font-size:.76rem;font-weight:700}.pc-form-grid small{font-weight:400;color:#8999a8}.pc-type{border-radius:5px;background:#e7f6ec;color:#187746;font-size:.62rem}.pc-type.deduct{background:#fff0ee;color:#b34c42}.pc-table-wrap td.right{text-align:right;font-weight:750;white-space:nowrap}.icon-action{border:0;background:transparent;color:#ad4a4a;cursor:pointer;font-size:.9rem}.icon-action:disabled{opacity:.3}.pc-preview{padding:18px;position:sticky;top:16px}.pc-preview h2{margin:5px 0 15px;color:var(--navy);font-size:1.1rem}.pc-preview>div{display:flex;justify-content:space-between;gap:8px;padding:10px 0;border-bottom:1px solid #edf1f5;font-size:.81rem}.pc-preview .earning{color:#18834f}.pc-preview .deduction{color:#bb4e45}.pc-preview .netline{padding-top:15px;border-bottom:0;font-size:.95rem;font-weight:800;color:var(--navy)}.pc-preview>small{color:#81909d;font-size:.69rem}.pc-lock{padding:18px}.pc-lock h2{margin-bottom:13px}.pc-lock .full{width:100%;margin-top:9px}.pc-lock p{font-size:.73rem;color:var(--muted);line-height:1.5}.pc-back{border:0;background:none;color:#2672a7;padding:5px 0;cursor:pointer;font:inherit;font-size:.76rem}.pc-success{margin:9px 0;padding:9px;border-radius:7px;background:#e9f8ef;color:#16724f;font-size:.74rem}.pc-history{padding:18px}.pc-history>div{margin-top:12px;padding:13px;background:#f6f9fc;border-radius:8px}.pc-history span,.pc-history strong,.pc-history small{display:block}.pc-history span,.pc-history small{font-size:.73rem;color:var(--muted)}.pc-history strong{margin:5px 0;font-size:.82rem}.pc-modal-backdrop{position:fixed;inset:0;z-index:3000;background:#0b1c2d80;display:grid;place-items:center;padding:18px}.pc-modal{width:min(600px,100%);max-height:90vh;overflow:auto;background:white;border-radius:14px;padding:24px;box-shadow:0 20px 60px #0004;position:relative}.pc-modal-close{position:absolute;right:18px;top:18px;border:0;background:transparent;font-size:1.1rem;color:#66798b;cursor:pointer}.pc-modal h2{margin:5px 0;color:var(--navy)}.pc-modal>p{margin:0 0 18px;font-size:.82rem;color:var(--muted)}.pc-modal>label{margin-top:13px}.pc-modal textarea{min-height:70px}.pc-meta-row{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}.pc-meta-row span{background:#edf4f8;color:#426078;border-radius:6px;padding:5px 8px;font-size:.68rem;font-weight:700}.pc-modal footer{display:flex;justify-content:flex-end;gap:9px;margin-top:20px}.pc-modal .pc-primary{min-height:40px}
+@media(max-width:900px){.pc-config-grid{grid-template-columns:1fr}.pc-preview{position:static}.pc-filters{grid-template-columns:1fr 1fr}.pc-search{grid-column:1/-1}}@media(max-width:560px){.pc-stats{grid-template-columns:1fr}.pc-form-grid{grid-template-columns:1fr}.pc-heading h1,.pc-topline h1{font-size:1.25rem}.pc-filters{grid-template-columns:1fr}.pc-search{grid-column:auto}.pc-section-title{align-items:flex-start;flex-direction:column}}
+
+/* Pay component editor polish */
+.pay-component-backdrop{background:rgba(10,35,61,.64);backdrop-filter:blur(3px);animation:payComponentFade .2s ease-out both}
+.pay-component-modal{width:min(560px,100%);padding:28px 30px 24px;border:1px solid #d9e8f5;box-shadow:0 24px 70px rgba(8,36,63,.3);animation:payComponentEnter .28s cubic-bezier(.2,.8,.25,1) both}
+.pay-component-modal .pc-kicker{color:#176eae}
+.pay-component-modal h2{font-size:1.3rem;letter-spacing:-.02em}
+.pay-component-modal>p{line-height:1.5}
+.pay-component-modal .pc-form-grid{padding:14px 0 0;gap:14px 16px}
+.pay-component-modal .pc-form-grid label{color:#405d78}
+.pay-component-modal input:not([type=checkbox]):focus,.pay-component-modal select:focus,.pay-component-modal textarea:focus{outline:0;border-color:#3887c4;box-shadow:0 0 0 3px rgba(45,128,190,.14)}
+.pay-component-modal .pc-form-grid label.check{min-height:42px;flex-direction:row;align-items:center;align-self:center;gap:10px;padding:9px 11px;border:1px solid #dce9f4;border-radius:8px;background:#f5f9fd;color:#294b69;cursor:pointer}
+.pay-component-modal .pc-form-grid label.check input[type=checkbox]{appearance:none;-webkit-appearance:none;width:17px;height:17px;flex:0 0 17px;margin:0;border:1.5px solid #8ea8bf;border-radius:4px;background:#fff;cursor:pointer;transition:background-color .15s,border-color .15s,box-shadow .15s}
+.pay-component-modal .pc-form-grid label.check input[type=checkbox]:checked{border-color:#176eae;background:#176eae}
+.pay-component-modal .pc-form-grid label.check input[type=checkbox]:checked::after{content:"";display:block;width:4px;height:8px;margin:2px 0 0 5px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
+.pay-component-modal .pc-form-grid label.check input[type=checkbox]:focus-visible{outline:3px solid rgba(45,128,190,.25);outline-offset:2px}
+.pay-component-modal footer{padding-top:16px;border-top:1px solid #e8f0f6}
+.pay-component-modal .pc-primary{background:linear-gradient(120deg,#14517f,#197bb8);border-color:#14517f;box-shadow:0 4px 10px rgba(23,110,174,.18)}
+.pay-component-modal .pc-primary:hover{background:linear-gradient(120deg,#103f66,#14689e)}
+@keyframes payComponentFade{from{opacity:0}to{opacity:1}}
+@keyframes payComponentEnter{from{opacity:0;transform:translateY(14px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+@media(prefers-reduced-motion:reduce){.pay-component-backdrop,.pay-component-modal{animation:none}}
+@media(max-width:560px){.pay-component-modal{padding:24px 20px 20px}.pay-component-modal .pc-form-grid{grid-template-columns:1fr}.pay-component-modal .pc-form-grid label.check{min-height:40px}}
+
+/* Requested pay component modal proportions and blue title band */
+.pay-component-modal{width:min(770px,100%);min-height:430px;padding:0 30px 24px;display:flex;flex-direction:column}
+.pay-component-modal .pay-component-modal-header{position:relative;margin:0 -30px;padding:22px 62px 18px 30px;background:linear-gradient(120deg,#123f68,#197bb8);border-radius:13px 13px 0 0;color:#fff}
+.pay-component-modal .pay-component-modal-header .pc-kicker{color:#cde8ff}
+.pay-component-modal .pay-component-modal-header h2{margin:5px 0;color:#fff}
+.pay-component-modal .pay-component-modal-header p{margin:0;color:#e1f1ff;font-size:.82rem;line-height:1.45}
+.pay-component-modal .pay-component-modal-header .pc-modal-close{top:18px;right:18px;color:#e1f1ff}
+.pay-component-modal .pay-component-modal-header .pc-modal-close:hover{color:#fff}
+.pay-component-modal .pc-form-grid{padding:22px 0 18px;gap:16px 18px}
+.pay-component-modal footer{margin-top:auto}
+.pay-component-modal .pc-form-grid label.check input[type=checkbox]{display:grid;place-items:center;position:relative}
+.pay-component-modal .pc-form-grid label.check input[type=checkbox]:checked::after{position:static;width:4px;height:8px;margin:0;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
+@media(max-width:560px){.pay-component-modal{min-height:0;padding:0 20px 20px}.pay-component-modal .pay-component-modal-header{margin:0 -20px;padding:20px 52px 16px 20px}.pay-component-modal .pc-form-grid{padding:16px 0 14px}}
+.pay-component-modal .pc-form-grid label.check{min-height:60px;align-items:center}
+.pay-component-modal .pc-form-grid label.check input[type=checkbox]{align-self:center}
+.pay-component-modal .check-copy{display:flex;flex-direction:column;gap:3px;line-height:1.3}
+.pay-component-modal .check-copy strong{font-size:.74rem;color:#294b69}
+.pay-component-modal .check-copy small{font-size:.66rem;color:#71869a;font-weight:400}
+.pay-component-modal .pc-form-grid>label>small{font-size:.67rem;line-height:1.35}
+.pc-crumb a{cursor:pointer}
+.pc-topline-actions{display:flex;align-items:center;gap:12px;flex:0 0 auto}
+.pc-return-button{min-height:38px;color:#176eae;border-color:#b9d4e8;background:#f5faff}
+.pc-return-button:hover{background:#e8f3fc;border-color:#8bb8d9}
+@media(max-width:560px){.pc-topline{align-items:flex-start;gap:12px;flex-direction:column}.pc-topline-actions{width:100%;justify-content:space-between;order:-1}}
+
+/* Pay components dashboard theme */
+.pay-components-page{--navy:#123743;--blue:#087c8b;--muted:#6c8188;--line:#e1e9e8;color:#213b42;padding-bottom:24px}
+.pay-components-page .pc-crumb{color:#7d9094;margin-bottom:14px}
+.pay-components-page .pc-crumb a{color:#087c8b}
+.pay-components-page .pc-heading{position:relative;isolation:isolate;overflow:hidden;align-items:center;min-height:150px;margin-bottom:20px;padding:26px 30px;border:1px solid rgba(255,255,255,.28);border-radius:20px;background:radial-gradient(ellipse at 88% 18%,rgba(114,218,203,.42),transparent 32%),linear-gradient(118deg,#073c4d 0%,#087986 54%,#34a19b 100%);box-shadow:0 14px 32px rgba(5,73,82,.19)}
+.pay-components-page .pc-heading::after{content:"";position:absolute;z-index:-1;width:250px;height:250px;right:11%;top:-175px;border:1px solid rgba(220,255,247,.17);border-radius:50%;box-shadow:0 0 0 25px rgba(220,255,247,.045),0 0 0 52px rgba(220,255,247,.035)}
+.pay-components-page .pc-heading>div{max-width:720px}
+.pay-components-page .pc-heading .pc-kicker{color:#b4e6df}
+.pay-components-page .pc-heading h1{margin:7px 0;color:#fff;font-size:1.75rem;letter-spacing:-.035em}
+.pay-components-page .pc-heading p{color:rgba(238,252,250,.78);font-size:.85rem;line-height:1.5}
+.pay-components-page .pc-heading .pc-primary{position:relative;z-index:1;flex:0 0 auto;min-height:42px;padding:10px 16px;border:1px solid rgba(255,255,255,.68);border-radius:999px;background:#f7fffd;color:#075964;box-shadow:0 5px 16px rgba(0,38,47,.15);transition:transform .18s ease,box-shadow .18s ease}
+.pay-components-page .pc-heading .pc-primary:hover{transform:translateY(-2px);box-shadow:0 9px 22px rgba(0,38,47,.23)}
+.pay-components-page .pc-stats{gap:16px;margin-bottom:20px}
+.pay-components-page .pc-stats article{position:relative;overflow:hidden;min-height:110px;padding:18px 21px;border:1px solid #e0e9e8;border-top:0;border-radius:16px;background:linear-gradient(145deg,#fff,#f6fbfa);box-shadow:0 8px 20px rgba(28,72,75,.07);transition:transform .18s ease,box-shadow .18s ease}
+.pay-components-page .pc-stats article:hover{transform:translateY(-2px);box-shadow:0 12px 25px rgba(28,72,75,.11)}
+.pay-components-page .pc-stats article::after{content:"";position:absolute;width:120px;height:120px;right:-55px;top:-72px;border-radius:50%;background:rgba(58,169,157,.09)}
+.pay-components-page .pc-stats article:first-child{border-color:#0b6771;background:radial-gradient(circle at 92% 4%,rgba(100,208,191,.25),transparent 32%),linear-gradient(120deg,#07505f,#087b84 72%,#168f8b);box-shadow:0 10px 24px rgba(5,90,99,.2)}
+.pay-components-page .pc-stats article:first-child span,.pay-components-page .pc-stats article:first-child small{color:rgba(238,252,250,.77)}
+.pay-components-page .pc-stats article:first-child strong{color:#fff}
+.pay-components-page .pc-stats article.green{border-left:3px solid #43ad8c}
+.pay-components-page .pc-stats article.amber{border-left:3px solid #e0a14b}
+.pay-components-page .pc-stats article span{font-size:.75rem;letter-spacing:.015em}
+.pay-components-page .pc-stats article strong{font-size:1.85rem;letter-spacing:-.04em}
+.pay-components-page .pc-card{overflow:hidden;border:1px solid #e2eae9;border-radius:18px;background:linear-gradient(155deg,#fff 0%,#fcfefd 100%);box-shadow:0 9px 26px rgba(31,68,72,.07)}
+.pay-components-page .pc-filters{grid-template-columns:minmax(240px,2fr) repeat(3,minmax(155px,1fr));gap:11px;padding:18px 20px;background:linear-gradient(180deg,#fff,#f8fbfa);border-bottom:1px solid #e8efee}
+.pay-components-page .pc-search{min-height:42px;border-color:#dce7e5;border-radius:11px;background:#fff}
+.pay-components-page .pc-filters select{min-height:42px;border-color:#dce7e5;border-radius:11px;background-color:#fff;color:#36545a}
+.pay-components-page .pc-filters select:focus,.pay-components-page .pc-search:focus-within{outline:0;border-color:#57aaa3;box-shadow:0 0 0 3px rgba(37,144,137,.1)}
+.pay-components-page .pc-section-title{padding:20px 22px 14px;border-bottom:0}
+.pay-components-page .pc-section-title h2{font-size:1.08rem;letter-spacing:-.02em;color:#173d45}
+.pay-components-page .pc-section-title p{color:#829499}
+.pay-components-page .pc-table-wrap table{min-width:860px}
+.pay-components-page .pc-table-wrap th{padding:12px 14px;background:#eff6f4;color:#71878a;font-size:.66rem;letter-spacing:.075em}
+.pay-components-page .pc-table-wrap td{padding:15px 14px;border-top:1px solid #edf2f1;color:#456168;font-size:.77rem}
+.pay-components-page .pc-table-wrap tbody tr{transition:background-color .16s ease}
+.pay-components-page .pc-table-wrap tbody tr:hover{background:#f2faf8}
+.pay-components-page .pc-table-wrap td strong{color:#1b3e45;font-size:.78rem;letter-spacing:.015em}
+.pay-components-page .pc-table-wrap td small{color:#82969a}
+.pay-components-page .pc-type{background:#e3f5ef;color:#178268;border-radius:999px;font-size:.61rem}
+.pay-components-page .pc-type.deduct{background:#fff1e4;color:#ae6531}
+.pay-components-page .pc-badge{background:#fff3df;color:#a86d19}
+.pay-components-page .pc-badge.locked{background:#e0f5ed;color:#178268}
+.pay-components-page .pc-back{margin-right:7px;color:#087c8b;font-weight:700}
+.pay-components-page .pc-back:hover{color:#07505f;text-decoration:underline}
+.pay-components-page .pc-modal-backdrop{background:rgba(5,34,43,.64)}
+.pay-components-page .pay-component-modal .pay-component-modal-header{background:radial-gradient(ellipse at 90% 0%,rgba(105,210,193,.25),transparent 35%),linear-gradient(120deg,#073e4e,#087b83 58%,#198d88)}
+.pay-components-page .pay-component-modal .pc-primary{background:linear-gradient(120deg,#075968,#0b8586);border-color:#087c83}
+.pay-components-page .pay-component-modal .pc-primary:hover{background:linear-gradient(120deg,#064653,#08736f)}
+@media(max-width:900px){.pay-components-page .pc-filters{grid-template-columns:repeat(2,minmax(0,1fr))}.pay-components-page .pc-search{grid-column:1/-1}}
+@media(max-width:560px){.pay-components-page .pc-heading{align-items:flex-start;flex-direction:column;gap:18px;padding:22px;border-radius:16px}.pay-components-page .pc-heading h1{font-size:1.45rem}.pay-components-page .pc-stats{gap:11px}.pay-components-page .pc-stats article{min-height:96px}.pay-components-page .pc-filters{grid-template-columns:1fr;padding:14px}.pay-components-page .pc-search{grid-column:auto}.pay-components-page .pc-section-title{padding:16px 16px 12px}}
+@media(prefers-reduced-motion:reduce){.pay-components-page .pc-stats article,.pay-components-page .pc-heading .pc-primary,.pay-components-page .pc-table-wrap tbody tr{transition:none}}
+
+/* Keep all pay component stat cards visually consistent */
+.pay-components-page .pc-stats article,
+.pay-components-page .pc-stats article:first-child,
+.pay-components-page .pc-stats article.green,
+.pay-components-page .pc-stats article.amber{
+  border:1px solid rgba(255,255,255,.92);
+  border-top:1px solid rgba(255,255,255,.92);
+  border-left:1px solid rgba(255,255,255,.92);
+  background:linear-gradient(145deg,rgba(255,255,255,.99),rgba(233,248,243,.94));
+  box-shadow:0 8px 22px rgba(34,94,82,.08),inset 0 1px 0 rgba(255,255,255,.98);
+  backdrop-filter:blur(12px);
+}
+.pay-components-page .pc-stats article:first-child span,
+.pay-components-page .pc-stats article:first-child small{color:var(--muted)}
+.pay-components-page .pc-stats article:first-child strong{color:var(--navy)}
+.pay-components-page .pc-stats article::after{background:rgba(72,174,145,.09)}
+
+/* Salary configuration shares the light mint glass payroll dashboard theme */
+.salary-configuration-page{--navy:#123743;--blue:#087c8b;--muted:#6c8188;--line:#e1e9e8;color:#213b42;padding-bottom:24px}
+.salary-configuration-page .pc-crumb{color:#7d9094;margin-bottom:14px}
+.salary-configuration-page .pc-crumb a{color:#087c8b}
+.salary-configuration-page .pc-heading,.salary-configuration-page .pc-topline{position:relative;isolation:isolate;overflow:hidden;min-height:142px;margin-bottom:20px;padding:25px 30px;border:1px solid rgba(255,255,255,.28);border-radius:20px;background:radial-gradient(ellipse at 88% 12%,rgba(114,218,203,.4),transparent 32%),linear-gradient(118deg,#073c4d 0%,#087986 54%,#34a19b 100%);box-shadow:0 14px 32px rgba(5,73,82,.17)}
+.salary-configuration-page .pc-heading::after,.salary-configuration-page .pc-topline::after{content:"";position:absolute;z-index:-1;width:240px;height:240px;right:11%;top:-175px;border:1px solid rgba(220,255,247,.17);border-radius:50%;box-shadow:0 0 0 25px rgba(220,255,247,.045),0 0 0 52px rgba(220,255,247,.035)}
+.salary-configuration-page .pc-heading .pc-kicker,.salary-configuration-page .pc-topline .pc-kicker{color:#b4e6df}
+.salary-configuration-page .pc-heading h1,.salary-configuration-page .pc-topline h1{margin:7px 0;color:#fff;font-size:1.65rem;letter-spacing:-.035em}
+.salary-configuration-page .pc-heading h1 small,.salary-configuration-page .pc-topline h1 small{color:rgba(238,252,250,.8)}
+.salary-configuration-page .pc-heading p,.salary-configuration-page .pc-topline p{color:rgba(238,252,250,.78);font-size:.84rem;line-height:1.5}
+.salary-configuration-page .pc-topline{align-items:center}
+.salary-configuration-page .pc-topline-actions{position:relative;z-index:1}
+.salary-configuration-page .pc-topline-actions .pc-return-button{border-color:rgba(255,255,255,.72);background:#f7fffd;color:#075964;border-radius:999px}
+.salary-configuration-page .pc-topline-actions .pc-return-button:hover{background:#e8faf5}
+.salary-configuration-page .pc-stats{gap:16px;margin-bottom:20px}
+.salary-configuration-page .pc-stats article{position:relative;overflow:hidden;min-height:110px;padding:18px 21px;border:1px solid rgba(255,255,255,.92);border-radius:16px;background:linear-gradient(145deg,rgba(255,255,255,.99),rgba(233,248,243,.94));box-shadow:0 8px 22px rgba(34,94,82,.08),inset 0 1px 0 rgba(255,255,255,.98);backdrop-filter:blur(12px);transition:transform .18s ease,box-shadow .18s ease}
+.salary-configuration-page .pc-stats article:hover{transform:translateY(-2px);box-shadow:0 12px 25px rgba(34,94,82,.11),inset 0 1px 0 rgba(255,255,255,.98)}
+.salary-configuration-page .pc-stats article::after{content:"";position:absolute;width:120px;height:120px;right:-55px;top:-72px;border-radius:50%;background:rgba(72,174,145,.09)}
+.salary-configuration-page .pc-stats article:first-child span,.salary-configuration-page .pc-stats article:first-child small{color:var(--muted)}
+.salary-configuration-page .pc-stats article:first-child strong{color:var(--navy)}
+.salary-configuration-page .pc-stats article.amber,.salary-configuration-page .pc-stats article.green{border-color:rgba(255,255,255,.92)}
+.salary-configuration-page .pc-card,.salary-configuration-page .pc-preview{overflow:hidden;border:1px solid rgba(255,255,255,.9);border-radius:18px;background:linear-gradient(145deg,rgba(255,255,255,.99),rgba(239,249,246,.94));box-shadow:0 9px 26px rgba(34,94,82,.08),inset 0 1px 0 rgba(255,255,255,.98);backdrop-filter:blur(12px)}
+.salary-configuration-page .pc-filters{background:linear-gradient(180deg,#fff,#f7fbf9);border-bottom-color:#e8efee}
+.salary-configuration-page .pc-search{min-height:42px;border-color:#dce7e5;border-radius:11px;background:#fff}
+.salary-configuration-page .pc-filters select{min-height:42px;border-color:#dce7e5;border-radius:11px;background-color:#fff;color:#36545a}
+.salary-configuration-page .pc-filters select:focus,.salary-configuration-page .pc-search:focus-within{outline:0;border-color:#57aaa3;box-shadow:0 0 0 3px rgba(37,144,137,.1)}
+.salary-configuration-page .pc-table-wrap th{background:#eff6f4;color:#71878a;letter-spacing:.075em}
+.salary-configuration-page .pc-table-wrap td{border-top-color:#edf2f1;color:#456168}
+.salary-configuration-page .pc-table-wrap tbody tr{transition:background-color .16s ease}
+.salary-configuration-page .pc-table-wrap tbody tr:hover{background:#f2faf8}
+.salary-configuration-page .pc-table-wrap td strong{color:#1b3e45}
+.salary-configuration-page .pc-primary{border-color:#087c83;background:linear-gradient(120deg,#075968,#0b8586);box-shadow:0 5px 14px rgba(5,90,99,.16)}
+.salary-configuration-page .pc-primary:hover{background:linear-gradient(120deg,#064653,#08736f)}
+.salary-configuration-page .pc-secondary{border-color:#c9dfd9;background:linear-gradient(145deg,#fff,#f0f9f5);color:#245760}
+.salary-configuration-page .pc-modal-backdrop{background:rgba(5,34,43,.64)}
+.salary-configuration-page .pc-modal .pc-kicker{color:#087c8b}
+.salary-configuration-page .pc-modal .pc-primary{color:#fff}
+@media(max-width:900px){.salary-configuration-page .pc-config-grid{grid-template-columns:1fr}}
+@media(max-width:560px){.salary-configuration-page .pc-heading,.salary-configuration-page .pc-topline{align-items:flex-start;flex-direction:column;gap:14px;padding:21px;border-radius:16px}.salary-configuration-page .pc-heading h1,.salary-configuration-page .pc-topline h1{font-size:1.4rem}.salary-configuration-page .pc-topline-actions{width:100%;justify-content:space-between;order:-1}.salary-configuration-page .pc-stats{gap:11px}.salary-configuration-page .pc-stats article{min-height:96px}}
+@media(prefers-reduced-motion:reduce){.salary-configuration-page .pc-stats article,.salary-configuration-page .pc-table-wrap tbody tr{transition:none}}

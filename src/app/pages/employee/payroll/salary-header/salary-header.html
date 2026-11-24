@@ -1,0 +1,129 @@
+<section class="salary-header-page" aria-labelledby="salary-header-title">
+  <nav class="salary-breadcrumb no-print" aria-label="Breadcrumb">
+    <a routerLink="/dashboard" queryParamsHandling="preserve">Dashboard</a>
+    <i class="bi bi-chevron-right" aria-hidden="true"></i>
+    <span>Payroll</span>
+    <i class="bi bi-chevron-right" aria-hidden="true"></i>
+    <strong>Salary Header</strong>
+  </nav>
+
+  <header class="salary-page-title">
+    <div class="salary-title-copy">
+      <span class="salary-title-icon"><i class="bi bi-cash-stack"></i></span>
+      <div>
+        <h1 id="salary-header-title">Salary Header</h1>
+        <p>Your current approved salary structure and monthly component rules.</p>
+      </div>
+    </div>
+    <button type="button" class="salary-print-button no-print" (click)="printSalaryHeader()">
+      <i class="bi bi-printer"></i> Print summary
+    </button>
+  </header>
+
+  <div class="salary-data-note no-print">
+    <i class="bi bi-info-circle-fill"></i>
+    <!-- <span>Showing temporary UI data from <code>{{ dummyApiName }}</code>. This screen does not make a backend request.</span> -->
+  </div>
+
+  <div *ngIf="isLoading()" class="salary-loading" role="status">
+    <i class="bi bi-arrow-repeat"></i> Loading salary header…
+  </div>
+
+  <ng-container *ngIf="salaryHeader() as header">
+    <article class="salary-hero">
+      <div class="salary-hero-main">
+        <div class="salary-status-row">
+          <span class="salary-status"><i class="bi bi-lock-fill"></i> {{ header.status }}</span>
+          <span class="salary-reference">Salary Header #{{ header.salaryHeaderId }}</span>
+        </div>
+        <h2>{{ header.employeeName }}</h2>
+        <p><i class="bi bi-person-badge"></i> {{ header.employeeCode }} <span aria-hidden="true">•</span> {{ header.designation }}</p>
+      </div>
+      <div class="salary-hero-meta">
+        <div><span>Revision</span><strong>Revision {{ header.revisionNo }}</strong></div>
+        <div><span>Effective from</span><strong>{{ header.effectiveFrom }}</strong></div>
+        <div><span>Valid through</span><strong>{{ header.effectiveTo || 'Active' }}</strong></div>
+      </div>
+    </article>
+
+    <section class="salary-summary-grid" aria-label="Monthly salary summary">
+      <article class="salary-summary-card gross">
+        <span class="salary-summary-icon"><i class="bi bi-wallet2"></i></span>
+        <div><span>Monthly Gross</span><strong>{{ header.monthlyGross | currency:'INR':'symbol':'1.2-2' }}</strong><small>Total earnings before deductions</small></div>
+      </article>
+      <article class="salary-summary-card deduction">
+        <span class="salary-summary-icon"><i class="bi bi-dash-circle"></i></span>
+        <div><span>Total Deductions</span><strong>{{ header.totalDeductions | currency:'INR':'symbol':'1.2-2' }}</strong><small>Statutory deductions in this revision</small></div>
+      </article>
+      <article class="salary-summary-card net">
+        <span class="salary-summary-icon"><i class="bi bi-cash-coin"></i></span>
+        <div><span>Net Payable</span><strong>{{ header.netPayable | currency:'INR':'symbol':'1.2-2' }}</strong><small>Expected full-month net remuneration</small></div>
+      </article>
+    </section>
+
+    <section class="salary-card">
+      <header class="salary-card-header">
+        <div>
+          <h2><i class="bi bi-file-earmark-text"></i> Salary configuration</h2>
+          <p>Effective-dated information for the locked salary revision.</p>
+        </div>
+        <span class="readonly-tag"><i class="bi bi-eye"></i> Read only</span>
+      </header>
+      <dl class="salary-field-grid">
+        <div><dt>Employee code</dt><dd>{{ header.employeeCode }}</dd></div>
+        <div><dt>Department</dt><dd>{{ header.department }}</dd></div>
+        <div><dt>Designation</dt><dd>{{ header.designation }}</dd></div>
+        <div><dt>Pay matrix</dt><dd>{{ header.payMatrix }}</dd></div>
+        <div><dt>Effective from</dt><dd>{{ header.effectiveFrom }}</dd></div>
+        <div><dt>Effective to</dt><dd>{{ header.effectiveTo || 'Until revised' }}</dd></div>
+        <div><dt>Created on</dt><dd>{{ header.createdOn }}</dd></div>
+        <div><dt>Payroll status</dt><dd><span class="inline-status">{{ header.status }}</span></dd></div>
+      </dl>
+    </section>
+
+    <section class="salary-card salary-components-card">
+      <header class="salary-card-header">
+        <div>
+          <h2><i class="bi bi-list-check"></i> Salary components</h2>
+          <p>Component-level earning and deduction rules applied to this salary header.</p>
+        </div>
+        <span class="component-count">{{ header.components.length }} components</span>
+      </header>
+
+      <div class="salary-table-wrap">
+        <table class="salary-components-table">
+          <thead>
+            <tr>
+              <th scope="col">Component</th>
+              <th scope="col">Type</th>
+              <th scope="col">Calculation</th>
+              <th scope="col">Rule / input detail</th>
+              <th scope="col" class="amount-column">Monthly amount</th>
+              <th scope="col" class="flag-column">LOP</th>
+              <th scope="col" class="flag-column">Taxable</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let component of header.components">
+              <td><strong>{{ component.name }}</strong><span class="component-code">{{ component.code }}</span></td>
+              <td><span class="type-badge" [class.deduction]="component.componentType === 'DEDUCTION'">{{ component.componentType }}</span></td>
+              <td><span class="calc-type">{{ component.calculationType }}</span></td>
+              <td class="rule-cell">{{ component.rule }}</td>
+              <td class="amount-column" [class.amount-deduction]="component.componentType === 'DEDUCTION'">{{ component.componentType === 'DEDUCTION' ? '-' : '+' }}{{ component.amount | currency:'INR':'symbol':'1.2-2' }}</td>
+              <td class="flag-column"><i class="bi" [ngClass]="component.isProrated ? 'bi-check-circle-fill flag-yes' : 'bi-dash-circle flag-no'"></i><span class="sr-only">{{ component.isProrated ? 'Applicable' : 'Not applicable' }}</span></td>
+              <td class="flag-column"><i class="bi" [ngClass]="component.isTaxable ? 'bi-check-circle-fill flag-yes' : 'bi-dash-circle flag-no'"></i><span class="sr-only">{{ component.isTaxable ? 'Applicable' : 'Not applicable' }}</span></td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr><td colspan="4">Net payable for a full month</td><td class="amount-column">{{ header.netPayable | currency:'INR':'symbol':'1.2-2' }}</td><td colspan="2"></td></tr>
+          </tfoot>
+        </table>
+      </div>
+    </section>
+
+    <aside class="salary-lock-note">
+      <i class="bi bi-shield-lock-fill"></i>
+      <div><strong>This salary revision is locked.</strong><p>It is used for monthly payroll processing. Contact your reporting office if any approved salary detail needs correction.</p></div>
+    </aside>
+  </ng-container>
+</section>

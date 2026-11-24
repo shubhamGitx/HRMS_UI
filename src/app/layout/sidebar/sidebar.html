@@ -134,6 +134,26 @@
         </div>
       </div>
 
+      <!-- Payroll Dropdown -->
+      <div class="menu-group">
+        <a class="nav-menu-item has-submenu"
+           [class.parent-active]="isGroupActive(payrollMenuAdmin)"
+           [attr.title]="language.t('Payroll')"
+           (click)="toggleSubmenu('payroll', $event)">
+          <i class="bi bi-currency-rupee menu-icon"></i>
+          <span class="menu-label">{{ language.t('Payroll') }}</span>
+          <i class="bi menu-chevron" [ngClass]="expandedMenus['payroll'] ? 'bi-chevron-down' : 'bi-chevron-right'"></i>
+        </a>
+        <div class="submenu-container" *ngIf="expandedMenus['payroll'] && !collapsed">
+          <a class="submenu-item"
+             *ngFor="let item of payrollMenuAdmin"
+             [routerLink]="item.path"
+             queryParamsHandling="preserve"
+             [class.active]="isRouteActive(item.path)"
+             (click)="closeMobileSidebar()">{{ language.t(item.title) }}</a>
+        </div>
+      </div>
+
       <!-- Tour Management -->
       <div class="menu-group">
         <a class="nav-menu-item has-submenu" [attr.title]="language.t('Tour Management')" (click)="toggleSubmenu('tour', $event)">

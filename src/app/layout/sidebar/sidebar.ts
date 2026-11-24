@@ -78,6 +78,11 @@ export class SidebarComponent implements OnInit, OnChanges {
     { title: 'Attendance Reports', path: '/dashboard/attendance/attendance-reports' }
   ];
 
+  readonly payrollMenuAdmin: StaticMenuItem[] = [
+    { title: 'Salary Configuration', path: '/dashboard/payroll/salary-configuration' },
+    { title: 'Pay Components', path: '/dashboard/payroll/pay-components' }
+  ];
+
   // Employee Self-Service Menus
   readonly profileMenuEmployee: StaticMenuItem[] = [
     { title: 'Personal Information', path: '/dashboard/my-profile/personal-information' },
@@ -177,7 +182,7 @@ export class SidebarComponent implements OnInit, OnChanges {
         return;
       }
       if (items && items.length > 0) {
-        this.dbMenuItems = this.enrichMenuItems(items);
+        this.dbMenuItems = this.ensureSalaryHeaderInAdminPayroll(this.enrichMenuItems(items));
         this.expandedDbMenus = new Set<number>();
         for (const item of this.dbMenuItems) {
           if (this.isDbParentActive(item)) {
@@ -193,7 +198,7 @@ export class SidebarComponent implements OnInit, OnChanges {
     if (this.isGroupActive(this.contractMenuEmployee)) this.expandedMenus['myContract'] = true;
     if (this.isGroupActive(this.attendanceMenuEmployee)) this.expandedMenus['attendance'] = true;
     if (this.isGroupActive(this.leaveMenuEmployee)) this.expandedMenus['leave'] = true;
-    if (this.isGroupActive(this.payrollMenuEmployee)) this.expandedMenus['payroll'] = true;
+    if (this.isGroupActive(this.payrollMenuEmployee) || this.isGroupActive(this.payrollMenuAdmin)) this.expandedMenus['payroll'] = true;
     if (this.isGroupActive(this.tourMenuEmployee)) this.expandedMenus['tour'] = true;
     if (this.isGroupActive(this.grievanceMenuEmployee)) this.expandedMenus['grievance'] = true;
     if (this.isGroupActive(this.certificatesMenuEmployee)) this.expandedMenus['certificates'] = true;
@@ -353,6 +358,9 @@ export class SidebarComponent implements OnInit, OnChanges {
       'उपस्थिति सुधार': '/dashboard/attendance/attendance-correction',
       'Current Salary': '/dashboard/payroll/current-salary',
       'वर्तमान वेतन': '/dashboard/payroll/current-salary',
+      'Salary Header': '/dashboard/payroll/salary-configuration',
+      'Salary Configuration': '/dashboard/payroll/salary-configuration',
+      'Pay Components': '/dashboard/payroll/pay-components',
       'Payslip': '/dashboard/payroll/payslips',
       'Payslips': '/dashboard/payroll/payslips',
       'वेतन पर्ची': '/dashboard/payroll/payslips',
@@ -374,5 +382,39 @@ export class SidebarComponent implements OnInit, OnChanges {
       icon: item.icon || iconMap[item.label] || 'bi-circle',
       children: item.children ? this.enrichMenuItems(item.children) : []
     }));
+  }
+
+  /** Keeps the new payroll function visible for admin navigation whether menu data is API-driven or static. */
+  private ensureSalaryHeaderInAdminPayroll(items: DashboardMenuItem[]): DashboardMenuItem[] {
+    const payrollLinks: DashboardMenuItem[] = [
+      { id: -9101, label: 'Salary Configuration', icon: 'bi-cash-stack', route: '/dashboard/payroll/salary-configuration', isHeading: false, children: [] },
+      { id: -9102, label: 'Pay Components', icon: 'bi-list-check', route: '/dashboard/payroll/pay-components', isHeading: false, children: [] }
+    ];
+
+    let payrollFound = false;
+    const updated = items.map(item => {
+      if (item.label.trim().toLowerCase() !== 'payroll') return item;
+
+      payrollFound = true;
+      const children = [...item.children];
+      for (const link of payrollLinks) {
+        if (!children.some(child => child.route === link.route || child.label === link.label)) children.push(link);
+      }
+      return { ...item, children };
+    });
+
+    if (payrollFound) return updated;
+
+    return [
+      ...updated,
+      {
+        id: -9100,
+        label: 'Payroll',
+        icon: 'bi-currency-rupee',
+        route: null,
+        isHeading: false,
+        children: payrollLinks
+      }
+    ];
   }
 }
