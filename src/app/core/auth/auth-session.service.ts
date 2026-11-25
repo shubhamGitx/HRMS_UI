@@ -26,7 +26,12 @@ export class AuthSessionService {
     return sessionStorage.getItem(this.tokenKey);
   }
 
-  get user(): AuthenticatedUser | null {
+  get isMaker(): boolean {
+    const user = this.user;
+    return user?.userRole === 'Official' && user.roleCode?.trim().toUpperCase() === 'SMAKER';
+  }
+
+  get user(): AuthenticatedUser | null {debugger
     const stored = sessionStorage.getItem(this.userKey);
     if (!stored) return null;
     try { return JSON.parse(stored) as AuthenticatedUser; } catch { this.clear(); return null; }

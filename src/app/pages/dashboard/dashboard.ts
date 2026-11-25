@@ -188,16 +188,6 @@ export class Dashboard implements OnInit {
       }));
     }
 
-    this.route.queryParams.subscribe(params => {
-      if (params['role']) {
-        this.role = params['role'] === 'admin' ? 'admin' : 'employee';
-      } else {
-        const sessionRole = this.authSession.user?.userRole;
-        this.role = sessionRole === 'Official' ? 'admin' : 'employee';
-      }
-      this.refreshCurrentDashboard();
-    });
-
     this.route.paramMap.subscribe(params => {
       this.currentSection = params.get('section');
       this.currentAction = params.get('action');
