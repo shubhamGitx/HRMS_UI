@@ -69,6 +69,15 @@ export const API_ENDPOINT = {
     PAY_COMPONENTS: '/PayComponents',
     PAY_COMPONENT_LOOKUPS: '/PayComponents/masterdropdown',
     PAY_COMPONENT_SUMMARY: '/PayComponents/summary',
+    SALARY_CONFIGURATION: '/SalaryConfiguration',
+    SALARY_CONFIGURATION_BY_EMPLOYEE_ID: (employeeId: number | string) =>
+      `/SalaryConfiguration/${employeeId}`,
+    SALARY_CONFIGURATION_SUMMARY: '/SalaryConfiguration/summary',
+    SAVE_SALARY_HEADER_DRAFT: '/SalaryConfiguration/salary-headers',
+    UPDATE_SALARY_HEADER_DRAFT: (salaryHeaderId: number | string) =>
+      `/SalaryConfiguration/salary-headers/${salaryHeaderId}`,
+    LOCK_SALARY_HEADER: (salaryHeaderId: number | string) =>
+      `/SalaryConfiguration/salary-headers/${salaryHeaderId}/lock`,
   },
   CONTRACT: {
     // Contract endpoints

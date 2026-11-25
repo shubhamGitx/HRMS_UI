@@ -185,6 +185,7 @@
 .salary-configuration-page .salary-filter-option{display:block;width:100%;padding:.62rem .75rem;border:0;border-radius:.5rem;background:transparent;color:#35545a;font:inherit;font-size:.78rem;line-height:1.35;text-align:left;cursor:pointer;transition:background-color .12s ease,color .12s ease}
 .salary-configuration-page .salary-filter-option:hover,.salary-configuration-page .salary-filter-option:focus-visible{outline:0;background:#eff9f6;color:#08746e}
 .salary-configuration-page .salary-filter-option[aria-selected=true]{background:#e5f5f0;color:#08746e;font-weight:700}
+.salary-configuration-page .pc-error{margin:0 0 14px;padding:11px 13px;border:1px solid #f3c7bf;border-radius:9px;background:#fff3f0;color:#a84536;font-size:.78rem;line-height:1.45}
 @keyframes salaryDropdownIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
 @media(prefers-reduced-motion:reduce){.salary-configuration-page .salary-filter-menu{animation:none}.salary-configuration-page .salary-filter-trigger i,.salary-configuration-page .salary-filter-option{transition:none}}
 .pay-components-page .pc-error{margin:14px 0 0;padding:11px 13px;border:1px solid #f3c7bf;border-radius:9px;background:#fff3f0;color:#a84536;font-size:.78rem;line-height:1.45}

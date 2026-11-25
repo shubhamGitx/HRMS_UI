@@ -16,25 +16,27 @@
     </header>
     <section class="pc-stats">
       <article>
-        <span>Employees</span><strong>{{ employees().length }}</strong
+        <span>Employees</span><strong>{{ summaryLoading() ? '…' : summary().totalEmployees }}</strong
         ><small>In this office scope</small>
       </article>
       <article class="amber">
-        <span>Pending / Draft</span><strong>{{ draftCount() }}</strong
+        <span>Pending / Draft</span><strong>{{ summaryLoading() ? '…' : draftCount() }}</strong
         ><small>Need salary configuration or lock</small>
       </article>
       <article class="green">
-        <span>Locked</span><strong>{{ lockedCount() }}</strong
+        <span>Locked</span><strong>{{ summaryLoading() ? '…' : lockedCount() }}</strong
         ><small>Eligible for payroll processing</small>
       </article>
     </section>
+    <p class="pc-error" *ngIf="summaryError()">{{ summaryError() }}</p>
     <section class="pc-card">
       <div class="pc-filters">
         <label class="pc-search"
           ><i class="bi bi-search"></i
           ><input
             class="form-control salary-filter-search"
-            [(ngModel)]="search"
+          [ngModel]="search()"
+          (ngModelChange)="search.set($event)"
             placeholder="Search employee name or code"
         /></label>
         <div class="dropdown salary-filter-dropdown">
@@ -150,7 +152,13 @@
                 </button>
               </td>
             </tr>
-            <tr *ngIf="!filteredEmployees().length">
+            <tr *ngIf="loading()">
+              <td colspan="6" class="pc-empty">Loading salary configuration employees…</td>
+            </tr>
+            <tr *ngIf="!loading() && error()">
+              <td colspan="6" class="pc-empty">{{ error() }}</td>
+            </tr>
+            <tr *ngIf="!loading() && !error() && !filteredEmployees().length">
               <td colspan="6" class="pc-empty">No employees match these filters.</td>
             </tr>
           </tbody>
@@ -159,8 +167,13 @@
     </section>
   </ng-container>
 
-  <ng-template #configureView
-    ><ng-container *ngIf="employee() as e"
+  <ng-template #configureView>
+    <p class="pc-success" *ngIf="detailLoading()" role="status">Loading employee salary details…</p>
+    <p class="pc-error" *ngIf="detailError()" role="alert">{{ detailError() }}</p>
+    <button *ngIf="detailError() && !employee()" class="pc-back" (click)="backToList()">
+      <i class="bi bi-arrow-left"></i> Back to salary list
+    </button>
+    <ng-container *ngIf="employee() as e"
       ><nav class="pc-crumb">
         <a routerLink="/dashboard" [queryParams]="{ role: 'admin' }">Home</a
         ><i class="bi bi-chevron-right"></i><a (click)="backToList()">Salary Configuration</a
@@ -193,15 +206,16 @@
                   Effective dated parent salary version. Only locked versions are payroll eligible.
                 </p>
               </div>
-              <span class="pc-revision">Version {{ e.status === 'LOCKED' ? 2 : 1 }}</span>
+              <span class="pc-revision"><i class="bi bi-lock-fill"></i> Version {{ e.versionNo ?? '—' }} · System managed</span>
             </div>
             <div class="pc-form-grid">
               <label
                 >Effective from<input
                   type="date"
-                  [(ngModel)]="effectiveFrom"
-                  [disabled]="status() === 'LOCKED'" /></label
-              ><label>Effective to<input value="Open / active" readonly /></label
+                  [ngModel]="effectiveFrom()"
+                  (ngModelChange)="effectiveFrom.set($event)"
+                  [disabled]="formDisabled()" /><small>Draft start date; saved with this salary version.</small></label
+              ><label>Effective to<input [value]="e.effectiveTo || 'Open / active'" readonly /><small>System-managed; the prior version closes when a new version is locked.</small></label
               ><label
                 >Pay Matrix level & cell<input
                   [value]="
@@ -212,18 +226,20 @@
                     (e.sanctionedAmount | number) +
                     ')'
                   "
-                /><small>Sanctioned rate from pay matrix master</small></label
-              ><label>Next increment date<input [value]="e.nextIncrementDate" readonly /></label>
+                  readonly
+                  aria-label="Pay matrix level, cell and sanctioned rate (read only)"
+                /><small><i class="bi bi-lock-fill"></i> Verified from employee and pay matrix records.</small></label
+              ><label>Next increment date<input [value]="e.nextIncrementDate || 'Not set'" readonly /><small><i class="bi bi-lock-fill"></i> Employee record</small></label>
             </div>
           </section>
           <section class="pc-card">
             <div class="pc-section-title">
               <div>
                 <h2>Salary Components</h2>
-                <p>Child calculation rows assigned to this salary header.</p>
+                <p>Component calculation rows assigned to this salary version.</p>
               </div>
-              <button class="pc-primary" (click)="openAdd()" [disabled]="status() === 'LOCKED'">
-                <i class="bi bi-plus-lg"></i> Add component
+              <button class="pc-primary" (click)="openAdd()" [disabled]="formDisabled()">
+                <i class="bi bi-plus-lg"></i> Add from Pay Components
               </button>
             </div>
             <div class="pc-table-wrap">
@@ -241,38 +257,32 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let line of lines()">
-                    <ng-container *ngIf="component(line.componentId) as c"
-                      ><td>{{ c.calcPriority }}</td>
-                      <td>
-                        <strong>{{ c.name }}</strong
-                        ><small>{{ c.code }}</small>
-                      </td>
-                      <td>
-                        <span class="pc-type" [class.deduct]="c.componentType === 'DEDUCTION'">{{
-                          c.componentType
-                        }}</span>
-                      </td>
-                      <td>{{ c.calcType }}</td>
-                      <td>
-                        {{
-                          c.calcType === 'FIXED'
-                            ? 'Fixed amount'
-                            : c.calcType === 'PERCENTAGE'
-                              ? line.percentage + '% of ' + line.baseCode
-                              : c.formulaExpression
-                        }}
-                      </td>
-                      <td class="right">₹{{ line.computedAmount | number: '1.2-2' }}</td>
-                      <td>
-                        <button
-                          class="icon-action"
-                          [disabled]="status() === 'LOCKED' || c.code === 'CONSOLIDATED_PAY'"
-                          (click)="removeLine(c.id)"
-                          aria-label="Remove component"
-                        >
-                          <i class="bi bi-trash"></i>
-                        </button></td
-                    ></ng-container>
+                    <td>{{ line.priority }}</td>
+                    <td>
+                      <strong>{{ line.componentName || ('Component #' + line.componentId) }}</strong>
+                      <small>{{ line.componentCode }}</small>
+                    </td>
+                    <td>
+                      <span class="pc-type" [class.deduct]="componentType(line) === 'DEDUCTION'">
+                        {{ componentType(line) || '—' }}
+                      </span>
+                    </td>
+                    <td>{{ component(line.componentId)?.calcType || '—' }}</td>
+                    <td>{{ line.ruleInput || '—' }}</td>
+                    <td class="right">₹{{ line.monthlyAmount | number: '1.2-2' }}</td>
+                    <td>
+                      <button
+                        class="icon-action"
+                        [disabled]="formDisabled() || line.componentCode === 'CONSOLIDATED_PAY'"
+                        (click)="removeLine(line.componentId)"
+                        aria-label="Remove component"
+                      >
+                        <i class="bi bi-trash"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr *ngIf="!detailLoading() && !detailError() && !lines().length">
+                    <td colspan="7" class="pc-empty">Add at least one component to save this salary version.</td>
                   </tr>
                 </tbody>
               </table>
@@ -309,17 +319,22 @@
           </section>
           <section class="pc-card pc-lock">
             <h2>Save Salary Version</h2>
-            <button class="pc-secondary" (click)="save(false)" [disabled]="status() === 'LOCKED'">
-              Save as Draft</button
+            <button
+              class="pc-secondary"
+              (click)="save(false)"
+              [disabled]="formDisabled() || lines().length === 0"
+            >
+              {{ saving() ? 'Saving…' : 'Save as Draft' }}</button
             ><button
               class="pc-primary full"
               (click)="save(true)"
-              [disabled]="status() === 'LOCKED' || lines().length === 0"
+              [disabled]="formDisabled() || lines().length === 0"
             >
-              Confirm &amp; Lock Salary
+              {{ saving() ? 'Saving…' : 'Confirm & Lock Salary' }}
             </button>
             <p>Locking makes this salary version eligible for monthly payroll.</p>
             <div class="pc-success" *ngIf="savedMessage()">{{ savedMessage() }}</div>
+            <div class="pc-error" *ngIf="saveError()">{{ saveError() }}</div>
             <button class="pc-back" (click)="backToList()">
               <i class="bi bi-arrow-left"></i> Back to employee list
             </button>
@@ -335,19 +350,19 @@
         <i class="bi bi-x-lg"></i></button
       ><span class="pc-kicker">SALARY COMPONENT</span>
       <h2>Add component</h2>
-      <p>Select a reusable active pay component and provide its employee specific inputs.</p>
-      <label
-        >Pay component<select [(ngModel)]="newComponentId">
+      <p>Select an existing active definition from the Pay Components Master, then enter the values for this employee’s salary version. This does not create a new master component.</p>
+      <label>Pay component
+        <select [ngModel]="newComponentId()" (ngModelChange)="newComponentId.set($event)">
           <option [ngValue]="null">Choose component</option>
           <option
-            *ngFor="let c of components"
+            *ngFor="let c of components()"
             [ngValue]="c.id"
             [disabled]="!c.isActive || lines().some((l) => l.componentId === c.id)"
-          >
-            {{ c.code }} · {{ c.name }} ({{ c.componentType }})
-          </option>
-        </select></label
-      ><ng-container *ngIf="newComponentId() as selectedComponentId"
+          >{{ c.code }} · {{ c.name }} ({{ c.componentType }})</option>
+        </select>
+      </label>
+      <p class="pc-error" *ngIf="componentError()">{{ componentError() }}</p>
+      <ng-container *ngIf="newComponentId() as selectedComponentId"
         ><ng-container *ngIf="component(selectedComponentId) as c"
           ><div class="pc-meta-row">
             <span>{{ c.calcType }}</span
@@ -356,12 +371,12 @@
             ><span>Taxable {{ c.isTaxable ? 'Yes' : 'No' }}</span>
           </div>
           <label *ngIf="c.calcType === 'FIXED'"
-            >Fixed monthly amount<input type="number" min="0" [(ngModel)]="newFixedAmount" /></label
+            >Fixed monthly amount<input type="number" min="0" [ngModel]="newFixedAmount()" (ngModelChange)="newFixedAmount.set($event)" /></label
           ><ng-container *ngIf="c.calcType === 'PERCENTAGE'"
             ><label
-              >Base component<select [(ngModel)]="newBaseCode">
-                <option *ngFor="let line of lines()" [value]="component(line.componentId)?.code">
-                  {{ component(line.componentId)?.code }} · ₹{{ line.computedAmount | number }}
+              >Base component<select [ngModel]="newBaseCode()" (ngModelChange)="newBaseCode.set($event)">
+                <option *ngFor="let line of lines()" [value]="line.componentCode" [disabled]="!line.componentCode">
+                  {{ line.componentCode || line.componentName }} · ₹{{ line.monthlyAmount | number }}
                 </option>
               </select></label
             ><label
@@ -370,7 +385,8 @@
                 min="0"
                 max="100"
                 step="0.001"
-                [(ngModel)]="newPercentage" /></label></ng-container
+                [ngModel]="newPercentage()"
+                (ngModelChange)="newPercentage.set($event)" /></label></ng-container
           ><label *ngIf="c.calcType === 'FORMULA'"
             >Formula expression<textarea
               [value]="c.formulaExpression"

@@ -31,7 +31,7 @@ export class AuthSessionService {
     return user?.userRole === 'Official' && user.roleCode?.trim().toUpperCase() === 'SMAKER';
   }
 
-  get user(): AuthenticatedUser | null {debugger
+  get user(): AuthenticatedUser | null {
     const stored = sessionStorage.getItem(this.userKey);
     if (!stored) return null;
     try { return JSON.parse(stored) as AuthenticatedUser; } catch { this.clear(); return null; }
