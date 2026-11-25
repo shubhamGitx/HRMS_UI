@@ -5,9 +5,10 @@ import { filter } from 'rxjs/operators';
 import { Topbar } from './layout/topbar/topbar';
 import { Footer } from './layout/footer/footer'; 
 import { HeaderComponent } from './layout/header/header';
+import { SnackbarComponent } from './shared/snackbar/snackbar';
 
 @Component({
-  imports: [CommonModule, RouterOutlet, Topbar, Footer, HeaderComponent],
+  imports: [CommonModule, RouterOutlet, Topbar, Footer, HeaderComponent, SnackbarComponent],
   selector: 'app-root',
   styleUrl: './app.css',
   templateUrl: './app.html',

@@ -13,26 +13,34 @@
         configurations.
       </p>
     </div>
-    <button class="pc-primary" (click)="openNew()">
+    <button type="button" class="pc-primary" (click)="openNew()">
       <i class="bi bi-plus-lg"></i> Add pay component
     </button>
   </header>
   <section class="pc-stats">
     <article>
-      <span>Total Components</span><strong>{{ rows().length }}</strong
-      ><small>{{ activeCount }} active · {{ rows().length - activeCount }} inactive</small>
+      <span>Total Components</span>
+      <strong>{{ summaryLoading() ? '…' : summary().totalComponents }}</strong>
+      <small
+        >{{ summary().activeComponents }} active ·
+        {{ summary().inactiveComponents }} inactive</small
+      >
     </article>
     <article class="green">
-      <span>Earnings</span
-      ><strong>{{ rows().filter((x) => x.componentType === 'EARNING').length }}</strong
-      ><small>Priority 1–9</small>
+      <span>Earnings</span><strong>{{ summaryLoading() ? '…' : summary().earnings }}</strong>
+      <small>Pay components</small>
     </article>
     <article class="amber">
-      <span>Deductions</span
-      ><strong>{{ rows().filter((x) => x.componentType === 'DEDUCTION').length }}</strong
-      ><small>Priority 10+</small>
+      <span>Deductions</span><strong>{{ summaryLoading() ? '…' : summary().deductions }}</strong>
+      <small>Pay components</small>
+    </article>
+    <article class="green">
+      <span>Employer Contributions</span>
+      <strong>{{ summaryLoading() ? '…' : summary().employerContributions }}</strong>
+      <small>Pay components</small>
     </article>
   </section>
+  <p class="pc-error" *ngIf="summaryError()">{{ summaryError() }}</p>
   <section class="pc-card">
     <div class="pc-filters">
       <label class="pc-search"
@@ -40,14 +48,14 @@
         ><input [(ngModel)]="search" placeholder="Search by code or name" /></label
       ><select [(ngModel)]="typeFilter">
         <option value="ALL">All component types</option>
-        <option value="EARNING">Earning</option>
-        <option value="DEDUCTION">Deduction</option>
-        <option value="EMPLOYER_CONTRIB">Employer contribution</option></select
+        <option *ngFor="let type of componentTypes()" [value]="type.id">
+          {{ type.name }}
+        </option></select
       ><select [(ngModel)]="calcFilter">
         <option value="ALL">All calculation types</option>
-        <option value="FIXED">Fixed</option>
-        <option value="PERCENTAGE">Percentage</option>
-        <option value="FORMULA">Formula</option></select
+        <option *ngFor="let type of calculationTypes()" [value]="type.id">
+          {{ type.name }}
+        </option></select
       ><select [(ngModel)]="statusFilter">
         <option value="ACTIVE">Active</option>
         <option value="INACTIVE">Inactive</option>
@@ -72,7 +80,6 @@
             <th>LOP</th>
             <th>Taxable</th>
             <th>Status</th>
-            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -83,17 +90,20 @@
               ><small>{{ row.name }}</small>
             </td>
             <td>
-              <span class="pc-type" [class.deduct]="row.componentType === 'DEDUCTION'">{{
-                row.componentType
-              }}</span>
+              <span
+                class="pc-type"
+                [class.deduct]="row.componentTypeName.toLowerCase().includes('deduct')"
+                >{{ row.componentTypeName }}</span
+              >
             </td>
-            <td>{{ row.calcType }}</td>
+            <td>{{ row.calcTypeName }}</td>
             <td>
               {{
-                row.formulaExpression ||
-                  (row.calcType === 'FIXED'
-                    ? 'Fixed amount / matrix rate'
-                    : 'Base component percentage')
+                row.calcTypeName.toLowerCase() === 'fixed'
+                  ? 'Fixed amount / matrix rate'
+                  : row.calcTypeName.toLowerCase() === 'percentage'
+                    ? 'Base component percentage'
+                    : 'Configured calculation rule'
               }}
             </td>
             <td>{{ row.isProrated ? 'Yes' : 'No' }}</td>
@@ -103,15 +113,15 @@
                 row.isActive ? 'ACTIVE' : 'INACTIVE'
               }}</span>
             </td>
-            <td>
-              <button class="pc-back" (click)="edit(row)">Edit</button
-              ><button class="pc-back" (click)="toggleActive(row)">
-                {{ row.isActive ? 'Deactivate' : 'Activate' }}
-              </button>
-            </td>
           </tr>
-          <tr *ngIf="!filtered.length">
-            <td colspan="9" class="pc-empty">No pay components match these filters.</td>
+          <tr *ngIf="loading()">
+            <td colspan="8" class="pc-empty">Loading pay components…</td>
+          </tr>
+          <tr *ngIf="error() && !loading()">
+            <td colspan="8" class="pc-empty">{{ error() }}</td>
+          </tr>
+          <tr *ngIf="!loading() && !error() && !filtered.length">
+            <td colspan="8" class="pc-empty">No pay components match these filters.</td>
           </tr>
         </tbody>
       </table>
@@ -125,60 +135,66 @@
       aria-labelledby="pay-component-title"
     >
       <header class="pay-component-modal-header">
-        <button class="pc-modal-close" (click)="showForm.set(false)" aria-label="Close">
-          <i class="bi bi-x-lg"></i></button
-        ><span class="pc-kicker">MASTER DEFINITION</span>
-        <h2 id="pay-component-title">{{ editingId() ? 'Edit' : 'Add' }} Pay Component</h2>
+        <button
+          type="button"
+          class="pc-modal-close"
+          [disabled]="saving()"
+          (click)="showForm.set(false)"
+          aria-label="Close"
+        >
+          <i class="bi bi-x-lg"></i>
+        </button>
+        <span class="pc-kicker">MASTER DEFINITION</span>
+        <h2 id="pay-component-title">Add Pay Component</h2>
         <p>Define one reusable earning, deduction, or employer contribution component.</p>
       </header>
       <div class="pc-form-grid">
-        <label>Component code<input [(ngModel)]="code" placeholder="UPPER CASE" /></label
-        ><label>Display name<input [(ngModel)]="name" /></label
-        ><label
-          >Component type<select [(ngModel)]="componentType">
-            <option value="EARNING">Earning</option>
-            <option value="DEDUCTION">Deduction</option>
-            <option value="EMPLOYER_CONTRIB">Employer contribution</option>
+        <label>Component code<input [(ngModel)]="code" placeholder="UPPER CASE" /></label>
+        <label>Display name<input [(ngModel)]="name" /></label>
+        <label
+          >Component type<select [(ngModel)]="componentTypeId">
+            <option [ngValue]="null">Choose component type</option>
+            <option *ngFor="let type of lookups().componentTypes" [ngValue]="type.componentTypeId">
+              {{ type.name }}
+            </option>
           </select></label
-        ><label
-          >Calculation type<select [(ngModel)]="calcType">
-            <option value="FIXED">Fixed</option>
-            <option value="PERCENTAGE">Percentage</option>
-            <option value="FORMULA">Formula</option></select
-          ><small
-            >Fixed uses a set amount; percentage uses a base pay component; formula evaluates a
-            defined expression.</small
-          ></label
-        ><label
+        >
+        <label
+          >Calculation type<select [(ngModel)]="calcTypeId">
+            <option [ngValue]="null">Choose calculation type</option>
+            <option *ngFor="let type of lookups().calculationTypes" [ngValue]="type.calcTypeId">
+              {{ type.name }}
+            </option>
+          </select></label
+        >
+        <label
           >Calculation priority<input type="number" min="1" [(ngModel)]="calcPriority" /><small
-            >Sets calculation order. Suggested ranges: earnings 1–9, statutory deductions 10–19, tax
-            or recovery 20+.</small
-          ></label
-        ><label *ngIf="calcType === 'FORMULA'" class="wide"
-          >Default formula expression<textarea [(ngModel)]="formulaExpression"></textarea></label
-        ><label class="check"
-          ><input type="checkbox" [(ngModel)]="isProrated" /><span class="check-copy"
-            ><strong>LOP prorated</strong><small>Adjust this amount for unpaid days.</small></span
-          ></label
-        ><label class="check"
-          ><input type="checkbox" [(ngModel)]="isTaxable" /><span class="check-copy"
-            ><strong>Taxable</strong><small>Include this component in taxable pay.</small></span
-          ></label
-        ><label class="check"
-          ><input type="checkbox" [(ngModel)]="isActive" /><span class="check-copy"
-            ><strong>Active</strong><small>Allow this component in salary setups.</small></span
+            >Sets the order in which pay components are calculated.</small
           ></label
         >
+        <label class="check">
+          <input type="checkbox" [(ngModel)]="isProrated" />
+          <span>LOP prorated</span>
+        </label>
+        <label class="check">
+          <input type="checkbox" [(ngModel)]="isTaxable" />
+          <span>Taxable</span>
+        </label>
       </div>
-      <div class="pc-error" *ngIf="error()">{{ error() }}</div>
+      <div class="pc-error" *ngIf="formError()">{{ formError() }}</div>
       <footer>
-        <button class="pc-secondary" (click)="showForm.set(false)">Cancel</button
-        ><button class="pc-primary" (click)="save()">Save component</button>
+        <button
+          type="button"
+          class="pc-secondary"
+          (click)="showForm.set(false)"
+          [disabled]="saving()"
+        >
+          Cancel
+        </button>
+        <button type="button" class="pc-primary" (click)="save()" [disabled]="saving()">
+          {{ saving() ? 'Saving…' : 'Save component' }}
+        </button>
       </footer>
     </section>
   </div>
-  <p class="pc-data-note">
-    Temporary UI state only. The named dummy API is
-    <code>GET /api/dummy/payroll/pay-components</code>; no backend request is made.
-  </p>
 </main>

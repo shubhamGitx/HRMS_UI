@@ -32,18 +32,84 @@
       <div class="pc-filters">
         <label class="pc-search"
           ><i class="bi bi-search"></i
-          ><input [(ngModel)]="search" placeholder="Search employee name or code" /></label
-        ><select [(ngModel)]="designationFilter">
-          <option value="ALL">All designations</option>
-          <option *ngFor="let d of employees()" [value]="d.designation">
-            {{ d.designation }}
-          </option></select
-        ><select [(ngModel)]="statusFilter">
-          <option value="ALL">All salary statuses</option>
-          <option value="PENDING">Pending</option>
-          <option value="DRAFT">Draft</option>
-          <option value="LOCKED">Locked</option>
-        </select>
+          ><input
+            class="form-control salary-filter-search"
+            [(ngModel)]="search"
+            placeholder="Search employee name or code"
+        /></label>
+        <div class="dropdown salary-filter-dropdown">
+          <button
+            type="button"
+            class="form-select salary-filter-select salary-filter-trigger"
+            aria-haspopup="listbox"
+            aria-controls="designation-filter-options"
+            [attr.aria-expanded]="designationDropdownOpen()"
+            (click)="toggleDropdown('designation', $event)"
+            (keydown)="handleDropdownKeydown($event, 'designation')"
+          >
+            <span>{{ designationLabel }}</span>
+            <i class="bi bi-chevron-down" aria-hidden="true"></i>
+          </button>
+          <div
+            *ngIf="designationDropdownOpen()"
+            id="designation-filter-options"
+            class="dropdown-menu show salary-filter-menu"
+            role="listbox"
+            aria-label="Filter by designation"
+          >
+            <button
+              type="button"
+              class="dropdown-item salary-filter-option"
+              role="option"
+              [attr.aria-selected]="designationFilter() === 'ALL'"
+              (click)="selectDesignation('ALL')"
+            >
+              All designations
+            </button>
+            <button
+              *ngFor="let designation of designationOptions()"
+              type="button"
+              class="dropdown-item salary-filter-option"
+              role="option"
+              [attr.aria-selected]="designationFilter() === designation"
+              (click)="selectDesignation(designation)"
+            >
+              {{ designation }}
+            </button>
+          </div>
+        </div>
+        <div class="dropdown salary-filter-dropdown">
+          <button
+            type="button"
+            class="form-select salary-filter-select salary-filter-trigger"
+            aria-haspopup="listbox"
+            aria-controls="status-filter-options"
+            [attr.aria-expanded]="statusDropdownOpen()"
+            (click)="toggleDropdown('status', $event)"
+            (keydown)="handleDropdownKeydown($event, 'status')"
+          >
+            <span>{{ statusLabel }}</span>
+            <i class="bi bi-chevron-down" aria-hidden="true"></i>
+          </button>
+          <div
+            *ngIf="statusDropdownOpen()"
+            id="status-filter-options"
+            class="dropdown-menu show salary-filter-menu"
+            role="listbox"
+            aria-label="Filter by salary status"
+          >
+            <button
+              *ngFor="let option of statusOptions"
+              type="button"
+              class="dropdown-item salary-filter-option"
+              role="option"
+              [attr.aria-selected]="statusFilter() === option.value"
+              (click)="selectStatus(option.value)"
+            >
+              {{ option.label }}
+            </button>
+          </div>
+        </div>
       </div>
       <div class="pc-table-wrap">
         <table>

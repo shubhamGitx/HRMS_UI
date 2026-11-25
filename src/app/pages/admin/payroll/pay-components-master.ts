@@ -1,13 +1,24 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 import {
-  CalcType,
+  CreatePayComponentRequest,
   PayComponent,
-  PayType,
-  PayrollDummyApiService,
-} from './payroll-dummy-api.service';
+  PayComponentLookups,
+  PayComponentSummary,
+  PayComponentsApiService,
+} from '../../../core/services/pay-components-api.service';
+
+const EMPTY_SUMMARY: PayComponentSummary = {
+  totalComponents: 0,
+  activeComponents: 0,
+  inactiveComponents: 0,
+  earnings: 0,
+  deductions: 0,
+  employerContributions: 0,
+};
 
 @Component({
   selector: 'app-pay-components-master',
@@ -16,107 +27,164 @@ import {
   templateUrl: './pay-components-master.html',
   styleUrl: './salary-configuration.css',
 })
-export class PayComponentsMasterComponent {
-  private readonly api = inject(PayrollDummyApiService);
-  readonly rows = signal<PayComponent[]>([...this.api.payComponents]);
-  readonly search = signal('');
-  readonly typeFilter = signal('ALL');
-  readonly calcFilter = signal('ALL');
-  readonly statusFilter = signal('ACTIVE');
-  readonly showForm = signal(false);
-  readonly editingId = signal<number | null>(null);
+export class PayComponentsMasterComponent implements OnInit {
+  private readonly api = inject(PayComponentsApiService);
+  private readonly snackbar = inject(SnackbarService);
+  readonly rows = signal<PayComponent[]>([]);
+  readonly summary = signal<PayComponentSummary>(EMPTY_SUMMARY);
+  readonly loading = signal(true);
+  readonly summaryLoading = signal(true);
   readonly error = signal('');
+  readonly summaryError = signal('');
+  readonly formError = signal('');
+  readonly lookupsError = signal('');
+  readonly showForm = signal(false);
+  readonly saving = signal(false);
+  readonly lookups = signal<PayComponentLookups>({ componentTypes: [], calculationTypes: [] });
+  readonly componentTypes = computed(() =>
+    this.uniqueOptions('componentTypeId', 'componentTypeName'),
+  );
+  readonly calculationTypes = computed(() => this.uniqueOptions('calcTypeId', 'calcTypeName'));
+
+  search = '';
+  typeFilter = 'ALL';
+  calcFilter = 'ALL';
+  statusFilter = 'ACTIVE';
   code = '';
   name = '';
-  componentType: PayType = 'EARNING';
-  calcType: CalcType = 'FIXED';
+  componentTypeId: number | null = null;
+  calcTypeId: number | null = null;
   calcPriority = 1;
-  formulaExpression = '';
   isProrated = true;
   isTaxable = true;
-  isActive = true;
+
+  ngOnInit(): void {
+    this.refreshData();
+    this.api.getLookups().subscribe({
+      next: (lookups) => {
+        this.lookups.set(lookups);
+        this.lookupsError.set('');
+      },
+      error: () => this.lookupsError.set('Unable to load pay component options.'),
+    });
+  }
+
+  private refreshData(): void {
+    this.loading.set(true);
+    this.summaryLoading.set(true);
+    this.error.set('');
+    this.summaryError.set('');
+    this.api.getAllPayComponents().subscribe({
+      next: (components) => {
+        this.rows.set(components);
+        this.loading.set(false);
+      },
+      error: () => {
+        this.error.set('Unable to load pay components. Please try again later.');
+        this.loading.set(false);
+      },
+    });
+
+    this.api.getSummary().subscribe({
+      next: (summary) => {
+        this.summary.set({ ...EMPTY_SUMMARY, ...summary });
+        this.summaryLoading.set(false);
+      },
+      error: () => {
+        this.summaryError.set('Summary could not be loaded.');
+        this.summaryLoading.set(false);
+      },
+    });
+  }
+
   get filtered(): PayComponent[] {
+    const search = this.search.trim().toLowerCase();
     return this.rows()
       .filter(
-        (x) =>
-          (!this.search() ||
-            `${x.code} ${x.name}`.toLowerCase().includes(this.search().toLowerCase())) &&
-          (this.typeFilter() === 'ALL' || x.componentType === this.typeFilter()) &&
-          (this.calcFilter() === 'ALL' || x.calcType === this.calcFilter()) &&
-          (this.statusFilter() === 'ALL' ||
-            (this.statusFilter() === 'ACTIVE' ? x.isActive : !x.isActive)),
+        (component) =>
+          (!search || `${component.code} ${component.name}`.toLowerCase().includes(search)) &&
+          (this.typeFilter === 'ALL' || String(component.componentTypeId) === this.typeFilter) &&
+          (this.calcFilter === 'ALL' || String(component.calcTypeId) === this.calcFilter) &&
+          (this.statusFilter === 'ALL' ||
+            (this.statusFilter === 'ACTIVE' ? component.isActive : !component.isActive)),
       )
       .sort((a, b) => a.calcPriority - b.calcPriority);
   }
-  get activeCount(): number {
-    return this.rows().filter((x) => x.isActive).length;
+
+  private uniqueOptions(
+    idKey: 'componentTypeId' | 'calcTypeId',
+    nameKey: 'componentTypeName' | 'calcTypeName',
+  ): { id: number; name: string }[] {
+    const options = new Map<number, string>();
+    for (const component of this.rows()) {
+      options.set(component[idKey], component[nameKey]);
+    }
+    return [...options.entries()]
+      .map(([id, name]) => ({ id, name }))
+      .sort((a, b) => a.name.localeCompare(b.name));
   }
+
   openNew(): void {
-    this.editingId.set(null);
     this.code = '';
     this.name = '';
-    this.componentType = 'EARNING';
-    this.calcType = 'FIXED';
+    this.componentTypeId =
+      this.lookups().componentTypes.find((type) => type.code === 'EARNING')?.componentTypeId ??
+      null;
+    this.calcTypeId =
+      this.lookups().calculationTypes.find((type) => type.code === 'FIXED')?.calcTypeId ?? null;
     this.calcPriority = 1;
-    this.formulaExpression = '';
     this.isProrated = true;
     this.isTaxable = true;
-    this.isActive = true;
-    this.error.set('');
+    this.formError.set(this.lookupsError());
     this.showForm.set(true);
   }
-  edit(row: PayComponent): void {
-    this.editingId.set(row.id);
-    this.code = row.code;
-    this.name = row.name;
-    this.componentType = row.componentType;
-    this.calcType = row.calcType;
-    this.calcPriority = row.calcPriority;
-    this.formulaExpression = row.formulaExpression;
-    this.isProrated = row.isProrated;
-    this.isTaxable = row.isTaxable;
-    this.isActive = row.isActive;
-    this.error.set('');
-    this.showForm.set(true);
-  }
+
   save(): void {
+    if (this.saving()) return;
     const code = this.code.trim().toUpperCase();
-    if (!code || !this.name.trim()) {
-      this.error.set('Enter a component code and display name.');
+    const name = this.name.trim();
+    if (!code || !name || this.componentTypeId === null || this.calcTypeId === null) {
+      this.formError.set('Enter a component code and name, then choose its type and calculation.');
+      this.snackbar.show('warning', this.formError());
       return;
     }
-    if (this.rows().some((x) => x.code === code && x.id !== this.editingId())) {
-      this.error.set('That component code already exists.');
+    if (!Number.isInteger(this.calcPriority) || this.calcPriority < 1) {
+      this.formError.set('Enter a whole number of 1 or more for calculation priority.');
+      this.snackbar.show('warning', this.formError());
       return;
     }
-    if (this.componentType === 'EARNING' && this.calcType === 'FIXED' && this.calcPriority > 9) {
-      this.error.set('Earning priorities must be 1–9.');
-      return;
-    }
-    if (this.componentType === 'DEDUCTION' && this.calcPriority < 10) {
-      this.error.set('Deduction priorities must be 10 or greater.');
-      return;
-    }
-    const row: PayComponent = {
-      id: this.editingId() ?? Math.max(0, ...this.rows().map((x) => x.id)) + 1,
+
+    const request: CreatePayComponentRequest = {
       code,
-      name: this.name.trim(),
-      componentType: this.componentType,
-      calcType: this.calcType,
+      name,
+      componentTypeId: this.componentTypeId,
+      calcTypeId: this.calcTypeId,
       calcPriority: Number(this.calcPriority),
-      formulaExpression: this.calcType === 'FORMULA' ? this.formulaExpression.trim() : '',
       isProrated: this.isProrated,
       isTaxable: this.isTaxable,
-      isActive: this.isActive,
     };
-    this.rows.update((rows) =>
-      this.editingId() ? rows.map((x) => (x.id === row.id ? row : x)) : [...rows, row],
-    );
-    this.showForm.set(false);
-  }
-  toggleActive(row: PayComponent): void {
-    this.rows.update((rows) =>
-      rows.map((x) => (x.id === row.id ? { ...x, isActive: !x.isActive } : x)),
-    );
+
+    this.saving.set(true);
+    this.formError.set('');
+    this.api.createPayComponent(request).subscribe({
+      next: (response) => {
+        this.saving.set(false);
+        if (!response.success) {
+          this.formError.set(response.message || 'Unable to add pay component.');
+          this.snackbar.show('error', this.formError());
+          return;
+        }
+        this.showForm.set(false);
+        this.snackbar.show('success', `Pay component ${code} saved successfully.`);
+        this.refreshData();
+      },
+      error: (error) => {
+        this.saving.set(false);
+        this.formError.set(
+          error?.error?.message ?? error?.error?.Message ?? 'Unable to add pay component.',
+        );
+        this.snackbar.show('error', this.formError());
+      },
+    });
   }
 }
