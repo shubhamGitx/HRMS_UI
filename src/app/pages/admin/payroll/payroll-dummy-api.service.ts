@@ -12,6 +12,11 @@ export interface PayComponent {
   componentType: PayType;
   calcType: CalcType;
   calcPriority: number;
+  defaultValue?: number | null;
+  defaultBaseComponentCode?: string | null;
+  defaultMaxCap?: number | null;
+  defaultFormula?: string | null;
+  isMatrixLinked?: boolean;
   formulaExpression: string;
   isProrated: boolean;
   isTaxable: boolean;

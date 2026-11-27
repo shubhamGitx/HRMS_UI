@@ -42,6 +42,12 @@ export class ApiService {
     return this.http.put<T>(this.resolveUrl(endpoint), body, { headers, params });
   }
 
+  // ================= PATCH =================
+  patch<T = any>(endpoint: string, body: any = {}, optionsOrHeaders?: RequestOptions | any): Observable<T> {
+    const { headers, params } = this.normalizeOptions(optionsOrHeaders);
+    return this.http.patch<T>(this.resolveUrl(endpoint), body, { headers, params });
+  }
+
   // ================= DELETE =================
   delete<T = any>(endpoint: string, optionsOrHeaders?: RequestOptions | any): Observable<T> {
     const { headers, params } = this.normalizeOptions(optionsOrHeaders);

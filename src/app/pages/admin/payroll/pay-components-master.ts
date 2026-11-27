@@ -40,6 +40,7 @@ export class PayComponentsMasterComponent implements OnInit {
   readonly lookupsError = signal('');
   readonly showForm = signal(false);
   readonly saving = signal(false);
+  readonly changingStatusIds = signal<Set<number>>(new Set());
   readonly lookups = signal<PayComponentLookups>({ componentTypes: [], calculationTypes: [] });
   readonly componentTypes = computed(() =>
     this.uniqueOptions('componentTypeId', 'componentTypeName'),
@@ -55,8 +56,69 @@ export class PayComponentsMasterComponent implements OnInit {
   componentTypeId: number | null = null;
   calcTypeId: number | null = null;
   calcPriority = 1;
+  defaultValue: number | null = null;
+  defaultBaseComponentCode = '';
+  get availableBaseComponents(): PayComponent[] {
+    const currentCode = this.code.trim().toUpperCase();
+    return this.rows().filter(
+      (component) => component.isActive && component.code.trim().toUpperCase() !== currentCode,
+    );
+  }
+  defaultMaxCap: number | null = null;
+  defaultFormula = '';
+  get isMatrixLinked(): boolean {
+    return this.code.trim().toUpperCase() === 'BASIC';
+  }
   isProrated = true;
   isTaxable = true;
+  isActive = true;
+
+  get selectedComponentTypeCode(): string {
+    return (
+      this.lookups().componentTypes.find((item) => item.componentTypeId === this.componentTypeId)
+        ?.code ?? ''
+    );
+  }
+
+  get selectedCalcTypeCode(): string {
+    return (
+      this.lookups().calculationTypes.find((item) => item.calcTypeId === this.calcTypeId)?.code ?? ''
+    );
+  }
+
+  setCode(code: string): void {
+    this.code = code;
+    if (this.isMatrixLinked) {
+      this.componentTypeId = this.lookups().componentTypes.find(t => t.code === 'EARNING')?.componentTypeId ?? null;
+      this.calcTypeId = this.lookups().calculationTypes.find(t => t.code === 'FIXED')?.calcTypeId ?? null;
+      this.defaultValue = null;
+      this.onComponentTypeChanged();
+    }
+  }
+
+  canActivate(row: PayComponent): boolean {
+    if (row.code.trim().toUpperCase() !== 'BASIC') return !row.isMatrixLinked;
+    const options = this.lookups();
+    return row.isMatrixLinked && row.defaultValue == null &&
+      options.componentTypes.some(t => t.componentTypeId === row.componentTypeId && t.code === 'EARNING') &&
+      options.calculationTypes.some(t => t.calcTypeId === row.calcTypeId && t.code === 'FIXED');
+  }
+
+  onComponentTypeChanged(): void {
+    if (this.selectedComponentTypeCode === 'EARNING' && (this.calcPriority < 1 || this.calcPriority > 9)) {
+      this.calcPriority = 1;
+    } else if (
+      this.selectedComponentTypeCode === 'DEDUCTION' &&
+      (this.calcPriority < 10 || this.calcPriority > 89)
+    ) {
+      this.calcPriority = 10;
+    } else if (
+      this.selectedComponentTypeCode === 'EMPLOYER_CONTRIB' &&
+      this.calcPriority < 90
+    ) {
+      this.calcPriority = 90;
+    }
+  }
 
   ngOnInit(): void {
     this.refreshData();
@@ -133,8 +195,13 @@ export class PayComponentsMasterComponent implements OnInit {
     this.calcTypeId =
       this.lookups().calculationTypes.find((type) => type.code === 'FIXED')?.calcTypeId ?? null;
     this.calcPriority = 1;
+    this.defaultValue = null;
+    this.defaultBaseComponentCode = '';
+    this.defaultMaxCap = null;
+    this.defaultFormula = '';
     this.isProrated = true;
     this.isTaxable = true;
+    this.isActive = true;
     this.formError.set(this.lookupsError());
     this.showForm.set(true);
   }
@@ -148,8 +215,48 @@ export class PayComponentsMasterComponent implements OnInit {
       this.snackbar.show('warning', this.formError());
       return;
     }
-    if (!Number.isInteger(this.calcPriority) || this.calcPriority < 1) {
-      this.formError.set('Enter a whole number of 1 or more for calculation priority.');
+    const priorityBand = this.priorityBandError();
+    if (priorityBand) {
+      this.formError.set(priorityBand);
+      this.snackbar.show('warning', this.formError());
+      return;
+    }
+
+    if (this.isMatrixLinked && this.rows().some(row => row.code.trim().toUpperCase() === 'BASIC')) {
+      this.formError.set('BASIC already exists. Use the existing Basic Pay component.');
+      this.snackbar.show('warning', this.formError());
+      return;
+    }
+
+    if (
+      this.selectedCalcTypeCode === 'FIXED' &&
+      !this.isMatrixLinked &&
+      this.defaultValue == null
+    ) {
+      this.formError.set('Enter the default fixed amount or mark the component as matrix-linked.');
+      this.snackbar.show('warning', this.formError());
+      return;
+    }
+    if (
+      this.selectedCalcTypeCode === 'PERCENTAGE' &&
+      (this.defaultValue == null || !this.availableBaseComponents.some(
+        (component) => component.code === this.defaultBaseComponentCode,
+      ))
+    ) {
+      this.formError.set('Percentage components need a default percentage and base component code.');
+      this.snackbar.show('warning', this.formError());
+      return;
+    }
+    if (this.selectedCalcTypeCode === 'FORMULA' && !this.defaultFormula.trim()) {
+      this.formError.set('Enter a formula expression for this component.');
+      this.snackbar.show('warning', this.formError());
+      return;
+    }
+    if (
+      (this.defaultValue != null && this.defaultValue < 0) ||
+      (this.defaultMaxCap != null && this.defaultMaxCap < 0)
+    ) {
+      this.formError.set('Amounts, percentages, and caps must be zero or greater.');
       this.snackbar.show('warning', this.formError());
       return;
     }
@@ -160,8 +267,20 @@ export class PayComponentsMasterComponent implements OnInit {
       componentTypeId: this.componentTypeId,
       calcTypeId: this.calcTypeId,
       calcPriority: Number(this.calcPriority),
+      defaultValue:
+        this.selectedCalcTypeCode === 'FORMULA' || this.isMatrixLinked
+          ? null
+          : Number(this.defaultValue),
+      defaultBaseComponentCode:
+        this.selectedCalcTypeCode === 'PERCENTAGE'
+        ? this.defaultBaseComponentCode.trim().toUpperCase()
+          : null,
+      defaultMaxCap: this.selectedCalcTypeCode === 'FIXED' ? null : this.defaultMaxCap,
+      defaultFormula: this.selectedCalcTypeCode === 'FORMULA' ? this.defaultFormula.trim() : null,
+      isMatrixLinked: this.isMatrixLinked,
       isProrated: this.isProrated,
       isTaxable: this.isTaxable,
+      isActive: this.isActive,
     };
 
     this.saving.set(true);
@@ -186,5 +305,74 @@ export class PayComponentsMasterComponent implements OnInit {
         this.snackbar.show('error', this.formError());
       },
     });
+  }
+
+  toggleActive(row: PayComponent): void {
+    if (this.changingStatusIds().has(row.componentId) || (!row.isActive && !this.canActivate(row))) return;
+
+    const nextStatus = !row.isActive;
+    this.changingStatusIds.update((ids) => new Set(ids).add(row.componentId));
+    this.api.setPayComponentActive(row.componentId, nextStatus).subscribe({
+      next: (response) => {
+        if (!response.success) {
+          this.snackbar.show('error', response.message || 'Unable to change component status.');
+          this.finishStatusChange(row.componentId);
+          return;
+        }
+
+        this.rows.update((rows) =>
+          rows.map((item) =>
+            item.componentId === row.componentId ? { ...item, isActive: nextStatus } : item,
+          ),
+        );
+        this.summary.update((summary) => ({
+          ...summary,
+          activeComponents: summary.activeComponents + (nextStatus ? 1 : -1),
+          inactiveComponents: summary.inactiveComponents + (nextStatus ? -1 : 1),
+        }));
+        this.snackbar.show(
+          'success',
+          `${row.code} ${nextStatus ? 'activated' : 'deactivated'} successfully.`,
+        );
+        this.finishStatusChange(row.componentId);
+      },
+      error: (error) => {
+        this.snackbar.show(
+          'error',
+          error?.error?.message ?? error?.error?.Message ?? 'Unable to change component status.',
+        );
+        this.finishStatusChange(row.componentId);
+      },
+    });
+  }
+
+  private finishStatusChange(componentId: number): void {
+    this.changingStatusIds.update((ids) => {
+      const next = new Set(ids);
+      next.delete(componentId);
+      return next;
+    });
+  }
+
+  private priorityBandError(): string | null {
+    if (!Number.isInteger(this.calcPriority)) return 'Calculation priority must be a whole number.';
+    const priority = Number(this.calcPriority);
+    if (
+      this.selectedComponentTypeCode === 'EARNING' &&
+      (priority < 1 || priority > 9)
+    ) {
+      return 'Earning priorities must be from 1 to 9.';
+    }
+    if (
+      this.selectedComponentTypeCode === 'DEDUCTION' &&
+      (priority < 10 || priority > 89)
+    ) {
+      return 'Deduction priorities must be from 10 to 89.';
+    }
+    if (this.selectedComponentTypeCode === 'EMPLOYER_CONTRIB' && priority < 90) {
+      return 'Employer contribution priorities must be 90 or higher.';
+    }
+    if (priority <= 0) return 'Calculation priority must be greater than zero.';
+    return null;
   }
 }

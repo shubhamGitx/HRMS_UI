@@ -12,6 +12,11 @@ export interface PayComponent {
   calcTypeId: number;
   calcTypeName: string;
   calcPriority: number;
+  defaultValue: number | null;
+  defaultBaseComponentCode: string | null;
+  defaultMaxCap: number | null;
+  defaultFormula: string | null;
+  isMatrixLinked: boolean;
   isProrated: boolean;
   isTaxable: boolean;
   isActive: boolean;
@@ -44,8 +49,14 @@ export interface CreatePayComponentRequest {
   componentTypeId: number;
   calcTypeId: number;
   calcPriority: number;
+  defaultValue: number | null;
+  defaultBaseComponentCode: string | null;
+  defaultMaxCap: number | null;
+  defaultFormula: string | null;
+  isMatrixLinked: boolean;
   isProrated: boolean;
   isTaxable: boolean;
+  isActive: boolean;
 }
 
 interface ApiEnvelope<T> {
@@ -93,6 +104,17 @@ export class PayComponentsApiService {
     return this.api.post<PayComponentMutationResponse>(
       API_ENDPOINT.PAYROLL.PAY_COMPONENTS,
       request,
+    );
+  }
+
+  setPayComponentActive(
+    componentId: number,
+    isActive: boolean,
+  ): Observable<PayComponentMutationResponse> {
+    const action = isActive ? 'activate' : 'deactivate';
+    return this.api.patch<PayComponentMutationResponse>(
+      `${API_ENDPOINT.PAYROLL.PAY_COMPONENTS}/${componentId}/${action}`,
+      null,
     );
   }
 

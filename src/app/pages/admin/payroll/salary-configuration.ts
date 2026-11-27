@@ -4,6 +4,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { EMPTY, catchError, distinctUntilChanged, firstValueFrom, map, switchMap } from 'rxjs';
+import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 import {
   PayComponent,
   SalaryEmployee,
@@ -21,6 +22,7 @@ import {
   SalaryComponentInput,
   SavedSalaryComponent,
 } from '../../../core/services/salary-configuration-api.service';
+import { evaluateSalaryFormula } from './salary-formula';
 
 type SalaryConfigurationRow = Omit<SalaryEmployee, 'components'> & {
   versionNo: number | null;
@@ -44,6 +46,7 @@ export class SalaryConfigurationComponent implements OnInit {
   private readonly payComponentsApi = inject(PayComponentsApiService);
   private readonly contractApi = inject(ContractApiService);
   private readonly salaryApi = inject(SalaryConfigurationApiService);
+  private readonly snackbar = inject(SnackbarService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
@@ -58,6 +61,30 @@ export class SalaryConfigurationComponent implements OnInit {
   readonly detailError = signal('');
   readonly componentError = signal('');
   readonly components = signal<PayComponent[]>([]);
+  readonly catalogueLoaded = signal(false);
+  readonly basicMaster = computed(() => this.components().find(c =>
+    c.code.trim().toUpperCase() === 'BASIC' && c.isActive && c.isMatrixLinked &&
+    c.componentType === 'EARNING' && c.calcType === 'FIXED' && c.defaultValue == null,
+  ));
+  readonly basicIssue = computed(() => {
+    const employee = this.detailEmployee();
+    if (!employee || employee.status === 'LOCKED') return '';
+    if (this.componentError()) return this.componentError();
+    if (!this.catalogueLoaded()) return 'Loading the Basic Pay definition…';
+    if (!this.basicMaster()) return 'Configure and activate BASIC as a matrix-linked fixed earning in Pay Components.';
+    if (!this.payMatrixId() || !(employee.sanctionedAmount > 0)) return 'Assign a pay matrix with a sanctioned rate to this employee.';
+    return '';
+  });
+  readonly componentCategory = signal<'ALL' | 'EARNING' | 'DEDUCTION'>('ALL');
+  readonly availableComponents = computed(() =>
+    this.components().filter((component) =>
+      component.isActive &&
+      component.code.trim().toUpperCase() !== 'BASIC' &&
+      !component.isMatrixLinked &&
+      !this.lines().some((line) => line.componentId === component.id) &&
+      (this.componentCategory() === 'ALL' || component.componentType === this.componentCategory()),
+    ),
+  );
   readonly selectedId = signal<number | null>(null);
   readonly salaryHeaderId = signal<number | null>(null);
   readonly payMatrixId = signal<number | null>(null);
@@ -97,7 +124,7 @@ export class SalaryConfigurationComponent implements OnInit {
   readonly newComponentId = signal<number | null>(null);
   readonly newFixedAmount = signal<number | null>(null);
   readonly newPercentage = signal<number | null>(null);
-  readonly newBaseCode = signal('CONSOLIDATED_PAY');
+  readonly newBaseCode = signal('BASIC');
   readonly savedMessage = signal('');
   readonly saveError = signal('');
   readonly saving = signal(false);
@@ -174,7 +201,11 @@ export class SalaryConfigurationComponent implements OnInit {
 
   ngOnInit(): void {
     this.payComponentsApi.getAllPayComponents().subscribe({
-      next: (components) => this.components.set(components.map((component) => this.toPayComponent(component))),
+      next: (components) => {
+        this.components.set(components.map((component) => this.toPayComponent(component)));
+        this.catalogueLoaded.set(true);
+        this.syncMatrixBaseLine();
+      },
       error: () => this.componentError.set('Unable to load active pay components.'),
     });
 
@@ -240,6 +271,7 @@ export class SalaryConfigurationComponent implements OnInit {
       const employee = this.toSalaryEmployee(details);
       this.detailEmployee.set(employee);
       this.lines.set(employee.components);
+      this.syncMatrixBaseLine();
       this.status.set(employee.status === 'LOCKED' ? 'LOCKED' : 'DRAFT');
       this.effectiveFrom.set(details.salaryConfigurationId ? employee.effectiveFrom : '2026-04-01');
     });
@@ -298,11 +330,45 @@ export class SalaryConfigurationComponent implements OnInit {
           ? 'FORMULA'
           : 'FIXED',
       calcPriority: component.calcPriority,
-      formulaExpression: '',
+      defaultValue: component.defaultValue,
+      defaultBaseComponentCode: component.defaultBaseComponentCode,
+      defaultMaxCap: component.defaultMaxCap,
+      defaultFormula: component.defaultFormula,
+      isMatrixLinked: component.isMatrixLinked,
+      formulaExpression: component.defaultFormula ?? '',
       isProrated: component.isProrated,
       isTaxable: component.isTaxable,
       isActive: component.isActive,
     };
+  }
+
+  calculatedFormulaAmount(component: PayComponent): number {
+    try {
+      return this.calculateFormulaAmount(component);
+    } catch {
+      return 0;
+    }
+  }
+
+  private calculateFormulaAmount(component: PayComponent): number {
+    const values: Record<string, number> = {};
+    for (const line of this.lines()) {
+      if (line.componentCode) values[line.componentCode.trim().toUpperCase()] = Number(line.monthlyAmount) || 0;
+    }
+    const employee = this.detailEmployee();
+    if (employee && values['BASIC'] === undefined) {
+      values['BASIC'] = Number(employee.sanctionedAmount) || 0;
+    }
+    const amount = evaluateSalaryFormula(component.formulaExpression, values);
+    return this.applyMaximumCap(this.roundMoney(amount), component.defaultMaxCap);
+  }
+
+  private applyMaximumCap(amount: number, maximum: number | null | undefined): number {
+    return maximum == null ? amount : Math.min(amount, Number(maximum));
+  }
+
+  private roundMoney(amount: number): number {
+    return Math.round((amount + Number.EPSILON) * 100) / 100;
   }
 
   component(id: number): PayComponent | undefined {
@@ -330,29 +396,92 @@ export class SalaryConfigurationComponent implements OnInit {
     this.newComponentId.set(null);
     this.newFixedAmount.set(null);
     this.newPercentage.set(null);
+    this.newBaseCode.set('BASIC');
+    this.componentCategory.set('ALL');
     this.showAdd.set(true);
+  }
+  selectComponent(componentId: number | null): void {
+    this.newComponentId.set(componentId);
+    const selected = componentId == null ? undefined : this.component(componentId);
+    this.newFixedAmount.set(
+      selected?.calcType === 'FIXED' && !selected.isMatrixLinked
+        ? selected.defaultValue ?? null
+        : null,
+    );
+    this.newPercentage.set(
+      selected?.calcType === 'PERCENTAGE' ? selected.defaultValue ?? null : null,
+    );
+    this.newBaseCode.set(selected?.defaultBaseComponentCode || 'BASIC');
+  }
+  setComponentCategory(category: 'ALL' | 'EARNING' | 'DEDUCTION'): void {
+    this.componentCategory.set(category);
+    const selected = this.component(this.newComponentId() ?? -1);
+    if (selected && category !== 'ALL' && selected.componentType !== category) {
+      this.newComponentId.set(null);
+    }
+  }
+  isMatrixBaseLine(line: SavedSalaryComponent): boolean {
+    return (line.componentCode || this.component(line.componentId)?.code)?.trim().toUpperCase() === 'BASIC';
+  }
+  private syncMatrixBaseLine(): void {
+    const employee = this.detailEmployee();
+    if (!employee || employee.status === 'LOCKED' || this.basicIssue()) return;
+    const master = this.basicMaster();
+    if (!master) return;
+    const baseLine: SavedSalaryComponent = {
+      componentId: master.id,
+      componentCode: master.code,
+      componentName: master.name,
+      componentTypeCode: master.componentType,
+      priority: master.calcPriority,
+      ruleInput: 'Pay matrix sanctioned amount (locked)',
+      monthlyAmount: employee.sanctionedAmount,
+    };
+    this.lines.update((lines) => {
+      const otherLines = lines.filter(line => !this.isMatrixBaseLine(line) &&
+        line.ruleInput !== 'Pay matrix sanctioned amount (locked)');
+      return [baseLine, ...otherLines];
+    });
   }
   addLine(): void {
     if (this.formDisabled()) return;
     const id = this.newComponentId();
     if (id === null) return;
     const master = this.component(id);
-    if (!master || this.lines().some((x) => x.componentId === id)) return;
-    const amount =
-      master.calcType === 'FIXED'
-        ? Number(this.newFixedAmount() || 0)
+    if (!master || master.code.trim().toUpperCase() === 'BASIC' || master.isMatrixLinked || this.lines().some((x) => x.componentId === id)) return;
+    if (master.calcType === 'FORMULA' && !master.formulaExpression.trim()) {
+      this.snackbar.show('warning', 'Set a default formula for this component in Pay Components first.');
+      return;
+    }
+    if (master.calcType === 'FIXED' && this.newFixedAmount() == null) {
+      this.snackbar.show('warning', 'Enter a fixed monthly amount for this component.');
+      return;
+    }
+    if (master.calcType === 'PERCENTAGE' && this.newPercentage() == null) {
+      this.snackbar.show('warning', 'Enter a percentage for this component.');
+      return;
+    }
+    const baseLine = this.lines().find(
+      (line) => line.componentCode?.trim().toUpperCase() === this.newBaseCode().trim().toUpperCase(),
+    );
+    if (master.calcType === 'PERCENTAGE' && !baseLine) {
+      this.snackbar.show('warning', 'The selected base component is not in this salary structure.');
+      return;
+    }
+    let amount: number;
+    try {
+      amount = master.calcType === 'FIXED'
+        ? this.applyMaximumCap(Number(this.newFixedAmount()), master.defaultMaxCap)
         : master.calcType === 'PERCENTAGE'
-          ? Math.round(
-              (((this.lines().find(
-                (x) => x.componentCode === this.newBaseCode(),
-              )?.monthlyAmount || 0) *
-                Number(this.newPercentage() || 0)) /
-                100) *
-                100,
-            ) / 100
-          : master.code === 'EPF_EMP'
-            ? Math.min(this.gross(), 15000) * 0.12
-            : 0;
+          ? this.applyMaximumCap(
+              this.roundMoney((Number(baseLine?.monthlyAmount ?? 0) * Number(this.newPercentage())) / 100),
+              master.defaultMaxCap,
+            )
+          : this.calculateFormulaAmount(master);
+    } catch {
+      this.snackbar.show('warning', 'The formula could not be calculated. Check its component codes and expression.');
+      return;
+    }
     this.lines.update((lines) => [
       ...lines,
       {
@@ -372,15 +501,22 @@ export class SalaryConfigurationComponent implements OnInit {
     this.showAdd.set(false);
   }
   removeLine(id: number): void {
-    if (!this.formDisabled())
+    const line = this.lines().find((item) => item.componentId === id);
+    if (!this.formDisabled() && line && !this.isMatrixBaseLine(line))
       this.lines.update((lines) => lines.filter((line) => line.componentId !== id));
   }
 
-  async save(lock: boolean): Promise<void> {debugger
+  async save(lock: boolean): Promise<void> {
     const e = this.detailEmployee();
     if (!e || this.formDisabled()) return;
     this.savedMessage.set('');
     this.saveError.set('');
+
+    if (this.basicIssue()) {
+      this.saveError.set(this.basicIssue());
+      return;
+    }
+    this.syncMatrixBaseLine();
 
     if (!this.effectiveFrom()) {
       this.saveError.set('Select an effective from date.');
@@ -455,10 +591,14 @@ export class SalaryConfigurationComponent implements OnInit {
         await firstValueFrom(this.salaryApi.lockSalaryHeader(salaryHeaderId));
         this.updateSavedEmployee(savedEmployee, salaryHeaderId, 'LOCKED');
         if (this.selectedId() === e.employeeId) {
-          this.savedMessage.set('Salary configuration confirmed and locked successfully.');
+          const message = 'Salary configuration confirmed and locked successfully.';
+          this.savedMessage.set(message);
+          this.snackbar.show('success', message);
         }
       } else if (this.selectedId() === e.employeeId) {
-        this.savedMessage.set('Salary configuration saved as draft successfully.');
+        const message = 'Salary configuration saved as draft successfully.';
+        this.savedMessage.set(message);
+        this.snackbar.show('success', message);
       }
 
       this.salaryApi.getSalaryConfigurationSummary().subscribe({

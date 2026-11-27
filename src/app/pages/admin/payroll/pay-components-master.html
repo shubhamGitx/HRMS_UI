@@ -80,6 +80,7 @@
             <th>LOP</th>
             <th>Taxable</th>
             <th>Status</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -113,15 +114,27 @@
                 row.isActive ? 'ACTIVE' : 'INACTIVE'
               }}</span>
             </td>
+            <td>
+              <button
+                type="button"
+                class="pc-status-action"
+                [class.activate]="!row.isActive"
+                [disabled]="changingStatusIds().has(row.componentId) || (!row.isActive && !canActivate(row))"
+                [attr.title]="!row.isActive && !canActivate(row) ? 'Only BASIC can use the pay matrix and must be a fixed earning.' : null"
+                (click)="toggleActive(row)"
+              >
+                {{ changingStatusIds().has(row.componentId) ? 'Updating…' : row.isActive ? 'Deactivate' : 'Activate' }}
+              </button>
+            </td>
           </tr>
           <tr *ngIf="loading()">
-            <td colspan="8" class="pc-empty">Loading pay components…</td>
+            <td colspan="9" class="pc-empty">Loading pay components…</td>
           </tr>
           <tr *ngIf="error() && !loading()">
-            <td colspan="8" class="pc-empty">{{ error() }}</td>
+            <td colspan="9" class="pc-empty">{{ error() }}</td>
           </tr>
           <tr *ngIf="!loading() && !error() && !filtered.length">
-            <td colspan="8" class="pc-empty">No pay components match these filters.</td>
+            <td colspan="9" class="pc-empty">No pay components match these filters.</td>
           </tr>
         </tbody>
       </table>
@@ -149,10 +162,14 @@
         <p>Define one reusable earning, deduction, or employer contribution component.</p>
       </header>
       <div class="pc-form-grid">
-        <label>Component code<input [(ngModel)]="code" placeholder="UPPER CASE" /></label>
+        <label>Component code<input [ngModel]="code" (ngModelChange)="setCode($event)" placeholder="UPPER CASE" /></label>
         <label>Display name<input [(ngModel)]="name" /></label>
         <label
-          >Component type<select [(ngModel)]="componentTypeId">
+          >Component type<select
+            [(ngModel)]="componentTypeId"
+            [disabled]="isMatrixLinked"
+            (ngModelChange)="onComponentTypeChanged()"
+          >
             <option [ngValue]="null">Choose component type</option>
             <option *ngFor="let type of lookups().componentTypes" [ngValue]="type.componentTypeId">
               {{ type.name }}
@@ -160,7 +177,10 @@
           </select></label
         >
         <label
-          >Calculation type<select [(ngModel)]="calcTypeId">
+          >Calculation type<select
+            [(ngModel)]="calcTypeId"
+            [disabled]="isMatrixLinked"
+          >
             <option [ngValue]="null">Choose calculation type</option>
             <option *ngFor="let type of lookups().calculationTypes" [ngValue]="type.calcTypeId">
               {{ type.name }}
@@ -168,10 +188,110 @@
           </select></label
         >
         <label
-          >Calculation priority<input type="number" min="1" [(ngModel)]="calcPriority" /><small
-            >Sets the order in which pay components are calculated.</small
+          >Calculation priority<input
+            type="number"
+            [min]="
+              selectedComponentTypeCode === 'EARNING'
+                ? 1
+                : selectedComponentTypeCode === 'DEDUCTION'
+                  ? 10
+                  : 90
+            "
+            [max]="
+              selectedComponentTypeCode === 'EARNING'
+                ? 9
+                : selectedComponentTypeCode === 'DEDUCTION'
+                  ? 89
+                  : null
+            "
+            [(ngModel)]="calcPriority"
+          /><small
+            >{{
+              selectedComponentTypeCode === 'EARNING'
+                ? 'Earnings: 1–9'
+                : selectedComponentTypeCode === 'DEDUCTION'
+                  ? 'Deductions: 10–89'
+                  : selectedComponentTypeCode === 'EMPLOYER_CONTRIB'
+                    ? 'Employer contributions: 90+'
+                    : 'Choose a type to see its priority range.'
+            }}</small
           ></label
         >
+        <ng-container [ngSwitch]="selectedCalcTypeCode">
+          <label *ngSwitchCase="'FIXED'">
+            Default amount
+            <input
+              type="number"
+              min="0"
+              step="0.01"
+              [(ngModel)]="defaultValue"
+              [disabled]="isMatrixLinked"
+              [placeholder]="isMatrixLinked ? 'Fetched from employee pay matrix' : 'Enter amount'"
+            />
+            <small *ngIf="isMatrixLinked"
+              >Matrix-linked amount is stored as NULL and resolved from the employee’s pay matrix.</small
+            >
+          </label>
+          <ng-container *ngSwitchCase="'PERCENTAGE'">
+            <label>
+              Default percentage
+              <input
+                type="number"
+                min="0"
+                step="0.01"
+                [(ngModel)]="defaultValue"
+                placeholder="e.g. 12"
+              />
+            </label>
+            <label>
+              Base component code
+              <select [(ngModel)]="defaultBaseComponentCode">
+                <option value="">Select base component</option>
+                <option *ngFor="let component of availableBaseComponents" [value]="component.code">
+                  {{ component.code }} — {{ component.name }}
+                </option>
+              </select>
+            </label>
+            <label>
+              Maximum monthly cap (optional)
+              <input
+                type="number"
+                min="0"
+                step="0.01"
+                [(ngModel)]="defaultMaxCap"
+                placeholder="No cap"
+              />
+            </label>
+          </ng-container>
+          <ng-container *ngSwitchCase="'FORMULA'">
+          <label>
+              Formula expression
+              <textarea
+                [(ngModel)]="defaultFormula"
+                rows="3"
+                placeholder="e.g. MIN(BASIC, 15000) * 0.12"
+              ></textarea>
+            </label>
+            <label>
+              Maximum monthly cap (optional)
+              <input
+                type="number"
+                min="0"
+                step="0.01"
+                [(ngModel)]="defaultMaxCap"
+                placeholder="No cap"
+              />
+            </label>
+          </ng-container>
+        </ng-container>
+        <label class="check">
+          <input
+            type="checkbox"
+            [checked]="isMatrixLinked"
+            disabled
+          />
+          <span>Pay matrix (BASIC only)</span>
+        </label>
         <label class="check">
           <input type="checkbox" [(ngModel)]="isProrated" />
           <span>LOP prorated</span>
@@ -179,6 +299,10 @@
         <label class="check">
           <input type="checkbox" [(ngModel)]="isTaxable" />
           <span>Taxable</span>
+        </label>
+        <label class="check">
+          <input type="checkbox" [(ngModel)]="isActive" />
+          <span>Active</span>
         </label>
       </div>
       <div class="pc-error" *ngIf="formError()">{{ formError() }}</div>

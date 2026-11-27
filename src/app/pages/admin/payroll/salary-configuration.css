@@ -154,6 +154,13 @@
 .salary-configuration-page .pc-modal-backdrop{background:rgba(5,34,43,.64)}
 .salary-configuration-page .pc-modal .pc-kicker{color:#087c8b}
 .salary-configuration-page .pc-modal .pc-primary{color:#fff}
+.salary-configuration-page .salary-matrix-lock{display:inline-flex;align-items:center;gap:5px;padding:5px 8px;border-radius:999px;background:#e5f4ef;color:#11745e;font-size:.66rem;font-weight:800;white-space:nowrap}
+.salary-configuration-page .salary-component-category{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin:0 0 14px;padding:4px;border:1px solid #d9e6e2;border-radius:10px;background:#f3f8f6}
+.salary-configuration-page .salary-component-category button{min-height:36px;border:0;border-radius:7px;background:transparent;color:#516b70;font:inherit;font-size:.76rem;font-weight:700;cursor:pointer}
+.salary-configuration-page .salary-component-category button.active{background:linear-gradient(120deg,#075968,#0b8586);color:#fff;box-shadow:0 3px 8px rgba(5,90,99,.17)}
+.salary-configuration-page .salary-component-category button:focus-visible{outline:2px solid #168c91;outline-offset:2px}
+.salary-configuration-page .salary-formula-preview{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:12px;padding:11px 13px;border:1px solid #d7ece6;border-radius:9px;background:#eff9f5;color:#45656a;font-size:.76rem}
+.salary-configuration-page .salary-formula-preview strong{color:#11745e;font-size:.9rem}
 @media(max-width:900px){.salary-configuration-page .pc-config-grid{grid-template-columns:1fr}}
 @media(max-width:560px){.salary-configuration-page .pc-heading,.salary-configuration-page .pc-topline{align-items:flex-start;flex-direction:column;gap:14px;padding:21px;border-radius:16px}.salary-configuration-page .pc-heading h1,.salary-configuration-page .pc-topline h1{font-size:1.4rem}.salary-configuration-page .pc-topline-actions{width:100%;justify-content:space-between;order:-1}.salary-configuration-page .pc-stats{gap:11px}.salary-configuration-page .pc-stats article{min-height:96px}}
 @media(prefers-reduced-motion:reduce){.salary-configuration-page .pc-stats article,.salary-configuration-page .pc-table-wrap tbody tr{transition:none}}
@@ -191,3 +198,6 @@
 .pay-components-page .pc-error{margin:14px 0 0;padding:11px 13px;border:1px solid #f3c7bf;border-radius:9px;background:#fff3f0;color:#a84536;font-size:.78rem;line-height:1.45}
 .pay-components-page .pay-component-modal .pc-form-grid label.check{align-items:center}
 .pay-components-page .pay-component-modal .pc-form-grid label.check input[type=checkbox]{width:17px;height:17px;margin:0;accent-color:#087c83}
+.pay-components-page .pc-status-action{border:1px solid #d3a6a1;border-radius:7px;background:#fff7f5;color:#a54137;padding:6px 9px;font:inherit;font-size:.7rem;font-weight:700;white-space:nowrap;cursor:pointer}
+.pay-components-page .pc-status-action.activate{border-color:#a4d7c0;background:#f0fbf5;color:#14744d}
+.pay-components-page .pc-status-action:disabled{opacity:.55;cursor:wait}

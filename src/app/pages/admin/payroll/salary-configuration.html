@@ -271,9 +271,13 @@
                     <td>{{ line.ruleInput || '—' }}</td>
                     <td class="right">₹{{ line.monthlyAmount | number: '1.2-2' }}</td>
                     <td>
+                      <span *ngIf="isMatrixBaseLine(line)" class="salary-matrix-lock" title="Amount is set by the employee's pay matrix">
+                        <i class="bi bi-lock-fill"></i> Matrix
+                      </span>
                       <button
+                        *ngIf="!isMatrixBaseLine(line)"
                         class="icon-action"
-                        [disabled]="formDisabled() || line.componentCode === 'CONSOLIDATED_PAY'"
+                        [disabled]="formDisabled()"
                         (click)="removeLine(line.componentId)"
                         aria-label="Remove component"
                       >
@@ -319,16 +323,17 @@
           </section>
           <section class="pc-card pc-lock">
             <h2>Save Salary Version</h2>
+            <p *ngIf="basicIssue()" role="status">{{ basicIssue() }}</p>
             <button
               class="pc-secondary"
               (click)="save(false)"
-              [disabled]="formDisabled() || lines().length === 0"
+              [disabled]="formDisabled() || !!basicIssue() || lines().length === 0"
             >
               {{ saving() ? 'Saving…' : 'Save as Draft' }}</button
             ><button
               class="pc-primary full"
               (click)="save(true)"
-              [disabled]="formDisabled() || lines().length === 0"
+              [disabled]="formDisabled() || !!basicIssue() || lines().length === 0"
             >
               {{ saving() ? 'Saving…' : 'Confirm & Lock Salary' }}
             </button>
@@ -351,13 +356,17 @@
       ><span class="pc-kicker">SALARY COMPONENT</span>
       <h2>Add component</h2>
       <p>Select an existing active definition from the Pay Components Master, then enter the values for this employee’s salary version. This does not create a new master component.</p>
+      <div class="salary-component-category" role="tablist" aria-label="Filter components by category">
+        <button type="button" role="tab" [attr.aria-selected]="componentCategory() === 'ALL'" [class.active]="componentCategory() === 'ALL'" (click)="setComponentCategory('ALL')">All</button>
+        <button type="button" role="tab" [attr.aria-selected]="componentCategory() === 'EARNING'" [class.active]="componentCategory() === 'EARNING'" (click)="setComponentCategory('EARNING')">Earnings</button>
+        <button type="button" role="tab" [attr.aria-selected]="componentCategory() === 'DEDUCTION'" [class.active]="componentCategory() === 'DEDUCTION'" (click)="setComponentCategory('DEDUCTION')">Deductions</button>
+      </div>
       <label>Pay component
-        <select [ngModel]="newComponentId()" (ngModelChange)="newComponentId.set($event)">
+        <select [ngModel]="newComponentId()" (ngModelChange)="selectComponent($event)">
           <option [ngValue]="null">Choose component</option>
           <option
-            *ngFor="let c of components()"
+            *ngFor="let c of availableComponents()"
             [ngValue]="c.id"
-            [disabled]="!c.isActive || lines().some((l) => l.componentId === c.id)"
           >{{ c.code }} · {{ c.name }} ({{ c.componentType }})</option>
         </select>
       </label>
@@ -370,28 +379,37 @@
             ><span>LOP {{ c.isProrated ? 'Yes' : 'No' }}</span
             ><span>Taxable {{ c.isTaxable ? 'Yes' : 'No' }}</span>
           </div>
-          <label *ngIf="c.calcType === 'FIXED'"
-            >Fixed monthly amount<input type="number" min="0" [ngModel]="newFixedAmount()" (ngModelChange)="newFixedAmount.set($event)" /></label
-          ><ng-container *ngIf="c.calcType === 'PERCENTAGE'"
-            ><label
-              >Base component<select [ngModel]="newBaseCode()" (ngModelChange)="newBaseCode.set($event)">
+          <label *ngIf="c.calcType === 'FIXED'">
+            Fixed monthly amount
+            <input type="number" min="0" [ngModel]="newFixedAmount()" (ngModelChange)="newFixedAmount.set($event)" />
+            <small *ngIf="c.defaultValue != null">Pre-filled from the pay component default; adjust for this employee if needed.</small>
+          </label>
+          <ng-container *ngIf="c.calcType === 'PERCENTAGE'">
+            <label>
+              Base component
+              <select [ngModel]="newBaseCode()" (ngModelChange)="newBaseCode.set($event)">
                 <option *ngFor="let line of lines()" [value]="line.componentCode" [disabled]="!line.componentCode">
                   {{ line.componentCode || line.componentName }} · ₹{{ line.monthlyAmount | number }}
                 </option>
-              </select></label
-            ><label
-              >Percentage<input
-                type="number"
-                min="0"
-                max="100"
-                step="0.001"
-                [ngModel]="newPercentage()"
-                (ngModelChange)="newPercentage.set($event)" /></label></ng-container
-          ><label *ngIf="c.calcType === 'FORMULA'"
-            >Formula expression<textarea
-              [value]="c.formulaExpression"
-              readonly
-            ></textarea></label></ng-container
+              </select>
+            </label>
+            <label>
+              Percentage
+              <input type="number" min="0" step="0.001" [ngModel]="newPercentage()" (ngModelChange)="newPercentage.set($event)" />
+              <small *ngIf="c.defaultValue != null">Default rate: {{ c.defaultValue }}%.</small>
+            </label>
+            <small *ngIf="c.defaultMaxCap != null">Monthly maximum: ₹{{ c.defaultMaxCap | number: '1.2-2' }}.</small>
+          </ng-container>
+          <label *ngIf="c.calcType === 'FORMULA'">
+            Formula expression
+            <textarea [value]="c.formulaExpression" readonly></textarea>
+            <small *ngIf="!c.formulaExpression">No default formula is configured for this component.</small>
+            <small *ngIf="c.defaultMaxCap != null">Monthly maximum: ₹{{ c.defaultMaxCap | number: '1.2-2' }}.</small>
+          </label>
+          <div class="salary-formula-preview" *ngIf="c.calcType === 'FORMULA' && c.formulaExpression">
+            <span>Calculated monthly amount</span>
+            <strong>₹{{ calculatedFormulaAmount(c) | number: '1.2-2' }}</strong>
+          </div></ng-container
       ></ng-container>
       <footer>
         <button class="pc-secondary" (click)="showAdd.set(false)">Cancel</button
