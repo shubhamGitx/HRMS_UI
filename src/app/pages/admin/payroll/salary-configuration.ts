@@ -8,7 +8,7 @@ import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 import {
   PayComponent,
   SalaryEmployee,
-} from './payroll-dummy-api.service';
+} from './salary-configuration.models';
 import { ContractApiService } from '../../../core/services/contract-api.service';
 import {
   PayComponentsApiService,
